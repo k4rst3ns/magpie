@@ -17,6 +17,7 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%residues%" == "flexreg_apr16" $include "./modules/18_residues/flexreg_apr16.gms"
+$Ifi "%residues%" == "flexregcell_jan19" $include "./modules/18_residues/flexregcell_jan19.gms"
 $Ifi "%residues%" == "off" $include "./modules/18_residues/off.gms"
 *###################### R SECTION END (MODULETYPES) ############################
 
