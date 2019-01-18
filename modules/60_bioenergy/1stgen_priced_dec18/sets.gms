@@ -12,6 +12,9 @@ sets
    k1st60(kall) 1st generation bioenergy carriers
         / oils, ethanol /
 
+   BEgen different bioenergy generations
+        / tradition, 1stgen, 2ndgen /
+
    scen1st60 first generation bioenergy scenarios
        / const2020, const2030, phaseout2020 /
 
