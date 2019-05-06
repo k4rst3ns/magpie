@@ -1,7 +1,8 @@
-*** |  (C) 2008-2018 Potsdam Institute for Climate Impact Research (PIK),
-*** |  authors, and contributors see AUTHORS file
-*** |  This file is part of MAgPIE and licensed under GNU AGPL Version 3
-*** |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
+*** |  (C) 2008-2019 Potsdam Institute for Climate Impact Research (PIK)
+*** |  authors, and contributors see CITATION.cff file. This file is part
+*** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+*** |  AGPL-3.0, you are granted additional permissions described in the
+*** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
@@ -13,8 +14,8 @@ parameters
 ;
 
 variables
- vm_cost_AEI(i)                  Irrigation expansion costs (mio. USD04MER)
- v41_cost_AEI_annuity(i)         Annuity costs of AEI expansion in the current time step (mio. USD04MER)
+ vm_cost_AEI(i)                  Irrigation expansion costs (mio. USD04MER per yr)
+ v41_cost_AEI_annuity(i)         Annuity costs of AEI expansion in the current time step (mio. USD04MER per yr)
 ;
 
 positive variables
@@ -29,8 +30,8 @@ equations
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_cost_AEI(t,i,type)           Irrigation expansion costs (mio. USD04MER)
- ov41_cost_AEI_annuity(t,i,type) Annuity costs of AEI expansion in the current time step (mio. USD04MER)
+ ov_cost_AEI(t,i,type)           Irrigation expansion costs (mio. USD04MER per yr)
+ ov41_cost_AEI_annuity(t,i,type) Annuity costs of AEI expansion in the current time step (mio. USD04MER per yr)
  ov41_AEI(t,j,type)              Area equipped for irrigation in each grid cell (mio. ha)
  oq41_area_irrig(t,j,type)       Irrigation area constraint (mio. ha)
  oq41_cost_AEI_annuity(t,i,type) Calculation of annuity costs of AEI expansion (mio. USD04MER)

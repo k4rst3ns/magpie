@@ -1,7 +1,8 @@
-# |  (C) 2008-2018 Potsdam Institute for Climate Impact Research (PIK),
-# |  authors, and contributors see AUTHORS file
-# |  This file is part of MAgPIE and licensed under GNU AGPL Version 3
-# |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
+# |  (C) 2008-2019 Potsdam Institute for Climate Impact Research (PIK)
+# |  authors, and contributors see CITATION.cff file. This file is part
+# |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+# |  AGPL-3.0, you are granted additional permissions described in the
+# |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 # |  Contact: magpie@pik-potsdam.de
 
 start_run <- function(cfg,scenario=NULL,codeCheck=TRUE,
@@ -244,11 +245,7 @@ getReportData <- function(rep,scen,LU_pricing="y2010") {
     write.magpie(out[notGLO,,],"./modules/60_bioenergy/input/reg.2ndgen_bioenergy_demand.csv")
   }
   .emission_prices <- function(mag){
-    notGLO <- getRegions(mag)[!(getRegions(mag)=="GLO")]
     out_c <- mag[,,"Price|Carbon (US$2005/t CO2)"]*44/12 # US$2005/tCO2 -> US$2005/tC
-  	y_zeroprices <-  getYears(mag)<=LU_pricing & getYears(mag)>"y2010"
-	  out_c[,y_zeroprices,]<-0 # .5*44/12 # US$2005/tCO2 -> US$2005/tC
-
     dimnames(out_c)[[3]] <- "co2_c"
 
     out_n2o_direct <- mag[,,"Price|N2O (US$2005/t N2O)"]*44/28 # US$2005/tN2O -> US$2005/tN
@@ -261,6 +258,13 @@ getReportData <- function(rep,scen,LU_pricing="y2010") {
     dimnames(out_ch4)[[3]] <- "ch4"
 
     out <- mbind(out_n2o_direct,out_n2o_indirect,out_ch4,out_c)
+
+    # Set prices to zero before and in the year given in LU_pricing
+    y_zeroprices <- getYears(mag)<=LU_pricing
+    out[,y_zeroprices,]<-0
+
+    # Remove GLO region
+    notGLO <- getRegions(mag)[!(getRegions(mag)=="GLO")]
     write.magpie(out[notGLO,,],"./modules/56_ghg_policy/input/f56_pollutant_prices_coupling.cs3")
   }
 

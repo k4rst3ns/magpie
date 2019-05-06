@@ -1,10 +1,11 @@
-*** |  (C) 2008-2018 Potsdam Institute for Climate Impact Research (PIK),
-*** |  authors, and contributors see AUTHORS file
-*** |  This file is part of MAgPIE and licensed under GNU AGPL Version 3
-*** |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
+*** |  (C) 2008-2019 Potsdam Institute for Climate Impact Research (PIK)
+*** |  authors, and contributors see CITATION.cff file. This file is part
+*** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+*** |  AGPL-3.0, you are granted additional permissions described in the
+*** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @title Marginal Abatement Cost Curves 
+*' @title Marginal Abatement Cost Curves
 *'
 *' @description This module describes technical mitigation of GHG emissions.
 *' It allows to reduce GHG emissions by undertaking mitigation
@@ -16,12 +17,11 @@
 *' Their direct consequences on biophysical values like yields or water requirements is ignored at the moment.
 *'
 *' Mitigation costs are estimated using marginal abatement cost curves (MACCs).
-*' The curves allow to reduce emissions before technical mitigation (btm)
-*' by a certain percentage in exchange for additional costs.
-*' The MACCs used in this module are based on the data from @LUCAS200785.
-*' Despite we have reservations on its data quality, we stick on it as we are aware of no other better data.
+*' The curves are applied on the original emissions before technical mitigation (btm),
+*' and reduce them by a certain percentage in exchange for additional costs.
+*' The MACCs used in this module are based on the data from @LUCAS200785.  
 *'
-*' @authors Benjamin Leon Bodirsky
+*' @authors Benjamin Leon Bodirsky, Florian Humpenoeder
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%maccs%" == "off_jul16" $include "./modules/57_maccs/off_jul16.gms"

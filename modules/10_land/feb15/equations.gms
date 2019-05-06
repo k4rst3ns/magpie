@@ -1,14 +1,15 @@
-*** |  (C) 2008-2018 Potsdam Institute for Climate Impact Research (PIK),
-*** |  authors, and contributors see AUTHORS file
-*** |  This file is part of MAgPIE and licensed under GNU AGPL Version 3
-*** |  or later. See LICENSE file or go to http://www.gnu.org/licenses/
+*** |  (C) 2008-2019 Potsdam Institute for Climate Impact Research (PIK)
+*** |  authors, and contributors see CITATION.cff file. This file is part
+*** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+*** |  AGPL-3.0, you are granted additional permissions described in the
+*** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
 *' @equations
 *' This realization defines the total amount of land to be constant over time.
 
  q10_land(j2) ..
-		sum(land, vm_land(j2,land)) =e= sum(land, pcm_land(j2,land));
+		sum(land, vm_land(j2,land)) =e= sum(land, pm_land_start(j2,land));
 
 *' The following two equations calculate the land expansion and land contraction.
 

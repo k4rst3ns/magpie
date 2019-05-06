@@ -1,8 +1,9 @@
-*** (C) 2008-2017 Potsdam Institute for Climate Impact Research (PIK),
-*** authors, and contributors see AUTHORS file
-*** This file is part of MAgPIE and licensed under GNU AGPL Version 3
-*** or later. See LICENSE file or go to http://www.gnu.org/licenses/
-*** Contact: magpie@pik-potsdam.de
+*** |  (C) 2008-2019 Potsdam Institute for Climate Impact Research (PIK)
+*** |  authors, and contributors see CITATION.cff file. This file is part
+*** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+*** |  AGPL-3.0, you are granted additional permissions described in the
+*** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
+*** |  Contact: magpie@pik-potsdam.de
 
 *' @equations
 
@@ -61,7 +62,11 @@ q15_budget(iso) ..
 *' food demand as well as dietary composition.
 
 *' The BMI distribution within the population is calculated using
-*' regressions in a hierachical tree. First, the regression shares are calculated:
+*' regressions in a hierachical tree to estimate the share of the population
+*' falling into a certain BMI class.
+*' ![Hierarchical tree used to estimate BMI population shares](hierarchical_tree.png){ width=100% }
+
+*' First, the regression shares are calculated:
 
 q15_regr_bmi_shr(iso,sex,agegroup15,bmi_tree15) ..
         v15_regr_overgroups(iso,sex,agegroup15,bmi_tree15)
@@ -70,7 +75,8 @@ q15_regr_bmi_shr(iso,sex,agegroup15,bmi_tree15) ..
         + (i15_bmi_saturation(sex,agegroup15,bmi_tree15) * v15_income_pc_real_ppp_iso(iso))
         / (i15_bmi_halfsat(sex,agegroup15,bmi_tree15) + v15_income_pc_real_ppp_iso(iso));
 
-*' Then, these regression shares are applied to a hierarchical tree structure:
+*' Then, these regression shares are applied to parameterize the
+*' hierarchical tree structure:
 
 q15_bmi_shr_verylow(iso,sex,agegroup15) ..
         v15_bmi_shr_overgroups(iso,sex,agegroup15,"verylow")
@@ -139,7 +145,7 @@ q15_intake(iso)..
          sum((ct, sex, age, bmi_group15),
            v15_bmi_shr_regr(iso,sex,age,bmi_group15)*
            im_demography(ct,iso,sex,age) *
-           i15_intake(ct,iso,sex,age,bmi_group15)
+           p15_intake(ct,iso,sex,age,bmi_group15)
          )
          + sum(ct,i15_kcal_pregnancy(ct,iso))
          ;
