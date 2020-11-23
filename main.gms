@@ -197,7 +197,7 @@ $title magpie
 * 
 * 
 * 
-* Last modification (input data): Tue Sep 15 13:45:32 2020
+* Last modification (input data): Thu Nov 19 11:52:34 2020
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -280,7 +280,7 @@ $setglobal bioenergy  1stgen_priced_dec18
 $setglobal material  exo_flexreg_apr16
 $setglobal livestock  fbask_jan16
 
-$setglobal disagg_lvst  foragebased_aug18
+$setglobal disagg_lvst  localfeed_nov20
 
 $setglobal timber  biomass_mar20
 

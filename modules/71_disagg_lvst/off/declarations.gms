@@ -7,9 +7,17 @@
 
 positive variables
   vm_costs_additional_mon(i)                       Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+vm_tprod(j,k)                                transport production (mio. tDM per yr)
 ;
+
+equations
+  q71_transport_production(j,k) transported stuff
+;
+
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_costs_additional_mon(t,i,type) Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ ov_costs_additional_mon(t,i,type)     Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ ov_tprod(t,j,k,type)                  transport production (mio. tDM per yr)
+ oq71_transport_production(t,j,k,type) transported stuff
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

@@ -5,13 +5,12 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @description The off realization does not account for any further restriction of the livestock distribution. 
-
-*' @limitations This realization underestimates real world drivers for livestock distribution.
+*' @description The localfeed_nov20 is transported related.
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "declarations" $include "./modules/71_disagg_lvst/off/declarations.gms"
-$Ifi "%phase%" == "equations" $include "./modules/71_disagg_lvst/off/equations.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/71_disagg_lvst/off/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/71_disagg_lvst/off/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/71_disagg_lvst/localfeed_nov20/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/71_disagg_lvst/localfeed_nov20/declarations.gms"
+$Ifi "%phase%" == "equations" $include "./modules/71_disagg_lvst/localfeed_nov20/equations.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/71_disagg_lvst/localfeed_nov20/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/71_disagg_lvst/localfeed_nov20/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

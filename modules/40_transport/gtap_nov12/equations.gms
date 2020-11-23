@@ -9,7 +9,7 @@
 *'
 
 q40_cost_transport(j2,k) ..
-  vm_cost_transp(j2,k) =e= vm_prod(j2,k)*f40_distance(j2)
+  vm_cost_transp(j2,k) =e= vm_tprod(j2,k)*f40_distance(j2)
                            * f40_transport_costs(k);
 
 *'

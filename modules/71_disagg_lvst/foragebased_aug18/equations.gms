@@ -79,3 +79,6 @@ q71_punishment_mon(i2) ..
 
 *' Note that the punishment costs are based on transport costs and scaled up by one order of magnitude
 *' of the average transport costs to account for additional transport between clusters.
+
+q71_transport_production(j2,k) ..
+                vm_tprod(j2,k) =e= vm_prod(j2,k);
