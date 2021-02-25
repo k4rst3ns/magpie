@@ -5,7 +5,11 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-$setglobal c14_yields_scenario  nocc
+scalars
+  s14_yld_past_switch  Spillover parameter for translating technological change in the crop sector into pasture yield increases  (1)     / 0.1 /
+;
+
+$setglobal c14_yields_scenario  cc
 *   options:   cc  (climate change)
 *             nocc (no climate change)
 
