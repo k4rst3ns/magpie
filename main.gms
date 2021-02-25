@@ -223,7 +223,7 @@ $offlisting
 
 $setglobal c_timesteps  coup2100
 $setglobal c_past  till_2010
-$setglobal c_title  default
+$setglobal c_title  foragebased_pasture0
 
 scalars
 s_use_gdx   use of gdx files                                       / 2 /
@@ -280,7 +280,7 @@ $setglobal bioenergy  1stgen_priced_dec18
 $setglobal material  exo_flexreg_apr16
 $setglobal livestock  fbask_jan16
 
-$setglobal disagg_lvst  localfeed_nov20
+$setglobal disagg_lvst  foragebased_aug18
 
 $setglobal timber  biomass_mar20
 

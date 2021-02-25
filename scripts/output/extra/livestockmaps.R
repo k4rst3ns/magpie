@@ -12,6 +12,28 @@
 
 library(lucode2)
 library(magpie4)
+library(mrcommons)
 
 gdx <- path(outputdir,"fulldata.gdx")
-production(gdx,file=paste0(outputdir,"LivestockProductionMap.nc"),level="grid",products="kli",dir=outputdir)
+MagProduction  <- production(gdx,level="grid",products="kli",dir=outputdir)
+
+load(path(outputdir,"config.Rdata"))
+
+rev   <- cfg$input[setdiff(grep("magpie",cfg$input),grep("cellular",cfg$input))]
+cache <- gsub("(.+?)(\\_.*)","\\1", rev)
+setConfig(cachefolder = paste0("/p/projects/rd3mod/inputdata/cache/",cache), force = TRUE)
+
+
+histProduction <- collapseNames(calcOutput("LivestockGridded", aggregate = FALSE)[,,"dm"])
+
+doubleYears <- intersect(getYears(histProduction,as.integer=TRUE),getYears(MagProduction,as.integer=TRUE))
+beforeMag   <- setdiff(getYears(histProduction,as.integer=TRUE),getYears(MagProduction,as.integer=TRUE))
+
+getCells(MagProduction) <- getCells(histProduction)
+
+out  <- mbind(         histProduction[,beforeMag,],
+              setYears(histProduction[,doubleYears,], doubleYears-1),
+                        MagProduction)
+
+write.magpie(out, path(outputdir,"LivestockProductionMap.nc"))
+

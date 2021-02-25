@@ -6,20 +6,24 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 positive variables
- vm_tprod(j,k)             Feed transported to cell (mio. tDM per yr)
+ v71_tprod(j, kfeed, dir)                         Transported feed production to or from a cluster (mio. tDM per yr)
+ vm_tprod(j,k)                                    Transported production (mio. tDM per yr)
  vm_costs_additional_mon(i)                       Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
 ;
 
 equations
  q71_feed_liv(j,kfeed)                  Production constraint for livestock products (mio. tDM per yr)
- q71_transport_production(j,knofeed)    transport stuff feed
+ q71_transport_feed(j,kfeed)            Determination of transported production
+ q71_transport_nofeed(j,knofeed)        Transport of non feed stuff 
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_tprod(t,j,k,type)                        Feed transported to cell (mio. tDM per yr)
- ov_costs_additional_mon(t,i,type)           Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
- oq71_feed_liv(t,j,kfeed,type)               Production constraint for livestock products (mio. tDM per yr)
- oq71_transport_production(t,j,knofeed,type) transport stuff feed
+ ov71_tprod(t,j,kfeed,dir,type)          Transported feed production to or from a cluster (mio. tDM per yr)
+ ov_tprod(t,j,k,type)                    Transported production (mio. tDM per yr)
+ ov_costs_additional_mon(t,i,type)       Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ oq71_feed_liv(t,j,kfeed,type)           Production constraint for livestock products (mio. tDM per yr)
+ oq71_transport_feed(t,j,kfeed,type)     Determination of transported production
+ oq71_transport_nofeed(t,j,knofeed,type) Transport of non feed stuff 
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
