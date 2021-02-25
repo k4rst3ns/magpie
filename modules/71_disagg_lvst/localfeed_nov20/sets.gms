@@ -14,4 +14,7 @@ sets
  
    knofeed(k) non feed primary products
        / oilpalm, begr, betr, wood, woodfuel /
+
+   dir direction of transport route 
+       / from, to /
 ;

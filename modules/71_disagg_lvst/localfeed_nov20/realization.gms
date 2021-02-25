@@ -10,6 +10,7 @@
 *####################### R SECTION START (PHASES) ##############################
 $Ifi "%phase%" == "sets" $include "./modules/71_disagg_lvst/localfeed_nov20/sets.gms"
 $Ifi "%phase%" == "declarations" $include "./modules/71_disagg_lvst/localfeed_nov20/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/71_disagg_lvst/localfeed_nov20/input.gms"
 $Ifi "%phase%" == "equations" $include "./modules/71_disagg_lvst/localfeed_nov20/equations.gms"
 $Ifi "%phase%" == "presolve" $include "./modules/71_disagg_lvst/localfeed_nov20/presolve.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/71_disagg_lvst/localfeed_nov20/postsolve.gms"
