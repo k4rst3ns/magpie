@@ -7,5 +7,5 @@
 
 
 scalars
-  s71_transport     switch for transported feed stuff (1)        / 3 /
+  s71_transport     switch for transported feed stuff (1)        / 1 /
 ;

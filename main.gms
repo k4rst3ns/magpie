@@ -201,7 +201,7 @@ $title magpie
 *   Following files not found:
 *   calibration_inms_c200_08Jul2020.tgz
 * 
-* Last modification (input data): Sat Feb 20 14:23:58 2021
+* Last modification (input data): Thu Feb 25 17:52:31 2021
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -284,7 +284,7 @@ $setglobal bioenergy  1stgen_priced_dec18
 $setglobal material  exo_flexreg_apr16
 $setglobal livestock  fbask_jan16
 
-$setglobal disagg_lvst  foragebased_aug18
+$setglobal disagg_lvst  localfeed_nov20
 
 $setglobal timber  biomass_mar20
 
