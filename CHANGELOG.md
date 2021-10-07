@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **scripts** output/extra/disaggregation.R updated to account for sub-categories of "forestry"
 - **09_drivers** Update sets in drivers to include new SDP and Ariadne GDP and Pop scenarios
 - **21_trade** In the exo and off realization, equations corrected to be consistent with the mapping between supreg h and regions i. Bugfixes in trade exo and off realizations.
-- **21_trade** In sticky_feb18. Calculation of capital stocks in year 1995 as 1994 production multiplied by depreciation.
+- **38_factor_costs** In sticky_feb18. Calculation of capital stocks in year 1995 as 1994 production multiplied by depreciation. Also, factor requirements calculated as MER instead of PPP. Changes in units in the sticky realization.
 - **80_optimization** Bug fixes in the nlp_par (parallel optimization) and an increase in maximum number of iterations.
 
 
