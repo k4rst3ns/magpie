@@ -32,7 +32,7 @@ if (ord(t) = 1,
 
 * vm_prod.l(j,kcr)=sum(cell(i,j),p38_croparea_start(j,kcr)*f38_region_yield(i,kcr)* sum(supreg(h,i),fm_tau1995(h)));
 $ifthen "%c38_prod_init%" == "ON"  vm_prod.l(j,kcr)=sum(cell(i,j),sum(w,p38_croparea_start(j,w,kcr)*pm_yields_hist("y1995",j,kcr,w))* sum(supreg(h,i),fm_tau1995(h)));
-
+$endif
 else
 
 *' Update of existing stocks
