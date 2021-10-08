@@ -24,7 +24,6 @@ realizations<-c("sticky_feb18","mixed_feb17","fixed_per_ton_mar18")
 type<-NULL
 
 
-
 for(r in realizations){
   for(ci in calib_ini){
     for(vmi in vmprod_ini){
@@ -51,4 +50,5 @@ for(r in realizations){
       magpie4::submitCalibration(paste("H12",r,t,"Ini",ci,sep="_"))}
      }
     }
+}
 }
