@@ -104,7 +104,7 @@ i14_managementcalib(t,j,knbe14,w) =
                              sum(cell(i,j),i14_lambda_yields(t,i,knbe14)))$(f14_yields(t,j,knbe14,w)>0);
 
 
-i14_yields_calib(t,j,knbe14,w)    = i14_managementcalib(t,j,knbe14,w) * f14_yields(t,j,knbe14,w);
+pm_yields_hist(t,j,knbe14,w)    = i14_managementcalib(t,j,knbe14,w) * f14_yields(t,j,knbe14,w);
 
 *' Note that the calculation is split into two parts for better readability.
 *' @stop
@@ -118,8 +118,8 @@ i14_yields_calib(t,j,knbe14,w)    = i14_managementcalib(t,j,knbe14,w) * f14_yiel
 *' yields are outlier corrected, historical production and croparea can only be reproduced
 *' with this additional step of correction:
 
-i14_yields_calib(t,j,kcr,w)       = i14_yields_calib(t,j,kcr,w)      *sum(cell(i,j),f14_yld_calib(i,"crop"));
-i14_yields_calib(t,j,"pasture",w) = i14_yields_calib(t,j,"pasture",w)*sum(cell(i,j),f14_yld_calib(i,"past"));
+i14_yields_calib(t,j,kcr,w)       = pm_yields_hist(t,j,kcr,w)      *sum(cell(i,j),f14_yld_calib(i,"crop"));
+i14_yields_calib(t,j,"pasture",w) = pm_yields_hist(t,j,"pasture",w)*sum(cell(i,j),f14_yld_calib(i,"past"));
 
 *' @stop
 

@@ -17,6 +17,7 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
+cfg$input <- cfg$input[names(cfg$input) != "calibration"]
 cfg$results_folder <- "output/:title:"
 cfg$recalibrate <- TRUE
 cfg$title <- "calib_run"

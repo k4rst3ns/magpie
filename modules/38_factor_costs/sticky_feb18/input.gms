@@ -6,6 +6,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 $setglobal c38_sticky_mode  free
+$setglobal c38_prod_init    ON
 
 scalars
 *' Depreciation rate assuming roughly 20 years linear depreciation for invesment goods

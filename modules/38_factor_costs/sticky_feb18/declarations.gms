@@ -28,7 +28,7 @@ parameters
  p38_capital_cost_share(t,i)           Capital share for dynamic calculation (1)
  p38_share_calibration(i)              Summation factor used to calibrate calculated capital shares with historical values (1)
 
- p38_croparea_start(j,kcr)             Agricultural land initialization area (mio. ha)
+ p38_croparea_start(j,w,kcr)             Agricultural land initialization area (mio. ha)
 ;
 
 
