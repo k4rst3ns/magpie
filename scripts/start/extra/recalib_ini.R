@@ -39,12 +39,13 @@ for(r in realizations){
       cfg$gms$c_timesteps <- 1
       cfg$output <- c("rds_report")
       cfg$sequential <- TRUE
+      cfg$force_download <- FALSE
 
       cfg$gms$factor_costs     <-   r
       cfg$gms$c38_sticky_mode  <-   t
       cfg$gms$c38_prod_init    <-   vmi
 
-      start_run(cfg,codeCheck=FALSE)
+      start_run(cfg)
       magpie4::submitCalibration(paste("H12",r,t,"Ini",ci,sep="_"))}
      }
     }
