@@ -32,8 +32,6 @@ for(r in realizations){
 
     for(t in type){
 
-      if(initialization){
-
       cfg$input<-if(ci=="ON") cfg$input else if(ci=="OFF") cfg$input[names(cfg$input)!="calibration"] else stop("Not a valid option")
       cfg$results_folder <- "output/:title:"
       cfg$recalibrate <- TRUE
@@ -50,5 +48,4 @@ for(r in realizations){
       magpie4::submitCalibration(paste("H12",r,t,"Ini",ci,sep="_"))}
      }
     }
-}
 }
