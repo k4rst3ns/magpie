@@ -1,4 +1,4 @@
-*** |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -6,8 +6,8 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 *' @description
-*' The cellpool_aug16 realization is built on the IPCC 2006 Guidelines for
-*' National Greenhouse Gas Inventories (@ipcc_2006_2006.). It calculates the loss of
+*' The cellpool_aug23 realization is built on revised IPCC 2019 Guidelines for
+*' National Greenhouse Gas Inventories (@calvo_buendia_ipcc_2019). It calculates the loss of
 *' soil carbon due to cropping activities and management based on stock change factors,
 *' compared to potential natural vegetation.
 *' This approach also accounts for the temporal dimension of soil organic carbon change,
@@ -26,12 +26,12 @@
 
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/59_som/cellpool_aug16/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/59_som/cellpool_aug16/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/59_som/cellpool_aug16/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/59_som/cellpool_aug16/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/59_som/cellpool_aug16/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/59_som/cellpool_aug16/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/59_som/cellpool_aug16/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/59_som/cellpool_aug16/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/59_som/cellpool_jan23/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/59_som/cellpool_jan23/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/59_som/cellpool_jan23/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/59_som/cellpool_jan23/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/59_som/cellpool_jan23/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/59_som/cellpool_jan23/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/59_som/cellpool_jan23/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/59_som/cellpool_jan23/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################
