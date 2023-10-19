@@ -1,4 +1,4 @@
-# |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
+# |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
 # |  authors, and contributors see CITATION.cff file. This file is part
 # |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 # |  AGPL-3.0, you are granted additional permissions described in the
@@ -33,7 +33,7 @@ collect_data_and_make_emulator <- function(outputdir,name_of_fit="linear") {
 
   # lock the model (other emulaotr scripts have to wait until this one finished)
   lock_id <- gms::model_lock(file=".lockemu")
-  on.exit(gms::model_unlock(lock_id,file=".lockemu"))
+  withr::defer(gms::model_unlock(lock_id,file=".lockemu"))
 
   results_path <- "output"
 

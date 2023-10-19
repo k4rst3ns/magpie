@@ -1,4 +1,4 @@
-# |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
+# |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
 # |  authors, and contributors see CITATION.cff file. This file is part
 # |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 # |  AGPL-3.0, you are granted additional permissions described in the
@@ -45,7 +45,7 @@ for (i in 1:length(outputdir)) {
     a <- read.report(rep,as.list = FALSE)
     getNames(a,dim=1) <- scen
     #add to reporting mif file
-    write.report2(a,file="output/report_all.mif",append=TRUE,ndigit = 4,skipempty = FALSE)
+    write.report(a,file="output/report_all.mif",append=TRUE,ndigit = 4,skipempty = FALSE)
   } else missing <- c(missing,outputdir[i])
 }
 if (!is.null(missing)) {

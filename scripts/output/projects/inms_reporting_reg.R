@@ -1,4 +1,4 @@
-# |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
+# |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
 # |  authors, and contributors see CITATION.cff file. This file is part
 # |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 # |  AGPL-3.0, you are granted additional permissions described in the
@@ -34,9 +34,7 @@ if(!exists("source_include")) {
 
 print(paste0("script started for output directory",outputdir))
 
-wdbefore=getwd()
-on.exit(setwd(wdbefore))
-setwd(outputdir)
+withr::local_dir(outputdir)
 
 cfg <- gms::loadConfig("config.yml")
 title <- cfg$title
@@ -62,5 +60,5 @@ missingyears=function(x){
 a=missingyears(mif)
 
 write.reportProject(a,mapping=paste0(wdbefore,"/mapping_inms.csv"),file="report_inms.mif")
-#write.report2(a,file="magpie_results_nov2019.mif")
+#write.report(a,file="magpie_results_nov2019.mif")
 warnings()

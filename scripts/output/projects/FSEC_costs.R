@@ -1,4 +1,4 @@
-# |  (C) 2008-2022 Potsdam Institute for Climate Impact Research (PIK)
+# |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
 # |  authors, and contributors see CITATION.cff file. This file is part
 # |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 # |  AGPL-3.0, you are granted additional permissions described in the
@@ -37,12 +37,6 @@ title <- cfg$title
 message("Generating costs output for the run: ", title)
 gdx <- file.path(outputdir, "fulldata.gdx")
 
-baseDir <- getwd()
-costsOutputDir <- file.path(baseDir, "output", "costs")
-if (!dir.exists(costsOutputDir)) {
-    dir.create(costsOutputDir)
-}
-
 out <- getReportFSECCosts(gdx = gdx,
-                          reportOutputDir = costsOutputDir,
+                          reportOutputDir = outputdir,
                           scenario = title)

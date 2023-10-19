@@ -1,4 +1,4 @@
-# |  (C) 2008-2021 Potsdam Institute for Climate Impact Research (PIK)
+# |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
 # |  authors, and contributors see CITATION.cff file. This file is part
 # |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 # |  AGPL-3.0, you are granted additional permissions described in the
@@ -39,12 +39,7 @@ message("Generating DietaryIndicators output for the run: ", title)
 gdx <- file.path(outputdir, "fulldata.gdx")
 report <- getReportDietaryIndicators(gdx, scenario = title)
 
-dietaryIndicatorsOutputDir <- file.path(baseDir, "output", "DietaryIndicators")
-if (!dir.exists(dietaryIndicatorsOutputDir)) {
-    dir.create(dietaryIndicatorsOutputDir)
-}
-
-Map(f = function(x, i) write.csv(x, file = file.path(dietaryIndicatorsOutputDir, paste0(title, "_", i, ".csv")),
+Map(f = function(x, i) write.csv(x, file = file.path(outputdir, paste0(title, "_", i, ".csv")),
                                  row.names = FALSE, quote = TRUE),
     x = report,
     i = names(report))
