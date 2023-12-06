@@ -148,16 +148,16 @@ $title magpie
 
 *##################### R SECTION START (VERSION INFO) ##########################
 * 
-* Used data set: rev4.94_h12_magpie.tgz
-* md5sum: 25623b5ad3e8b72bd3008da9b69adfe0
+* Used data set: rev4.95_h12_magpie.tgz
+* md5sum: e0d58a1bf53dbff7be529586c3c2a920
 * Repository: /p/projects/rd3mod/inputdata/output
 * 
-* Used data set: rev4.94_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
-* md5sum: d7800a0ffe271483116a8f00a939a89a
+* Used data set: rev4.95_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
+* md5sum: 138b15b48768f1f7020282377109a16d
 * Repository: /p/projects/rd3mod/inputdata/output
 * 
-* Used data set: rev4.94_h12_validation.tgz
-* md5sum: 4b4128910822cf45603cab46f45ccf78
+* Used data set: rev4.95_h12_validation.tgz
+* md5sum: 003436151510ac2811964363bbaa545d
 * Repository: /p/projects/rd3mod/inputdata/output
 * 
 * Used data set: additional_data_rev4.46.tgz
@@ -179,11 +179,11 @@ $title magpie
 * 
 * Regionscode: 62eff8f7
 * 
-* Regions data revision: 4.94
+* Regions data revision: 4.95
 * 
 * lpj2magpie settings:
 * * LPJmL data: MRI-ESM2-0:ssp370
-* * Revision: 4.94
+* * Revision: 4.95
 * 
 * aggregation settings:
 * * Input resolution: 0.5
@@ -195,7 +195,7 @@ $title magpie
 * * Call: withCallingHandlers(expr, message = messageHandler, warning = warningHandler,     error = errorHandler)
 * 
 * 
-* Last modification (input data): Fri Nov 17 19:42:06 2023
+* Last modification (input data): Wed Dec  6 16:24:17 2023
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 

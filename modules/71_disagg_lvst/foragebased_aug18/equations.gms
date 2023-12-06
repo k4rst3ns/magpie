@@ -11,18 +11,22 @@
 *' feed items grazed pasture and fodder. These must be larger than the ruminant feed requirements
 *' that are given by the product of ruminant production and the respective feed baskets:
 
-q71_feed_rum_liv(j2, kforage) ..
-                 vm_prod(j2, kforage) =g=
-                  sum(kli_rum, v71_prod_rum(j2, kli_rum, kforage)
+q71_dem_feed_rum_forage(j2, kli_rum, kforage) ..
+                 v71_dem_feed_clust(j2, kli_rum, kforage) =e=
+                  v71_prod_rum(j2, kli_rum, kforage)
                  * sum((ct, cell(i2,j2), kforage2), im_feed_baskets(ct, i2, kli_rum,kforage2)) * 
-                     v71_feed_balanceflow_share(j2, kli_rum, kforage))
+                     v71_feed_balanceflow_share(j2, kli_rum, kforage)
                  ;
+
+q71_feed_to_prod_rum(j2, kforage) ..
+                 vm_prod(j1, kforage) =g= sum(kli_rum, v71_dem_feed_clust(j2, kli_rum, kforage);
+
 
 *' The above equation contains a split of pasture and fodder fed ruminants, since we assume that depending
 *' on the intensity level of the livestock production, ruminants will graze on pastures (extensive systems)
 *' or will be fed via harvested fodder crops (intensive systems).
 
-*' A regional balance flow accounts in [70_livestock] `q70_feed(i2,kap,kall)` for inconsistencies with 
+*' A regional balance flow accounts in [70_livestock] `q70_feed(i2, kap, kall)` for inconsistencies with 
 *' the FAO inventory of national feed use. On cellular level we distribute the regional balance flow as 
 *' a multiplicative correction term (introduced in `q71_feed_rum_liv`) that is given by 
 
@@ -59,3 +63,11 @@ q71_punishment_mon(i2) ..
 
 *' Note that the punishment costs are based on transport costs and scaled up by one order of magnitude
 *' of the average transport costs to account for additional transport between clusters.
+
+q71_dem_feed_mon(j2, kli_mon, kall) ..
+                  v71_dem_feed_clust(j2, kli_mon, kall) =e= 
+                  vm_prod(j2, kli_mon) * sum(cell(i2,j2), im_feed_baskets(ct, i2, kli_mon, kall)); *** feedbalance flow?? 
+   
+q71_dem_feed_rum_nforage(j2, kli_rum, knforage) ..
+                  v71_dem_feed_clust(j2, kli_rum, knforage) =e= 
+                  vm_prod(j2, kli_rum) * sum(cell(i2,j2), im_feed_baskets(ct, i2, kli_rum, knforage)); *** feedbalance flow??  

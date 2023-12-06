@@ -9,6 +9,7 @@ positive variables
  v71_feed_forage(j, kforage)                       Production of forage within a cell (mio. tDM per yr)
  v71_additional_mon(j, kli_mon)                    Additional punished production of monogastric livestock (mio. tDM per yr)
  vm_costs_additional_mon(i)                        Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ v71_dem_feed_clust(j,kli,kall)                    Cluster-level feed demand including byproducts (mio. tDM per yr)
 ;
 
 variables

@@ -5,5 +5,4 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-vm_costs_additional_mon.fx(i)=0;
 v71_dem_feed_clust.fix(j,kli,kall)=0;

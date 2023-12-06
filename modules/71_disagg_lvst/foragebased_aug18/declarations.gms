@@ -9,6 +9,7 @@ positive variables
  v71_prod_rum(j,kli_rum,kforage)                   Production of forage fed ruminants within a cell (mio. tDM per yr)
  v71_additional_mon(j, kli_mon)                    Additional punished production of monogastric livestock (mio. tDM per yr)
  vm_costs_additional_mon(i)                        Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ v71_dem_feed_clust(j,kli,kall)                     Cluster-level feed demand including byproducts (mio. tDM per yr)
 ;
 
 variables
@@ -16,11 +17,14 @@ variables
 ;
 
 equations
- q71_feed_rum_liv(j,kforage)                       Production constraint for ruminant livestock products (mio. tDM per yr)
+ q71_dem_feed_rum_forage(j,kli_rum,kforage)        Cluster-level feed demand for ruminates eating forage-based feed stuff (mio. tDM per yr)        
+ q71_feed_to_prod_rum(j,kforage)                   Production constraint for ruminant livestock products (mio. tDM per yr)
  q71_balanceflow_constraint(j,kli_rum,kforage)     Nonlinear balanceflow constraint for cellular forage feed products (mio. tDM per yr)
  q71_sum_rum_liv(j,kli_rum)                        Total production of forage fed ruminants (mio. tDM per yr)
  q71_prod_mon_liv(j,kli_mon)                       Production constraint for monogastric livestock products (mio. tDM per yr)
  q71_punishment_mon(i)                             Punishment for additional monogastrics (mio. USD05MER per yr)
+ q71_dem_feed_rum_forage(j,kli_mon,kall)        Cluster-level feed demand for monogastrics  eating feed stuff (mio. tDM per yr)
+ q71_dem_feed_rum_forage(j,kli_rum,knforage)        Cluster-level feed demand for ruminates eating non-forage-based feed stuff (mio. tDM per yr)
 ;
 
 parameters

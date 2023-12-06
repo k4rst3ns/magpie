@@ -7,6 +7,7 @@
 
 positive variables
   vm_costs_additional_mon(i)                       Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+  v71_dem_feed_clust(j,kli,kall)                     Cluster-level feed demand including byproducts (mio. tDM per yr)
 ;
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
