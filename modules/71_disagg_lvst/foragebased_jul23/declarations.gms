@@ -23,6 +23,7 @@ equations
  q71_feed_balanceflow_lp(i)                        Linear balanceflow constraint for forage feed products (mio. tDM per yr)
  q71_prod_mon_liv(j,kli_mon)                       Production constraint for monogastric livestock products (mio. tDM per yr)
  q71_punishment_mon(i)                             Punishment for additional monogastrics (mio. USD05MER per yr)
+ q71_dem_feed_clust(i, kli, kall)                  Allows for distribution of feed demand to cellular level (mio. tDM)
 ;
 
 parameters
@@ -40,6 +41,7 @@ parameters
  ov71_feed_forage(t,j,kforage,type)      Production of forage within a cell (mio. tDM per yr)
  ov71_additional_mon(t,j,kli_mon,type)   Additional punished production of monogastric livestock (mio. tDM per yr)
  ov_costs_additional_mon(t,i,type)       Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ ov71_dem_feed_clust(t,j,kli,kall,type)  Cluster-level feed demand including byproducts (mio. tDM per yr)
  ov71_feed_balanceflow(t,j,kforage,type) Cellular feed balanceflow for forage feed for ruminant livestock (mio. tDM per yr)
  oq71_feed_rum_liv(t,j,kforage,type)     Production constraint for ruminant livestock products (mio. tDM per yr)
  oq71_feed_forage(t,j,type)              Forage feed constraint (mio. tDM per yr)
@@ -47,5 +49,6 @@ parameters
  oq71_feed_balanceflow_lp(t,i,type)      Linear balanceflow constraint for forage feed products (mio. tDM per yr)
  oq71_prod_mon_liv(t,j,kli_mon,type)     Production constraint for monogastric livestock products (mio. tDM per yr)
  oq71_punishment_mon(t,i,type)           Punishment for additional monogastrics (mio. USD05MER per yr)
+ oq71_dem_feed_clust(t,i,kli,kall,type)  Allows for distribution of feed demand to cellular level (mio. tDM)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

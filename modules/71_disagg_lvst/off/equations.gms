@@ -5,4 +5,11 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-v71_dem_feed_clust.fix(j,kli,kall)=0;
+*' @equations
+
+*' Amount produced at cellular level feed demand  is flexible, can be distributed as it wants 
+
+ q71_dem_feed_clust(i2, kli, kall) ..
+                  sum(cell(i2,j2), v71_dem_feed_clust(j2, kli, kall)) =e=
+                  vm_dem_feed(i2, kli, kall) ;
+

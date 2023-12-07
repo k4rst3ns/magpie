@@ -41,11 +41,15 @@ parameters
  ov71_prod_rum(t,j,kli_rum,kforage,type)               Production of forage fed ruminants within a cell (mio. tDM per yr)
  ov71_additional_mon(t,j,kli_mon,type)                 Additional punished production of monogastric livestock (mio. tDM per yr)
  ov_costs_additional_mon(t,i,type)                     Punishment cost for additionally transported monogastric livst_egg (mio. USD05MER per yr)
+ ov71_dem_feed_clust(t,j,kli,kall,type)                Cluster-level feed demand including byproducts (mio. tDM per yr)
  ov71_feed_balanceflow_share(t,j,kli_rum,kforage,type) Cellular feed balanceflow multiplier for forage feed for ruminant livestock (1)
- oq71_feed_rum_liv(t,j,kforage,type)                   Production constraint for ruminant livestock products (mio. tDM per yr)
+ oq71_dem_feed_rum_forage(t,j,kli_rum,kforage,type)    Cluster-level feed demand for ruminates eating forage-based feed stuff (mio. tDM per yr)        
+ oq71_feed_to_prod_rum(t,j,kforage,type)               Production constraint for ruminant livestock products (mio. tDM per yr)
  oq71_balanceflow_constraint(t,j,kli_rum,kforage,type) Nonlinear balanceflow constraint for cellular forage feed products (mio. tDM per yr)
  oq71_sum_rum_liv(t,j,kli_rum,type)                    Total production of forage fed ruminants (mio. tDM per yr)
  oq71_prod_mon_liv(t,j,kli_mon,type)                   Production constraint for monogastric livestock products (mio. tDM per yr)
  oq71_punishment_mon(t,i,type)                         Punishment for additional monogastrics (mio. USD05MER per yr)
+ oq71_dem_feed_rum_forage(t,j,kli_mon,kall,type)       Cluster-level feed demand for monogastrics  eating feed stuff (mio. tDM per yr)
+ oq71_dem_feed_rum_forage(t,j,kli_rum,knforage,type)   Cluster-level feed demand for ruminates eating non-forage-based feed stuff (mio. tDM per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

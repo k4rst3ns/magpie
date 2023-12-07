@@ -70,3 +70,9 @@ q71_punishment_mon(i2) ..
 
 *' Note that the punishment costs are based on transport costs and scaled up by one order of magnitude
 *' of the average transport costs to account for additional transport between clusters.
+
+*' Amount produced at cellular level feed demand  is flexible, can be distributed as it wants 
+ q71_dem_feed_clust(i2, kli, kall) ..
+                  sum(cell(i2,j2), v71_dem_feed_clust(j2, kli, kall)) =e=
+                  vm_dem_feed(i2, kli, kall) ;
+

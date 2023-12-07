@@ -30,10 +30,10 @@ q71_feed_to_prod_rum(j2, kforage) ..
 *' the FAO inventory of national feed use. On cellular level we distribute the regional balance flow as 
 *' a multiplicative correction term (introduced in `q71_feed_rum_liv`) that is given by 
 
-q71_balanceflow_constraint(j2, kli_rum, kforage) ..
-             v71_feed_balanceflow_share(j2, kli_rum, kforage) =e=
-             1 + sum((ct, cell(i2,j2)), fm_feed_balanceflow(ct, i2, kli_rum, kforage) / 
-                     (im_feed_baskets(ct, i2, kli_rum, kforage) * vm_prod_reg(i2, kli_rum) + 10**(-10)))
+q71_balanceflow_constraint(j2, kli, kall) ..
+             v71_feed_balanceflow_share(j2, kli, kall) =e=
+             1 + sum((ct, cell(i2,j2)), fm_feed_balanceflow(ct, i2, kli, kall) / 
+                     (im_feed_baskets(ct, i2, kli, kall) * vm_prod_reg(i2, kli) + 10**(-10)))
              ;
 
 *' The total cellular ruminant production is then given by
@@ -66,8 +66,10 @@ q71_punishment_mon(i2) ..
 
 q71_dem_feed_mon(j2, kli_mon, kall) ..
                   v71_dem_feed_clust(j2, kli_mon, kall) =e= 
-                  vm_prod(j2, kli_mon) * sum(cell(i2,j2), im_feed_baskets(ct, i2, kli_mon, kall)); *** feedbalance flow?? 
+                  vm_prod(j2, kli_mon) * sum(cell(i2,j2), im_feed_baskets(ct, i2, kli_mon, kall)) *
+                     v71_feed_balanceflow_share(j2, kli_mon, kall);
    
 q71_dem_feed_rum_nforage(j2, kli_rum, knforage) ..
                   v71_dem_feed_clust(j2, kli_rum, knforage) =e= 
-                  vm_prod(j2, kli_rum) * sum(cell(i2,j2), im_feed_baskets(ct, i2, kli_rum, knforage)); *** feedbalance flow??  
+                  vm_prod(j2, kli_rum) * sum(cell(i2,j2), im_feed_baskets(ct, i2, kli_rum, knforage)) *
+                    v71_feed_balanceflow_share(j2, kli_rum, knforage);

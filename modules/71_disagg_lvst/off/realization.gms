@@ -11,6 +11,7 @@
 
 *####################### R SECTION START (PHASES) ##############################
 $Ifi "%phase%" == "declarations" $include "./modules/71_disagg_lvst/off/declarations.gms"
+$Ifi "%phase%" == "equations" $include "./modules/71_disagg_lvst/off/equations.gms"
 $Ifi "%phase%" == "presolve" $include "./modules/71_disagg_lvst/off/presolve.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/71_disagg_lvst/off/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################
