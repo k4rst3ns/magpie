@@ -1,4 +1,3 @@
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -8,28 +7,87 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### changed
+- **41_area_equipped_for_irrigation** updated (non-default) AEI data (from Mehta2022 to Mehta2024)
+- **22_land_conservation and default.cfg** Added options for baseline protection
+- **15_food, default.cfg and scenario_config.csv** changed fader setup and introduced new switches for specifying food substitution scenarios and exogeneous food intake scenarios
+- **70_livestock** default.cfg and scenario_config.csv** changed fader setup and introduced new switches for specifying feed substitution with SCP scenarios
+- **default.cfg** update additional data to rev4.50
+- **default.cfg** changed default realization for 44_biodiversity to new realization `bii_target_apr24`
+- **80_optimization** Simplifed cycling through CONOPT4, CONOPT4 with OPTFILE, CONOPT4 without preprocessing and CONOPT3.
+- **scripts** start/test_runs.R added 2 more test runs from FSEC
+- **32_forestry** revision and simplification of forestry implementation, renamed realization from `dynamic_feb21` to `dynamic_may24`.
+- **32_forestry** renamed interface `pm_demand_ext` to `pm_demand_forestry`
+- **default.cfg** Forestry sector included by default by using the `ForestryEndo` settings from `scenario_config.csv`: `s32_initial_distribution = 1`, `s32_demand_establishment = 1`, `s32_hvarea = 2`, `s35_secdf_distribution = 2`, `s35_hvarea = 2`, `s73_timber_demand_switch = 1`
+- **14_yields** revised timber yield calculations
+- **35_natveg**  `vm_land(j2,"forestry")` included in NPI/NDC constraint `q35_min_forest`
+- **35_natveg** replaced the realisation `dynamic_feb21` with realisation `pot_forest_may24`. The new realisation provides additional information on the potential forest area, which is now used to constrain forest and forestry expansion and recovery. The remaining area for forest establishment is provided to the forestry module via the new interface parameter `pcm_max_forest_est`.
+- **52_carbon** Separate carbon densities for forest and other land. Before there was only a single carbon density for natural vegetation land.
+- **scripts** modified agmip_merge_report to use piamInterfaces
+
+### added
+- **default.cfg** added cropland growth constraint `cfg$gms$s30_annual_max_growth`
+- **default.cfg** added technical cost for missing BII increase `cfg$gms$s44_cost_bii_missing`
+- **default.cfg** added settings for new price-driven bioenergy realization `1st2ndgen_priced_feb24`: `cfg$gms$s60_2ndgen_bioenergy_dem_min_post_fix`, `cfg$gms$c60_bioenergy_subsidy_fix_SSP2`, `s60_bioenergy_gj_price_1st`,
+`s60_bioenergy_price_2nd`, `c60_price_implementation`
+- **core** added `coup2110`timesteps
+- **15_food** added additional sigmoid food substition scenarios `sigmoid_75pc_25_50`, `sigmoid_50pc_25_50` and `sigmoid_25pc_25_50`
+- **30_crop** added regional cropland equation `q30_crop_reg` and presolve growth constraint
+- **44_biodiversity** added new realization `bii_target_apr24`, taking into account `f44_rr_layer`
+- **60_bioenergy** added new realization `1st2ndgen_priced_feb24` to enable price-driven 2nd gen bioenergy production
+- **scripts** added automatic set writer for new bioenergy realization to `start_functions`
+- **scripts** added start scripts for the GENIE project
+- **scenario_config.csv** added preset for GENIE project
+- **default.cfg** cfg$gms$s80_secondsolve option for second solve statement with 0=off as default
+- **21_trade** Minimum trade margin for forestry products `s21_min_trade_margin_forestry`
+- **73_timber** added interface `im_timber_prod_cost`
+- **scripts** added "checkSummation" output script for consistency checking a report.mif
+- **citation** added abstract
+
+### removed
+- **scripts/output/extra** removed scripts disaggregation_cropsplit and disaggregation_transitions
+- **scripts** removed support for spam files in start_functions
+- **14_yields** removed interface `pm_timber_yield_initial`
+- **21_trade** removed interface `pm_selfsuff_ext`, removed `v21_manna_from_heaven`
+- **32_forestry** removed interface `pm_representative_rotation`
+- **73_timber** removed interfaces `pm_demand_forestry_future` and `sm_wood_density`
+- **62_material/16_demand** Removed double structure for forestry products. `pm_demand_foresty` is now used in `62_material`
+- **35_natveg** removed growing stock calculation and calibration, which is no longer needed.
+
+### fixed
+- **14_yields** fix division by zero in preloop of managementcalib_aug19
+- **extra/disaggregation** fixed bug in disaggregation of land conservation related to switch from 59k to 67k that produced erroneous outputs
+- **44_biodiversity** avoid division by zero
+- **scenario_config.csv** same revision for input files as in default.cfg
+- **scenario_fsec.csv** scenario settings
+- **start/projects/fsec.R** scenario settings
+- **80_optimization** fixed a bug in nlp_apr17; cycling through CONOPT4, CONOPT4 without preprocessing and CONOPT3 was not working
+- **58_peatland** Added balance variable to avoid random infeasibilites
+
+## [4.7.3] - 2024-04-12
+
+### changed
+- **21_trade** Revision of trade module. Replaced `cfg$gms$s21_trade_bal_damper` in favour of `cfg$gms$k_import21`, which allows for additional imports to maintain feasibility
+- **21_trade** v21_import_for_feasibility now available for all countries, not just for importers
+- **70_livestock** if `c70_fac_req_regr` is set to `reg`: use of USDA/FAO values for historic factor requirements for livestock instead of using regression values and change of calibration year from 2005 to 2010 for regional factor requirements regression
+- **config** updated FSEC scenario config for revision and included new calibration file (after cost fix in preprocessing)
 - **default.cfg** updated inputdata revision to 4.104 to have NDC scenarios included
 - **scripts** cfg$gms$s35_secdf_distribution <- 2 for FSEC
 - **scripts** modified output reporting for SEALS to account for forestry plantations
-- **config** updated FSEC scenario config for revision and included new calibration file (after cost fix in preprocessing)
-- **config** added switch for minimum timber yields
-- **21_trade** v21_import_for_feasibility now available for all coutnries, not just for importers
-- **70_livestock** if `c70_fac_req_regr` is set to `reg`: use of USDA/FAO values for historic factor requirements for livestock instead of using regression values and change of calibration year from 2005 to 2010 for regional factor requirements regression
-- **21_trade** Revision of trade module. Replaced `cfg$gms$s21_trade_bal_damper` in favour of `cfg$gms$k_import21`, which allows for additional imports to maintain feasibility
-- **scripts/calibration/landconversion_cost.R** Revised calibration approach for conversion costs for cropland. Information from all calibration time steps in combination with a lowpass filter is now used for deriving the calibration factors, which avoids the previous zickzack pattern. The previous option `cfg$damping_factor_landconversion_cost` has been removed in favor of `cfg$lowpass_filter_landconversion_cost`. 
+- **scripts/calibration/landconversion_cost.R** Revised calibration approach for conversion costs for cropland. Information from all calibration time steps in combination with a lowpass filter is now used for deriving the calibration factors, which avoids the previous zickzack pattern. The previous option `cfg$damping_factor_landconversion_cost` has been removed in favor of `cfg$lowpass_filter_landconversion_cost`.
 
 ### added
 - **14_yields** added minimum threshold for wood yields. Below this threshold, wood yields are set to zero.
+- **config** added switch for minimum timber yields
 - **56_ghg_policy** added NDC scenarios
-- **60_bioenergy** added NDC scenarios 
-
-### removed
--
+- **60_bioenergy** added NDC scenarios
+- **scripts** start script for EAT2p0 Deep Dive project
 
 ### fixed
+- **15_food** Small number rather 0 in condition checking calorie balancing
+- **34_urban** `static` realization was not working because `vm_carbon_stock` was referenced without the set `stockType`
 - **52_carbon** removing jump of carbon content into fully grown forest when a forest changes from second-last age class to last age-class.
+- **58_peatland** Equation `q58_scalingFactorExp` revised to avoid division by zero.
 - **80_optimization** duplicated solve statement in all instances to avoid non-matchting left- and right-hand sides of equations
-- **58_peatland** Equation `q58_scalingFactorExp` revised to avoid division by zero. 
 
 
 ## [4.7.2] - 2024-04-02
@@ -872,7 +930,8 @@ This release version is focussed on consistency between the MAgPIE setup and the
 First open source release of the framework. See [MAgPIE 4.0 paper](https://doi.org/10.5194/gmd-12-1299-2019) for more information.
 
 
-[Unreleased]: https://github.com/magpiemodel/magpie/compare/v4.7.2...develop
+[Unreleased]: https://github.com/magpiemodel/magpie/compare/v4.7.3...develop
+[4.7.3]: https://github.com/magpiemodel/magpie/compare/v4.7.2...v4.7.3
 [4.7.2]: https://github.com/magpiemodel/magpie/compare/v4.7.1...v4.7.2
 [4.7.1]: https://github.com/magpiemodel/magpie/compare/v4.7.0...v4.7.1
 [4.7.0]: https://github.com/magpiemodel/magpie/compare/v4.6.11...v4.7.0

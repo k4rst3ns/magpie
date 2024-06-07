@@ -117,7 +117,7 @@ if (s15_run_diet_postprocessing = 1,
   p15_kcal_pc_iso(t,iso,kfo_rd) = p15_kcal_pc_iso(t,iso,kfo_rd) * i15_rumdairy_scp_fadeout(t,iso);
 
 
-* Conditional reduction of livestock products (without fish) depending on s15_kcal_pc_livestock_intake_target.
+* Conditional reduction of livestock products (without fish) depending on s15_kcal_pc_livestock_supply_target.
 * Optional substitution with plant-based products depending on s15_livescen_target_subst.
   p15_kcal_pc_iso_orig(t,iso,kfo) = p15_kcal_pc_iso(t,iso,kfo);
   p15_kcal_pc_iso_livestock_orig(t,iso) = sum(kfo_lp,p15_kcal_pc_iso(t,iso,kfo_lp));
@@ -131,7 +131,7 @@ if (s15_run_diet_postprocessing = 1,
                                  p15_kcal_pc_iso(t,iso,kfo_pp)
                                  /p15_kcal_pc_iso_plant_orig(t,iso);
 
-  p15_kcal_pc_livestock_supply_target(iso) = s15_kcal_pc_livestock_intake_target * f15_overcons_FAOwaste(iso,"livst_rum");
+  p15_kcal_pc_livestock_supply_target(iso) = s15_kcal_pc_livestock_supply_target * f15_overcons_FAOwaste(iso,"livst_rum");
 
   loop(iso$(p15_kcal_pc_iso_livestock_orig(t,iso) > p15_kcal_pc_livestock_supply_target(iso)),
   p15_kcal_pc_iso(t,iso,kfo_lp) = p15_livestock_kcal_structure_orig(t,iso,kfo_lp)
@@ -388,7 +388,7 @@ if ((s15_exo_diet = 1 or s15_exo_diet = 2),
              i15_intake_scen_target(t,iso) * p15_intake_detailed_scen_target(t,iso,EAT_nonstaples_old) / sum(EAT_nonstaples2_old, p15_intake_detailed_scen_target(t,iso,EAT_nonstaples2_old))
                     ;
 
-    if (smin((iso,kfo), p15_intake_detailed_scen_target(t,iso,kfo)) < 0,
+    if (smin((iso,kfo), p15_intake_detailed_scen_target(t,iso,kfo)) < (-1e-10),
        abort "The parameter p15_intake_detailed_scen_target became negative after calorie balancing.";
     );
 
@@ -616,10 +616,14 @@ elseif s15_exo_diet = 3,
          i15_intake_scen_target(t,iso) * p15_intake_detailed_scen_target(t,iso,EAT_nonstaples) /
          sum(EAT_nonstaples2, p15_intake_detailed_scen_target(t,iso,EAT_nonstaples2));
 
-  if (smin((iso,kfo), p15_intake_detailed_scen_target(t,iso,kfo)) < 0,
+  if (smin((iso,kfo), p15_intake_detailed_scen_target(t,iso,kfo)) < (-1e-10),
      display p15_intake_detailed_scen_target;
      abort "The parameter p15_intake_detailed_scen_target became negative after calorie balancing.";
      );
+
+* Correction of very small values
+  p15_intake_detailed_scen_target(t,iso,kfo)$(p15_intake_detailed_scen_target(t,iso,kfo) < 0) = 0;
+
 
 );
 *** End of MAgPIE-specific realization of the EAT Lancet diet
