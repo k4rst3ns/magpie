@@ -9,7 +9,6 @@
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
  ov_fallow(t,j,"marginal")                      = vm_fallow.m(j);
  ov_area(t,j,kcr,w,"marginal")                  = vm_area.m(j,kcr,w);
- ov_prod_kcr_w(t,j,kcr,w,"marginal")            = vm_prod_kcr_w.m(j,kcr,w);
  ov30_crop_area(t,i,"marginal")                 = v30_crop_area.m(i);
  ov_rotation_penalty(t,i,"marginal")            = vm_rotation_penalty.m(i);
  oq30_cropland(t,j,"marginal")                  = q30_cropland.m(j);
@@ -26,7 +25,6 @@
  oq30_land_snv_trans(t,j,"marginal")            = q30_land_snv_trans.m(j);
  ov_fallow(t,j,"level")                         = vm_fallow.l(j);
  ov_area(t,j,kcr,w,"level")                     = vm_area.l(j,kcr,w);
- ov_prod_kcr_w(t,j,kcr,w,"level")               = vm_prod_kcr_w.l(j,kcr,w);
  ov30_crop_area(t,i,"level")                    = v30_crop_area.l(i);
  ov_rotation_penalty(t,i,"level")               = vm_rotation_penalty.l(i);
  oq30_cropland(t,j,"level")                     = q30_cropland.l(j);
@@ -43,7 +41,6 @@
  oq30_land_snv_trans(t,j,"level")               = q30_land_snv_trans.l(j);
  ov_fallow(t,j,"upper")                         = vm_fallow.up(j);
  ov_area(t,j,kcr,w,"upper")                     = vm_area.up(j,kcr,w);
- ov_prod_kcr_w(t,j,kcr,w,"upper")               = vm_prod_kcr_w.up(j,kcr,w);
  ov30_crop_area(t,i,"upper")                    = v30_crop_area.up(i);
  ov_rotation_penalty(t,i,"upper")               = vm_rotation_penalty.up(i);
  oq30_cropland(t,j,"upper")                     = q30_cropland.up(j);
@@ -60,7 +57,6 @@
  oq30_land_snv_trans(t,j,"upper")               = q30_land_snv_trans.up(j);
  ov_fallow(t,j,"lower")                         = vm_fallow.lo(j);
  ov_area(t,j,kcr,w,"lower")                     = vm_area.lo(j,kcr,w);
- ov_prod_kcr_w(t,j,kcr,w,"lower")               = vm_prod_kcr_w.lo(j,kcr,w);
  ov30_crop_area(t,i,"lower")                    = v30_crop_area.lo(i);
  ov_rotation_penalty(t,i,"lower")               = vm_rotation_penalty.lo(i);
  oq30_cropland(t,j,"lower")                     = q30_cropland.lo(j);

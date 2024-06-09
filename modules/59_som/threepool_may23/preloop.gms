@@ -18,16 +18,6 @@ vm_carbon_stock.l(j, land, "soilc", stockType) =
 
 p59_land_before(j,land) = pm_land_start(j,land);
 
-* Initializating of SOC pools in the different land types
-p59_topsoilc_density_pre("y1995", i, land, sPools59) =
-  sum(lutypes59_land(land, lutypes59), 
-    f59_topsoilc_actualstate(i, sPools59, lutypes59)  / 
-      sum((cell(i,j), lutypes59_land2(land2,lutypes59)), pm_land_start(j, land2)));
-
-p59_topsoilc_actualstate(i, land, sPools59) =
-  p59_topsoilc_density_pre("y1995", i, land, sPools59) * 
-    sum(cell(i,j), pm_land_start(j, land));
-
 *****************************
 *** parameter dummies     ***
 *****************************
@@ -35,7 +25,7 @@ p59_topsoilc_actualstate(i, land, sPools59) =
 i59_cinput_multiplier_residue(i,sPools59,kcr) = 
   sum(kcr2$(sameas(kcr,kcr2)), 
     sum(kcr_tillage59(kcr2,tillage59), 
-      f59_cinput_multiplier_residue(i,sPools59,kcr,tillage59))));
+      f59_cinput_multiplier_residue(i,sPools59,kcr,tillage59)));
 
 i59_topsoilc_decay_max1(t, i, sPools59, w, tillage59) = 
   min(1, f59_topsoilc_decay(t, i, sPools59, w, tillage59)); 

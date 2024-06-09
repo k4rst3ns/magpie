@@ -20,10 +20,11 @@ if((ord(t) = 1),
 
   p59_topsoilc_density_pre("y1995", i, land, sPools59) =
     sum(lutypes59_land(land, lutypes59),
-      f59_topsoilc_actualstate(i, "actualstate", sPools59, lutypes59)  /
+      f59_topsoilc_actualstate(i, sPools59, lutypes59)  /
         sum((cell(i,j), lutypes59_land2(land2,lutypes59)), pm_land_start(j, land2)));
 
-  p59_topsoilc_density_post(t, i, land, sPools59) = 0
+  p59_topsoilc_density_post(t, i, land, sPools59) = 0;
+  p59_topsoilc_actualstate(i, land, sPools59) = 0;
 
 else
 

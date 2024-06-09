@@ -147,44 +147,44 @@ $title magpie
 *'  * Always try to access model outputs through the corresponding magpie package instead of accessing them directly with readGDX. It cannot be guaranteed that your script will work in the future if you do otherwise (as only the corresponding magpie package will be continuously adapted to changes in the GAMS code).
 
 *##################### R SECTION START (VERSION INFO) ##########################
-*
-* Used data set: rev4.106_h12_magpie.tgz
-* md5sum: NA
-* Repository: scp://cluster.pik-potsdam.de/p/projects/rd3mod/inputdata/output
-*
-* Used data set: rev4.106_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
-* md5sum: NA
-* Repository: scp://cluster.pik-potsdam.de/p/projects/rd3mod/inputdata/output
-*
-* Used data set: rev4.106_h12_validation.tgz
-* md5sum: NA
-* Repository: scp://cluster.pik-potsdam.de/p/projects/rd3mod/inputdata/output
-*
+* 
+* Used data set: rev4.108+newSOC_h12_magpie.tgz
+* md5sum: 96870d360f3aae8fea63eed13958ec84
+* Repository: /p/projects/rd3mod/inputdata/output
+* 
+* Used data set: rev4.108+newSOC_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
+* md5sum: 7ac39ba55e8a067c035ee6c61598cbb6
+* Repository: /p/projects/rd3mod/inputdata/output
+* 
+* Used data set: rev4.108+newSOC_h12_validation.tgz
+* md5sum: db839687a6ff470b0f5d5b995d5b39be
+* Repository: /p/projects/rd3mod/inputdata/output
+* 
 * Used data set: additional_data_rev4.50.tgz
-* md5sum: NA
-* Repository: scp://cluster.pik-potsdam.de/p/projects/landuse/data/input/archive
-*
+* md5sum: d29e253bd32fce7d3b9217642a5978d5
+* Repository: /p/projects/landuse/data/input/archive
+* 
 * Used data set: calibration_H12_26Mar24.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
-*
+* md5sum: d295e7ff0c65d97c1e0b84c440d0056b
+* Repository: /p/projects/rd3mod/mirror/rse.pik-potsdam.de/data/magpie/public
+* 
 * Low resolution: c200
 * High resolution: 0.5
-*
+* 
 * Total number of cells: 200
-*
+* 
 * Number of cells per region:
 *   CAZ  CHA  EUR  IND  JPN  LAM  MEA  NEU  OAS  REF  SSA  USA
 *    14   23   10    7    4   26   21    9   16   23   32   15
-*
+* 
 * Regionscode: 62eff8f7
-*
-* Regions data revision: 4.106
-*
+* 
+* Regions data revision: 4.108
+* 
 * lpj2magpie settings:
 * * LPJmL data: MRI-ESM2-0:ssp370
-* * Revision: 4.106
-*
+* * Revision: 4.108
+* 
 * aggregation settings:
 * * Input resolution: 0.5
 * * Output resolution: c200
@@ -193,10 +193,10 @@ $title magpie
 *   CAZ  CHA  EUR  IND  JPN  LAM  MEA  NEU  OAS  REF  SSA  USA
 *    14   23   10    7    4   26   21    9   16   23   32   15
 * * Call: withCallingHandlers(expr, message = messageHandler, warning = warningHandler,     error = errorHandler)
-*
-*
-* Last modification (input data): Thu May 23 11:16:51 2024
-*
+* 
+* 
+* Last modification (input data): Mon Jun 10 00:10:47 2024
+* 
 *###################### R SECTION END (VERSION INFO) ###########################
 
 $offupper
@@ -221,7 +221,7 @@ $offlisting
 
 $setglobal c_timesteps  coup2100
 $setglobal c_past  till_2010
-$setglobal c_title  default
+$setglobal c_title  default3p_disAgg_old
 
 scalars
 s_use_gdx   use of gdx files                                       / 0 /
@@ -278,13 +278,13 @@ $setglobal awms  ipcc2006_aug16
 $setglobal ghg_policy  price_aug22
 $setglobal maccs  on_aug22
 $setglobal peatland  v2
-$setglobal som  static_jan19
+$setglobal som  threepool_may23
 
 $setglobal bioenergy  1stgen_priced_dec18
 $setglobal material  exo_flexreg_apr16
 $setglobal livestock  fbask_jan16
 
-$setglobal disagg_lvst  foragebased_jul23
+$setglobal disagg_lvst  foragebased_aug18
 
 $setglobal timber  default
 
