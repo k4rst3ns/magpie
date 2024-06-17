@@ -68,3 +68,15 @@ $ondelim
 $include "./modules/59_som/threepool_may23/input/f59_topsoilc_actualstate.cs3"
 $offdelim
 ;
+
+table f59_topsoilc_naturalstate(i,sPools59,lutypes59) LPJ natural topsoil carbon for different pools and lu types(million tC)
+$ondelim
+$include "./modules/59_som/threepool_may23/input/f59_topsoilc_naturalstate.cs3"
+$offdelim
+;
+
+table f59_land_y1990(t_pre59,i,land) land use in y1990 (million ha)
+$ondelim
+$include "./modules/59_som/threepool_may23/input/f59_land_y1990.cs3"
+$offdelim
+;

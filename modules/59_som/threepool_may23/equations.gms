@@ -60,9 +60,9 @@ q59_previousstate_term_noncrop(i2, noncropland59, sPools59) ..
 q59_actualstate_crop(i2, sPools59) ..
                v59_topsoilc_actualstate(i2, "crop", sPools59)
                =e= sum((tillage59, w), v59_topsoilc_crop_previousstate(i2, sPools59, w, tillage59) * 
-                        (1 - sum(ct, i59_topsoilc_decay_max1(ct, i2, sPools59, w, tillage59)))) +
+                        (1 - pc59_topsoilc_decay_timestep(i2, sPools59, w, tillage59))) +
                    sum((tillage59, w), v59_topsoilc_crop_steadystate(i2, sPools59, w, tillage59) *
-                        sum(ct, i59_topsoilc_decay_max1(ct, i2, sPools59, w, tillage59)))
+                        pc59_topsoilc_decay_timestep(i2, sPools59, w, tillage59))
                ;
 
 *' for cropland and via
@@ -70,9 +70,9 @@ q59_actualstate_crop(i2, sPools59) ..
 q59_actualstate_noncrop(i2, noncropland59, sPools59) ..
                v59_topsoilc_actualstate(i2, noncropland59, sPools59)
                =e= v59_topsoilc_noncrop_previousstate(i2, noncropland59, sPools59) *
-                        (1 - sum(ct, i59_topsoilc_decay_max1(ct, i2, sPools59, "rainfed", "notill"))) +
+                        (1 - pc59_topsoilc_decay_timestep(i2, sPools59, "rainfed", "notill")) +
                    v59_topsoilc_noncrop_steadystate(i2, noncropland59, sPools59) *
-                        sum(ct, i59_topsoilc_decay_max1(ct, i2, sPools59, "rainfed", "notill"))
+                        pc59_topsoilc_decay_timestep(i2, sPools59, "rainfed", "notill")
               ;
 
 *' for non-cropland.
@@ -93,10 +93,10 @@ q59_carbon_soil(i2, land, stockType) ..
 
 q59_nr_som(i2) ..
              vm_nr_som(i2)
-               =e= 1/m_timestep_length * 1/15 * sum((tillage59, w, sPools59), 
+               =e= 1/m_timestep_length_forestry * 1/15 * sum((tillage59, w, sPools59), 
                         (v59_topsoilc_crop_previousstate(i2, sPools59, w, tillage59) -
                          v59_topsoilc_crop_steadystate(i2, sPools59, w, tillage59))
-                        * sum(ct, i59_topsoilc_decay_max1(ct, i2, sPools59, w, tillage59)))
+                        * pc59_topsoilc_decay_timestep(i2, sPools59, w, tillage59))
               ;
 
 *' with the carbon to nitrogen ratio of soils assumed to be 15:1.

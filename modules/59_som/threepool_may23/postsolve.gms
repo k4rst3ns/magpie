@@ -10,6 +10,23 @@ p59_topsoilc_density_post(t, i, land, sPools59)$(sum(cell(i,j), pcm_land(j,land)
   p59_topsoilc_actualstate(i, land, sPools59) / sum(cell(i,j), pcm_land(j,land));
 p59_land_before(j,land) = vm_land.l(j,land);
 
+**** natural stock calculations
+
+pc59_topsoilc_natural_steadystate(i, land, sPools59) =
+     f59_litter_input(t, i, sPools59) /
+       f59_topsoilc_decay(t, i, sPools59, "rainfed", "notill") *
+         sum(cell(i,j), vm_land.l(j, land));
+
+p59_topsoilc_naturalstate(t, i, land, sPools59)  = 
+     pc59_topsoilc_naturalstate_previous(i, land, sPools59) *
+       (1 - pc59_topsoilc_decay_timestep(i, sPools59, "rainfed", "notill")) +
+         pc59_topsoilc_natural_steadystate(i, land, sPools59) *
+           pc59_topsoilc_decay_timestep(i, sPools59, "rainfed", "notill");
+
+
+pc59_topsoilc_naturalstate_previous(i, land, sPools59) =
+  p59_topsoilc_naturalstate(t, i, land, sPools59);
+
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
  ov59_topsoilc_crop_steadystate(t,i,sPools59,w,tillage59,"marginal")        = v59_topsoilc_crop_steadystate.m(i,sPools59,w,tillage59);
  ov59_topsoilc_noncrop_steadystate(t,i,noncropland59,sPools59,"marginal")   = v59_topsoilc_noncrop_steadystate.m(i,noncropland59,sPools59);

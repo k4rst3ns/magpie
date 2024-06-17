@@ -16,16 +16,28 @@
 * other land to secondary forest. See current version of 35_natveg to check consistency.
 * The helper parameter `p59_topsoilc_actualstate` is used  to update `p59_topsoilc_density_pre`
 
+i59_topsoilc_decay_max1(t, i, sPools59, w, tillage59) =
+  min(1, f59_topsoilc_decay(t, i, sPools59, w, tillage59));
+
+pc59_topsoilc_decay_timestep(i, sPools59, w, tillage59) = 
+  1 - (1 - i59_topsoilc_decay_max1(t, i, sPools59, w, tillage59)) ** m_yeardiff_forestry(t);
+
 if((ord(t) = 1),
 
   p59_topsoilc_density_pre("y1995", i, land, sPools59) =
     sum(lutypes59_land(land, lutypes59),
       f59_topsoilc_actualstate(i, sPools59, lutypes59)  /
-        sum((cell(i,j), lutypes59_land2(land2,lutypes59)), pm_land_start(j, land2)));
+        sum(lutypes59_land2(land2,lutypes59), f59_land_y1990("y1990", i, land2)));
 
   p59_topsoilc_density_post(t, i, land, sPools59) = 0;
   p59_topsoilc_actualstate(i, land, sPools59) = 0;
 
+  pc59_topsoilc_naturalstate_previous(i, land, sPools59) = 
+    sum(lutypes59_land(land, lutypes59),
+      f59_topsoilc_naturalstate(i, sPools59, lutypes59)  /
+        sum(lutypes59_land2(land2,lutypes59), f59_land_y1990("y1990", i, land2))) * 
+          f59_land_y1990("y1990", i, land);
+ 
 else
 
   p59_topsoilc_actualstate(i, "secdforest", sPools59) = 

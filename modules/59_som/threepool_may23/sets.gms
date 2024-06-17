@@ -7,6 +7,9 @@
 
 sets
 
+t_pre59  Year of the previous time step
+       / y1990 /
+
 sPools59 soil pools
 / active, slow, passive /
 

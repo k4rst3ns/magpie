@@ -27,5 +27,3 @@ i59_cinput_multiplier_residue(i,sPools59,kcr) =
     sum(kcr_tillage59(kcr2,tillage59), 
       f59_cinput_multiplier_residue(i,sPools59,kcr,tillage59)));
 
-i59_topsoilc_decay_max1(t, i, sPools59, w, tillage59) = 
-  min(1, f59_topsoilc_decay(t, i, sPools59, w, tillage59)); 

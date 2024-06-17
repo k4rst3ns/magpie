@@ -68,10 +68,16 @@
 *' guarantees that mass balances are not violated while a homogeneous
 *' good is extracted from heterogeneous goods.
 
- q18_translate(i2,kres,attributes)..
-                  sum((w,kres_kcr(kres,kcr)), v18_res_ag_removal(i2,kcr,w,attributes))
+ q18_translate(i2,kres) ..
+                  sum((w,kres_kcr(kres,kcr)), v18_res_ag_removal(i2,kcr,w,"dm"))
                   =e=
-                  vm_prod_reg(i2,kres) * fm_attributes(attributes,kres);
+                  vm_prod_reg(i2,kres);
+
+ q18_translate2(i2,kcr,w,attributes) ..
+                  v18_res_ag_removal(i2,kcr,w,"dm") * f18_attributes_residue_ag(attributes,kcr)
+                  =e=
+                  v18_res_ag_removal(i2,kcr,w,attributes);
+
 
 *' Amount produced at cellular level is flexible, can be distributed as it wants 
  q18_prod_res_cell(j2,kres)..

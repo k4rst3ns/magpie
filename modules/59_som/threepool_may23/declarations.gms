@@ -8,9 +8,13 @@
 parameters
           i59_cinput_multiplier_residue(i, sPools59, kcr)                 Carbon input to soil pool input multipliers (1)
           i59_topsoilc_decay_max1(t, i, sPools59, w, tillage59)           Soil decay rates for all SOC sub-pools per year cut at 1 (1)
+          pc59_topsoilc_decay_timestep(i, sPools59, w, tillage59)         Soil decay rates for all SOC sub-pools per time steps length (1)
           p59_topsoilc_density_pre(t_all, i, land, sPools59)              Soil carbon density of the upper layer per hectare before solve (tC per ha)
           p59_topsoilc_density_post(t_all, i, land, sPools59)             Soil carbon density of the upper layer per hectare after solve (tC per ha)
           p59_topsoilc_actualstate(i, land, sPools59)                     Actual soil carbon stock per land type (mio. tC)
+          p59_topsoilc_naturalstate(t_all, i, land, sPools59)             Natural soil carbon stock per land type (mio. tC)
+          pc59_topsoilc_natural_steadystate(i, land, sPools59)            Natural steady state soil carbon stpock (mio. tC)
+          pc59_topsoilc_naturalstate_previous(i, land, sPools59)          Natural state of the time step before (mio. tC)
           i59_subsoilc_density(t_all,j)                                   Subsoil carbon density of per hectare (tC per ha)
           p59_land_before(j,land)                                         Land area in previous time step (mio. ha)
 ;
