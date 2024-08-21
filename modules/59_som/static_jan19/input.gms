@@ -19,16 +19,14 @@ $setglobal c59_exo_scen  constant
 *   options:   constant  (constant from 2020)
 *              fadeout_2050  (fading out till 2050)
 
-parameters f59_topsoilc_density(t_all,j) LPJ topsoil carbon density for natural vegetation (tC per ha)
-/
+table f59_soilclayer_density(t_all,j,layer59) LPJ carbon density of top and sub soil layer for natural vegetation (tC per ha)
 $ondelim
-$include "./modules/59_som/input/lpj_carbon_topsoil.cs2b"
+$include "./modules/59_som/static_jan19/input/lpj_carbon_soillayer.cs3"
 $offdelim
-/
 ;
-$if "%c59_som_scenario%" == "nocc" f59_topsoilc_density(t_all,j) = f59_topsoilc_density("y1995",j);
-$if "%c59_som_scenario%" == "nocc_hist" f59_topsoilc_density(t_all,j)$(m_year(t_all) > sm_fix_cc) = f59_topsoilc_density(t_all,j)$(m_year(t_all) = sm_fix_cc);
-m_fillmissingyears(f59_topsoilc_density,"j");
+$if "%c59_som_scenario%" == "nocc" f59_soilclayer_density(t_all,j,layer59) = f59_soilclayer_density("y1995",j,layer59);
+$if "%c59_som_scenario%" == "nocc_hist" f59_soilclayer_density(t_all,j,layer59)$(m_year(t_all) > sm_fix_cc) = f59_soilclayer_density(t_all,j,layer59)$(m_year(t_all) = sm_fix_cc);
+m_fillmissingyears(f59_soilclayer_density,"j,layer59");
 
 parameters f59_cshare_released(j) Share of soil carbon that is released on cropland compared to natural vegetation after 20 years (1)
 /

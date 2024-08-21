@@ -17,7 +17,7 @@ vm_carbon_stock.l(j,land,"soilc","actual") = fm_carbon_density("y1995",j,land,"s
 *' @code Cropland topsoil carbon densities are calculated based on simple IPCC stock change factors
 *' (if not done in cellular preprocessing). We assume following the IPCC assumptions that cropland activities
 *' will only change the topsoil (here 30 cm) carbon density.
-i59_subsoilc_density(t_all,j) = fm_carbon_density(t_all,j,"secdforest","soilc") - f59_topsoilc_density(t_all,j);
+i59_subsoilc_density(t_all,j) = f59_soilclayer_density(t_all,j,"subsoilc");
 $ifthen "%c59_static_spatial_level%" == "cellular" i59_topsoilc_density(t_all,j) = fm_carbon_density(t_all,j,"crop","soilc") - i59_subsoilc_density(t_all,j);
-$elseif "%c59_static_spatial_level%" == "cluster"  i59_topsoilc_density(t_all,j) = f59_topsoilc_density(t_all,j) * (1- f59_cshare_released(j));
+$elseif "%c59_static_spatial_level%" == "cluster"  i59_topsoilc_density(t_all,j) = f59_soilclayer_density(t_all,j,"topsoilc") * (1- f59_cshare_released(j));
 $endif
