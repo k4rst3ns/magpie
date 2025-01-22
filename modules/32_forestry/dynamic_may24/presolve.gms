@@ -5,13 +5,6 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*define ac_est and ac_sub
-ac_est(ac) = no;
-ac_est(ac) = yes$(ord(ac) <= (m_yeardiff_forestry(t)/5));
-
-ac_sub(ac) = no;
-ac_sub(ac) = yes$(ord(ac) > (m_yeardiff_forestry(t)/5));
-
 *Reduction of ac_est is not possible.
 v32_hvarea_forestry.fx(j,ac_est) = 0;
 v32_land_reduction.fx(j,type32,ac_est) = 0;
@@ -21,11 +14,14 @@ v32_land_reduction.fx(j,type32,ac_est) = 0;
    p32_aff_pol_timestep("y1995",j) = 0;
    p32_aff_pol_timestep(t,j)$(ord(t)>1) = p32_aff_pol(t,j) - p32_aff_pol(t-1,j);
 * Suitable area (`p32_aff_pot`) for NPI/NDC afforestation
-   p32_aff_pot(t,j) = sum((kcr,w),vm_area.l(j,kcr,w) - vm_area.lo(j,kcr,w)) + (vm_land.l(j,"past") - vm_land.lo(j,"past")) - pm_land_conservation(t,j,"other","restore");
+   p32_aff_pot(t,j) = 0.95 * (sum((kcr,w),vm_area.l(j,kcr,w) - vm_area.lo(j,kcr,w))
+                        + (vm_fallow.l(j) - vm_fallow.lo(j)) 
+                        + (vm_land.l(j,"past") - vm_land.lo(j,"past")) 
+                        - pm_land_conservation(t,j,"other","restore"));
 *** NDC/NPI re/afforesation is further constrained by the remaining forest establishment potential
    p32_aff_pot(t,j)$(p32_aff_pot(t,j) > pm_max_forest_est(t,j)) = pm_max_forest_est(t,j);
 * suitable area `p32_aff_pot` can be negative, if land restoration is switched on (level smaller than lower bound), therefore set negative values to 0
-   p32_aff_pot(t,j)$(p32_aff_pot(t,j) < 0) = 0;
+   p32_aff_pot(t,j)$(p32_aff_pot(t,j) < 1e-6) = 0;
 * Limit prescribed NPI/NDC afforestation in `p32_aff_pol_timestep` if not enough suitable area (`p32_aff_pot`) for afforestation is available
    p32_aff_pol_timestep(t,j)$(p32_aff_pol_timestep(t,j) > p32_aff_pot(t,j)) = p32_aff_pot(t,j);
 ** END ndc **
@@ -37,7 +33,7 @@ v32_land_reduction.fx(j,type32,ac_est) = 0;
 if(s32_aff_plantation = 0,
  p32_carbon_density_ac(t,j,"aff",ac,ag_pools) = pm_carbon_density_secdforest_ac(t,j,ac,ag_pools);
 elseif s32_aff_plantation = 1,
- p32_carbon_density_ac(t,j,"aff",ac,ag_pools) = pm_carbon_density_plantation_ac(t,j,ac,"vegc");
+ p32_carbon_density_ac(t,j,"aff",ac,ag_pools) = pm_carbon_density_plantation_ac(t,j,ac,ag_pools);
 );
 
 *' Timber plantations carbon densities:
@@ -51,12 +47,6 @@ p32_cdr_ac(t,j,ac)$(ord(ac) > 1 AND (ord(ac)-1) <= s32_planing_horizon/5)
 = p32_carbon_density_ac(t,j,"aff",ac,"vegc") - p32_carbon_density_ac(t,j,"aff",ac-1,"vegc");
 
 * Disturbance from generic sources to managed and natural forests
-if((ord(t) = 1),
- pc32_land(j,type32,ac) = p32_land_start_ac(j,type32,ac);
-else
- pc32_land(j,type32,ac) = p32_land(t-1,j,type32,ac);
-);
-
 p32_disturbance_loss_ftype32(t,j,"aff",ac_sub) = pc32_land(j,"aff",ac_sub) * f32_forest_shock(t,"%c32_shock_scenario%") * m_timestep_length;
 pc32_land(j,"aff",ac_est) = pc32_land(j,"aff",ac_est) + sum(ac_sub,p32_disturbance_loss_ftype32(t,j,"aff",ac_sub))/card(ac_est2);
 
@@ -68,25 +58,20 @@ pc32_land(j,"aff",ac_sub) = pc32_land(j,"aff",ac_sub) - p32_disturbance_loss_fty
 s32_shift = m_yeardiff_forestry(t)/5;
 *' @stop
 
-*' Shifting of age-classes in land.
+*' Shifting of age-classes
 *` @code
-if((ord(t)=1),
-p32_land(t,j,type32,ac)$(ord(ac) > s32_shift) = p32_land_start_ac(j,type32,ac-s32_shift);
-p32_land(t,j,type32,"acx") = p32_land(t,j,type32,"acx") + sum(ac$(ord(ac) > card(ac)-s32_shift), p32_land_start_ac(j,type32,ac));
-else
 * Example: ac10 in t = ac5 (ac10-1) in t-1 for a 5 yr time step (s32_shift = 1)
 p32_land(t,j,type32,ac)$(ord(ac) > s32_shift) = pc32_land(j,type32,ac-s32_shift);
 * Account for cases at the end of the age class set (s32_shift > 1) which are not shifted by the above calculation
 p32_land(t,j,type32,"acx") = p32_land(t,j,type32,"acx") + sum(ac$(ord(ac) > card(ac)-s32_shift), pc32_land(j,type32,ac));
-);
+
 * set ac_est to zero
 p32_land(t,j,type32,ac_est) = 0;
 *' @stop
 
 ** Calculate v32_land.l
 v32_land.l(j,type32,ac) = p32_land(t,j,type32,ac);
-pc32_land(j,type32,ac) = v32_land.l(j,type32,ac);
-p32_land_before(t,j,type32,ac) = p32_land(t,j,type32,ac);
+pc32_land(j,type32,ac) = p32_land(t,j,type32,ac);
 vm_land.l(j,"forestry") = sum((type32,ac), v32_land.l(j,type32,ac));
 pcm_land(j,"forestry") = sum((type32,ac), v32_land.l(j,type32,ac));
 pcm_land_forestry(j,type32) =  sum(ac, v32_land.l(j,type32,ac));
@@ -134,6 +119,13 @@ v32_land.l(j,"plant",ac_est) = 0.001;
 v32_land.fx(j,"ndc",ac_sub) = pc32_land(j,"ndc",ac_sub);
 v32_land.lo(j,"ndc",ac_est) = 0;
 v32_land.up(j,"ndc",ac_est) = Inf;
+
+* release all bounds in case of NPI / NDC reversal and set recurring costs to zero
+if (m_year(t) >= s32_npi_ndc_reversal,
+  v32_land.lo(j,"ndc",ac) = 0;
+  v32_land.up(j,"ndc",ac) = Inf;
+  i32_recurring_cost("ndc") = 0;
+);
 
 ** fix c price induced afforestation based on s32_planing_horizon, fixed only until end of s32_planing_horizon, ac_est is free
 if(s32_aff_prot = 0,
@@ -197,5 +189,18 @@ p32_future_to_current_demand_ratio(t,i)$(sum(kforestry, pm_demand_forestry(t,i,k
 pm_land_conservation(t,j,"secdforest","restore")$(pm_land_conservation(t,j,"secdforest","restore") > sum(ac, p32_land(t,j,"ndc",ac) + v32_land.lo(j,"plant",ac) + p32_land(t,j,"aff",ac))+ p32_aff_pol_timestep(t,j))
         = pm_land_conservation(t,j,"secdforest","restore") - (sum(ac, p32_land(t,j,"ndc",ac) + p32_land(t,j,"aff",ac) + v32_land.lo(j,"plant",ac)) + p32_aff_pol_timestep(t,j));
 pm_land_conservation(t,j,"secdforest","restore")$(pm_land_conservation(t,j,"secdforest","restore") <= sum(ac, p32_land(t,j,"ndc",ac) + p32_land(t,j,"aff",ac) + v32_land.lo(j,"plant",ac)) + p32_aff_pol_timestep(t,j)) = 0;
+
+* Update biodiversity value
+vm_bv.l(j,"aff_co2p",potnatveg) = 
+  sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), pc32_land(j,"aff",ac)) *
+  p32_bii_coeff("aff",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j,potnatveg);
+
+vm_bv.l(j,"aff_ndc",potnatveg) = 
+  sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), pc32_land(j,"ndc",ac)) *
+  p32_bii_coeff("ndc",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j,potnatveg);
+
+vm_bv.l(j,"plant",potnatveg) = 
+  sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), pc32_land(j,"plant",ac)) *
+  p32_bii_coeff("plant",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j,potnatveg);
 
 *** EOF presolve.gms ***

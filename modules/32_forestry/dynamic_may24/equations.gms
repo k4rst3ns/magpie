@@ -11,20 +11,18 @@
 ****** Costs ******
 *------------------
 
-*' The direct costs of Timber production and afforestation `vm_cost_fore` include
-*' maintenance and monitoring costs for newly established plantations as well as
-*' standing plantations '[@sathaye_ghg_2005]. In addition, this type of forest management
-*' (including afforestation) may cause costs in other parts of the model such as costs
-*' for technological change [13_tc] or land expansion [39_landconversion]. Also included
-*' are additional costs for producing timber from extremely highly managed plantations
-*' which are analogous to intensification using technological change from [13_tc] but
-*' in a parametrized form.
+*' The direct costs for timber plantations and re/afforestation `vm_cost_fore` include
+*' establishment cost for new forests, recurring maintenance and monitoring
+*' costs for standing forests as well as harvesting costs for timber plantations. 
+*' In addition, this type of forest management
+*' (including re/afforestation) may cause costs in other parts of the model such as costs
+*' for technological change [13_tc] or land expansion [39_landconversion]. 
 
 q32_cost_total(i2) .. vm_cost_fore(i2) =e=
                    v32_cost_recur(i2)
                    + v32_cost_establishment(i2)
                    + v32_cost_hvarea(i2)
-                   + sum(cell(i2,j2), v32_land_missing(j2) + v32_land_missing_ndc(j2)) * s32_free_land_cost
+                   + sum(cell(i2,j2), v32_land_missing(j2)) * s32_free_land_cost
                    ;
 
 *-----------------------------------------------
@@ -60,15 +58,20 @@ sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum(
  vm_land_forestry(j2,type32) =e= sum(ac, v32_land(j2,type32,ac));
 
  q32_land_expansion_forestry(j2,type32) ..
- vm_landexpansion_forestry(j2,type32) =e= v32_land_expansion(j2,type32);
+ vm_landexpansion_forestry(j2,type32) =e= v32_land_expansion(j2,type32) - (v32_land_replant(j2))$sameas(type32,"plant");
 
  q32_land_reduction_forestry(j2,type32) ..
- vm_landreduction_forestry(j2,type32) =e= sum(ac_sub, v32_land_reduction(j2,type32,ac_sub));
+ vm_landreduction_forestry(j2,type32) =e= sum(ac_sub, v32_land_reduction(j2,type32,ac_sub)) - (v32_land_replant(j2))$sameas(type32,"plant");
+
+ q32_land_replant(j2) ..
+  v32_land_replant(j2)
+  =e=
+  sum(ac_sub, v32_hvarea_forestry(j2,ac_sub)) * sum(cell(i2,j2), min(1, sum(ct, p32_future_to_current_demand_ratio(ct,i2))))$s32_establishment_dynamic;
 
 *' The constraint `q32_aff_pol` accounts for the exogenous afforestation prescribed by NPI/NDC policies.
 
  q32_aff_pol(j2) ..
- sum(ac_est, v32_land(j2,"ndc",ac_est)) + v32_land_missing_ndc(j2) =e= sum(ct, p32_aff_pol_timestep(ct,j2));
+ sum(ac_est, v32_land(j2,"ndc",ac_est)) =e= sum(ct, p32_aff_pol_timestep(ct,j2));
 
 *' The constraint `q32_max_aff` accounts for the allowed maximum global endogenous
 *' afforestation defined in `i32_max_aff_area_glo`.
@@ -155,7 +158,7 @@ q32_cost_establishment(i2)..
 *' trees established for re/afforestation purposes.
 
 q32_cost_recur(i2) .. v32_cost_recur(i2) =e=
-                    sum((cell(i2,j2),type32,ac_sub), v32_land(j2,type32,ac_sub)) * s32_recurring_cost;
+                    sum((cell(i2,j2),type32,ac_sub), v32_land(j2,type32,ac_sub) * i32_recurring_cost(type32));
 
 
 **** Plantation establishment decision

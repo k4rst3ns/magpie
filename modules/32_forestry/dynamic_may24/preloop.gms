@@ -5,7 +5,8 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*m_sigmoid_time_interpol(i32_plant_contr_fader,2020,2050,0.05,0);
+i32_recurring_cost(type32) = s32_recurring_cost;
+
 m_sigmoid_time_interpol(i32_plant_contr_growth_fader,s32_plant_contr_growth_startyear,s32_plant_contr_growth_endyear,s32_plant_contr_growth_startvalue,s32_plant_contr_growth_endvalue);
 
 p32_est_cost("plant") = s32_est_cost_plant;
@@ -170,6 +171,9 @@ loop(j,
     );
 );
 
+** Initialize forestry land types 
+pc32_land(j,type32,ac) = p32_land_start_ac(j,type32,ac);
+
 *** NPI/NDC policies BEGIN
 ** Afforestation policies NPI and NDCs
 p32_aff_pol(t,j) = round(f32_aff_pol(t,j,"%c32_aff_policy%"),6);
@@ -182,12 +186,12 @@ p32_aff_togo(t,i) = smax(t2, sum(cell(i,j), p32_aff_pol(t2,j))) - sum(cell(i,j),
 * The global (`s32_max_aff_area`) and regional limit (`f32_max_aff_area`) for total afforestation (sum of endogenous and exogenous) is reduced by exogenous NPI/NDC afforestation (`p32_aff_pol`).
 if(s32_max_aff_area_glo = 1,
   i32_max_aff_area_glo(t) = s32_max_aff_area - smax(t2, sum(j, p32_aff_pol(t2,j)));
-  i32_max_aff_area_glo(t)$(i32_max_aff_area_glo(t) < 0) = 0;
+  i32_max_aff_area_glo(t)$(i32_max_aff_area_glo(t) < 1e-6) = 0;
   i32_max_aff_area_glo(t)$(m_year(t) <= sm_fix_SSP2) = Inf;
   i32_max_aff_area_reg(t,i) = 0;
 elseif s32_max_aff_area_glo = 0,
   i32_max_aff_area_reg(t,i) = f32_max_aff_area(i) - smax(t2, sum(cell(i,j), p32_aff_pol(t2,j)));
-  i32_max_aff_area_reg(t,i)$(i32_max_aff_area_reg(t,i) < 0) = 0;
+  i32_max_aff_area_reg(t,i)$(i32_max_aff_area_reg(t,i) < 1e-6) = 0;
   i32_max_aff_area_reg(t,i)$(m_year(t) <= sm_fix_SSP2) = Inf;
   i32_max_aff_area_glo(t) = 0;
 );
@@ -225,3 +229,16 @@ p32_land(t,j,type32,ac) = 0;
 
 * initialize forest disturbance losses
 p32_disturbance_loss_ftype32(t,j,"aff",ac) = 0;
+
+* Initialize biodiversity value
+vm_bv.l(j,"aff_co2p",potnatveg) = 
+  sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), pc32_land(j,"aff",ac)) *
+  p32_bii_coeff("aff",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j,potnatveg);
+
+vm_bv.l(j,"aff_ndc",potnatveg) = 
+  sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), pc32_land(j,"ndc",ac)) *
+  p32_bii_coeff("ndc",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j,potnatveg);
+
+vm_bv.l(j,"plant",potnatveg) = 
+  sum(bii_class_secd, sum(ac_to_bii_class_secd(ac,bii_class_secd), pc32_land(j,"plant",ac)) *
+  p32_bii_coeff("plant",bii_class_secd,potnatveg)) * fm_luh2_side_layers(j,potnatveg);

@@ -109,6 +109,7 @@ s15_exo_foodscen_functional_form    Switch for functional form of exogenous food
 s15_exo_foodscen_start              Food substitution start year        / 2025 /
 s15_exo_foodscen_target             Food substitution target year       / 2050 /
 s15_exo_foodscen_convergence        Convergence to exogenous food scenario (1) / 1 /
+s15_scp_supplement_fat_meat         Switch for supplemental fat needed as ingredient for scp-based meat alternatives (1) / 0 /
 ;
 
 table f15_household_balanceflow(t_all,i,kall,dm_ge_nr)   Balance flow to take account of heterogeneous products and processes (mio. tDM)
@@ -162,7 +163,7 @@ $include "./modules/15_food/input/f15_intake_pc_observed_iso.cs3"
 $offdelim;
 
 
-parameter f15_prices_initial(kall) Food prices in initialization period (USD05MER per t DM)
+parameter f15_prices_initial(kall) Food prices in initialization period (USD17MER per t DM)
 /
 $ondelim
 $include "./modules/15_food/input/f15_prices_initial.csv"

@@ -14,7 +14,7 @@ positive variables
  v18_res_ag_recycling(i,kcr,w,attributes)   Recylcing of crop residues to soils in respective attribute units DM GJ Nr P K WM C (mio. tX)
  vm_res_ag_burn(i,kcr,w,attributes)         Residues burned on fields in respective attribute units DM GJ Nr P K WM C (mio. tX)
  vm_res_recycling(i,kcr,w,attributes)       Residues recycled to croplands in respective nutrients Nr P K units (mio. tX)
- vm_cost_prod_kres(i,kres)                  Production costs of harvesting crop residues (mio. USD05MER per yr)
+ vm_cost_prod_kres(i,kres)                  Production costs of harvesting crop residues (mio. USD17MER per yr)
 ;
 
 equations
@@ -29,7 +29,7 @@ equations
  q18_prod_res_cell(j,kres)                  Allows for distribution of residues to cellular level (mio. tDM)
  q18_res_recycling_cnr(i,kcr,w,c_nr)        Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
  q18_res_recycling_pk(i,kcr,w,pk18)         Nutrient recycling of phosphorus and potash (mio. tX)
- q18_cost_prod_res(i,kres)                  Production costs of harvesting crop residues (mio. USD05MER)
+ q18_cost_prod_res(i,kres)                  Production costs of harvesting crop residues (mio. USD17MER)
 
 ;
 

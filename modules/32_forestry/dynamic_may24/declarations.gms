@@ -20,8 +20,8 @@ parameters
  p32_carbon_density_ac(t,j,type32,ac,ag_pools)      Carbon density for ac and ag_pools (tC per ha)
  p32_carbon_density_ac_forestry(t_all,j,ac)         Above ground carbon density for age classes and carbon pools (tC per ha)
  p32_carbon_density_ac_marg(t_all,j,ac)             Marginal above ground carbon density for age classes and carbon pools (tC per ha)
- p32_land(t,j,type32,ac)                            Forestry land for each cell wood type and age class before and after optimization (mio. ha)
- pc32_land(j,type32,ac)                             Forestry land per forestry land type initialization of the optimization (mio. ha)
+ p32_land(t,j,type32,ac)                            Forestry land pools before optimization (mio. ha)
+ pc32_land(j,type32,ac)                             Forestry land pools in current time step (mio. ha)
  p32_yield_forestry_future(t,j)                     Cellular timber yield expected in the future (m3 per ha per year)
  p32_IGR(t_all,j,ac)                                Instantaneous growth rate or periodic annual increment of forest growth (1)
  p32_rot_flg(t_all,j,ac)                            Identifier flag when calculating rotation length (1)
@@ -32,7 +32,6 @@ parameters
  p32_cdr_ac(t,j,ac)                                 Non-cumulative CDR from afforestation plantations for each age-class depending on planning horizon (tC per ha)
  p32_rotation_offset                                Offset calc in age class equivalents (1)
  p32_land_start_ac(j,type32,ac)                     Saving first value of starting land (mio. ha)
- p32_land_before(t,j,type32,ac)                     Saving time value of starting land (mio. ha)
  p32_time(ac)                                       Time as a function of age-classes (yr)
  p32_discount_factor(t_all,j,ac)                    Discount factor for each age class (1)
  p32_net_present_value(t_all,j,ac)                  Net present value for a representative 1ha land of plantations (mio. USD)
@@ -55,17 +54,17 @@ parameters
  p32_forestry_product_dist(t,i,kforestry)           Distribution of wood products (1)
  p32_future_to_current_demand_ratio(t,i)            Ratio of future and current timber demand (1)
  p32_demand_forestry_future(t,i,kforestry)          Future forestry demand in current time step (tDM per yr)
- p32_est_cost(type32)                               Establishment cost (USD per ha)
+ p32_est_cost(type32)                               Establishment cost (USD17MER per ha)
+ i32_recurring_cost(type32)                         Recurring costs (USD17MER per ha)
 ;
 
 positive variables
  vm_cost_fore(i)                                    Forestry costs (Mio USD)
- v32_cost_hvarea(i)                                 Cost of harvesting timber from forests (mio. USD per yr)
+ v32_cost_hvarea(i)                                 Cost of harvesting timber from forests (mio. USD17MER per yr)
  v32_land(j,type32,ac)                              Forestry land pools (mio. ha)
  v32_land_missing(j)                                Technical area balance term for timber plantation establishment (mio. ha)
- v32_land_missing_ndc(j)                            Technical area balance term for NPI NDC reforestation (mio. ha)
  vm_landdiff_forestry                               Aggregated difference in forestry land compared to previous timestep (mio. ha)
- v32_cost_recur(i)                                  Recurring forest management costs (USD per ha)
+ v32_cost_recur(i)                                  Recurring forest management costs (USD17MER per ha)
  v32_land_expansion(j,type32)                       Forestry land expansion (mio. ha)
  v32_land_reduction(j,type32,ac)                    Forestry land reduction (mio. ha)
  v32_cost_establishment(i)                          Cost of establishment calculated at the current time step (mio. USD)
@@ -75,6 +74,7 @@ positive variables
  vm_landreduction_forestry(j,type32)                Forestry land reduction (mio. ha)
  vm_land_forestry(j,type32)                         Forestry land pools (mio. ha)
  v32_prod_forestry_future(i)                        Future expected production of woody biomass from commercial plantations (mio. tDM per yr)
+ v32_land_replant(j)                                Harvested and replanted area in timber plantations (mio. ha)
 ;
 
 variables
@@ -103,25 +103,25 @@ equations
  q32_cost_establishment(i)                          Present value of cost of establishment (mio. USD)
  q32_bgp_aff(j,ac)                                  Biophysical afforestation calculation (mio. tCeq)
  q32_forestry_est(j,type32,ac)                      Distribution of forestry establishment over ac_est (mio. ha)
- q32_cost_hvarea(i)                                Cost of harvesting timber from forests (mio. USD per yr)
+ q32_cost_hvarea(i)                                Cost of harvesting timber from forests (mio. USD17MER per yr)
  q32_prod_forestry(j)                              Production of woody biomass from commercial plantations (mio. tDM per yr)
  q32_bv_aff(j,potnatveg)                           Biodiversity value for aff forestry land (Mha)
  q32_bv_ndc(j,potnatveg)                           Biodiversity value for ndc forestry land (Mha)
  q32_bv_plant(j,potnatveg)                         Biodiversity value for plantations (Mha)
  q32_land_expansion_forestry(j,type32)             Forestry land expansion (mio. ha)
  q32_land_reduction_forestry(j,type32)             Forestry land reduction (mio. ha)
+ q32_land_replant(j)                               Harvested and replanted area in timber plantations (mio. ha)
 ;
 
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_cost_fore(t,i,type)                        Forestry costs (Mio USD)
- ov32_cost_hvarea(t,i,type)                    Cost of harvesting timber from forests (mio. USD per yr)
+ ov32_cost_hvarea(t,i,type)                    Cost of harvesting timber from forests (mio. USD17MER per yr)
  ov32_land(t,j,type32,ac,type)                 Forestry land pools (mio. ha)
  ov32_land_missing(t,j,type)                   Technical area balance term for timber plantation establishment (mio. ha)
- ov32_land_missing_ndc(t,j,type)               Technical area balance term for NPI NDC reforestation (mio. ha)
  ov_landdiff_forestry(t,type)                  Aggregated difference in forestry land compared to previous timestep (mio. ha)
- ov32_cost_recur(t,i,type)                     Recurring forest management costs (USD per ha)
+ ov32_cost_recur(t,i,type)                     Recurring forest management costs (USD17MER per ha)
  ov32_land_expansion(t,j,type32,type)          Forestry land expansion (mio. ha)
  ov32_land_reduction(t,j,type32,ac,type)       Forestry land reduction (mio. ha)
  ov32_cost_establishment(t,i,type)             Cost of establishment calculated at the current time step (mio. USD)
@@ -131,6 +131,7 @@ parameters
  ov_landreduction_forestry(t,j,type32,type)    Forestry land reduction (mio. ha)
  ov_land_forestry(t,j,type32,type)             Forestry land pools (mio. ha)
  ov32_prod_forestry_future(t,i,type)           Future expected production of woody biomass from commercial plantations (mio. tDM per yr)
+ ov32_land_replant(t,j,type)                   Harvested and replanted area in timber plantations (mio. ha)
  ov_cdr_aff(t,j,ac,aff_effect,type)            Expected bgc (CDR) and local bph effects of afforestation depending on planning horizon (mio. tC)
  oq32_cost_total(t,i,type)                     Total forestry costs constraint (mio. USD)
  oq32_land(t,j,type)                           Land constraint (mio. ha)
@@ -153,12 +154,13 @@ parameters
  oq32_cost_establishment(t,i,type)             Present value of cost of establishment (mio. USD)
  oq32_bgp_aff(t,j,ac,type)                     Biophysical afforestation calculation (mio. tCeq)
  oq32_forestry_est(t,j,type32,ac,type)         Distribution of forestry establishment over ac_est (mio. ha)
- oq32_cost_hvarea(t,i,type)                    Cost of harvesting timber from forests (mio. USD per yr)
+ oq32_cost_hvarea(t,i,type)                    Cost of harvesting timber from forests (mio. USD17MER per yr)
  oq32_prod_forestry(t,j,type)                  Production of woody biomass from commercial plantations (mio. tDM per yr)
  oq32_bv_aff(t,j,potnatveg,type)               Biodiversity value for aff forestry land (Mha)
  oq32_bv_ndc(t,j,potnatveg,type)               Biodiversity value for ndc forestry land (Mha)
  oq32_bv_plant(t,j,potnatveg,type)             Biodiversity value for plantations (Mha)
  oq32_land_expansion_forestry(t,j,type32,type) Forestry land expansion (mio. ha)
  oq32_land_reduction_forestry(t,j,type32,type) Forestry land reduction (mio. ha)
+ oq32_land_replant(t,j,type)                   Harvested and replanted area in timber plantations (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
