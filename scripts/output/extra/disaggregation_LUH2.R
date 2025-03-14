@@ -1,4 +1,4 @@
-# |  (C) 2008-2024 Potsdam Institute for Climate Impact Research (PIK)
+# |  (C) 2008-2025 Potsdam Institute for Climate Impact Research (PIK)
 # |  authors, and contributors see CITATION.cff file. This file is part
 # |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 # |  AGPL-3.0, you are granted additional permissions described in the
@@ -267,7 +267,7 @@ gc()
 }
 
 ####### ONLY DYNAMIC FORESTRY ON#############
-#check for dynamic foresty
+#check for dynamic forestry
 if(!is.null(harvested_area_timber(gdx,level = "cell"))) {
   message("Start forestry / timber reporting")
 

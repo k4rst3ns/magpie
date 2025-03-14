@@ -1,4 +1,4 @@
-*** |  (C) 2008-2024 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2025 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -148,25 +148,25 @@ $title magpie
 
 *##################### R SECTION START (VERSION INFO) ##########################
 * 
-* Used data set: rev4.116+newSOC_v1_h12_magpie.tgz
-* md5sum: 873f6d28fcc878067665c0f8057ddc54
-* Repository: /p/projects/rd3mod/inputdata/output_1.27
+* Used data set: rev4.116_h12_magpie.tgz
+* md5sum: a020594c956835f8f44fc1b062506a01
+* Repository: /p/projects/rd3mod/mirror/rse.pik-potsdam.de/data/magpie/public
 * 
-* Used data set: rev4.116+newSOC_v1_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
-* md5sum: de2692fe225de8b222bfe881f1530112
-* Repository: /p/projects/rd3mod/inputdata/output_1.27
+* Used data set: rev4.116_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
+* md5sum: 6bc13df515d9663430beff24c80280fd
+* Repository: /p/projects/rd3mod/mirror/rse.pik-potsdam.de/data/magpie/public
 * 
-* Used data set: rev4.116+newSOC_v1_h12_validation.tgz
-* md5sum: 79c07d64667f35cbfdeaf3cd14b3d246
-* Repository: /p/projects/rd3mod/inputdata/output_1.27
+* Used data set: rev4.116_h12_validation.tgz
+* md5sum: 494dbecfb4800872218fc6d791880ff9
+* Repository: /p/projects/rd3mod/mirror/rse.pik-potsdam.de/data/magpie/public
 * 
-* Used data set: additional_data_rev4.60.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
+* Used data set: additional_data_rev4.62.tgz
+* md5sum: 4a34597095b29a273245a5ba42b60bdc
+* Repository: /p/projects/rd3mod/mirror/rse.pik-potsdam.de/data/magpie/public
 * 
-* Used data set: calibration_H12_27Sep24.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
+* Used data set: calibration_H12_FAO_10Mar25
+* md5sum: aba0b877f383fefabc558d79180fc43f
+* Repository: /p/projects/landuse/data/input/calibration
 * 
 * Low resolution: c200
 * High resolution: 0.5
@@ -194,8 +194,7 @@ $title magpie
 *    14   23   10    7    4   26   21    9   16   23   32   15
 * * Call: withCallingHandlers(expr, message = messageHandler, warning = warningHandler,     error = errorHandler)
 * 
-* 
-* Last modification (input data): Thu Jan 23 12:44:17 2025
+* Last modification (input data): Thu Feb 20 17:30:37 2025
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -219,7 +218,7 @@ $offlisting
 **************************MODEL SPECIFIC SCALARS********************************
 *                    Key parameters during model runs
 
-$setglobal c_timesteps  7
+$setglobal c_timesteps  coup2100
 $setglobal c_past  till_2010
 $setglobal c_title  default
 
@@ -249,7 +248,7 @@ $setglobal land_conservation  area_based_apr22
 
 $setglobal ageclass  oct24
 
-$setglobal cropland  simple_apr24
+$setglobal cropland  detail_apr24
 $setglobal croparea  simple_apr24
 $setglobal past  endo_jun13
 
@@ -279,9 +278,9 @@ $setglobal awms  ipcc2006_aug16
 $setglobal ghg_policy  price_aug22
 $setglobal maccs  on_aug22
 $setglobal peatland  v2
-$setglobal som  threepool_may23
+$setglobal som  cellpool_jan23
 
-$setglobal bioenergy  1stgen_priced_dec18
+$setglobal bioenergy  1st2ndgen_priced_feb24
 $setglobal material  exo_flexreg_apr16
 $setglobal livestock  fbask_jan16
 

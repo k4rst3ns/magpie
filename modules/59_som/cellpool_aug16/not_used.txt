@@ -1,3 +1,0 @@
-name,type,reason
-vm_res_recycling,input,questionnaire
-vm_land_other,input,not needed

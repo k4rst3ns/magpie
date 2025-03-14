@@ -1,4 +1,4 @@
-*** |  (C) 2008-2024 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2025 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -14,3 +14,4 @@ $if "%c59_exo_scen%" == "fadeout_2050" i59_nr_som_exogenous_per_ha(t,i)$(sum(cel
 
 vm_nr_som.fx(i) = i59_nr_som_exogenous_per_ha(t, i) * sum(cell(i,j), pcm_land(j, "crop"));
 vm_nr_som_fertilizer.fx(i) = i59_nr_som_exogenous_per_ha(t, i) * sum(cell(i,j), pcm_land(j, "crop"));
+vm_cost_scm.fx(j) = 0;

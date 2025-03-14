@@ -1,4 +1,4 @@
-*** |  (C) 2008-2024 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2025 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -22,6 +22,7 @@ scalars
   s58_rewet_exo_target_value     Target value for exogenous peatland rewetting as share of drained peatland in reference period (1) / 0.5 /
   s58_intact_prot_exo            Switch for exogenous protection of intact peatland for selected countries (1) / 0 /
   s58_intact_prot_exo_noselect   Switch for exogenous protection of intact peatland for all other countries (1) / 0 /
+  s58_annual_rewetting_limit     Share of drained peatland that can be rewetted per year (1) / 0.02 /
 ;
 
 * Set-switch for countries affected by certain policies
