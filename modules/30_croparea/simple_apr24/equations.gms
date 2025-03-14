@@ -8,11 +8,16 @@
 *' @equations
 
 *' Agricultural production is calculated by multiplying the area under
-*' production with corresponding yields. Production from rainfed and irrigated
-*' areas is summed up:
+*' production with corresponding yields.
+
+ q30_prod_kcr_w(j2,kcr,w) ..
+   vm_prod_kcr_w(j2,kcr,w) =e= vm_area(j2,kcr,w) * vm_yld(j2,kcr,w);
+
+*' For total production rainfed and irrigated production is summed up:
+*** Maybe test here  other types of contrains (lower)
 
  q30_prod(j2,kcr) ..
-  vm_prod(j2,kcr) =e= sum(w, vm_area(j2,kcr,w) * vm_yld(j2,kcr,w));
+  vm_prod(j2,kcr) =e= sum(w, vm_prod_kcr_w(j2,kcr,w));
 
 *' A penalty is applied for the violation of bioenergy tree (betr) rules.
 *' The penalty applies to the missing bioenergy tree land, i.e. where bioenergy tree land 

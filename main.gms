@@ -148,19 +148,19 @@ $title magpie
 
 *##################### R SECTION START (VERSION INFO) ##########################
 * 
-* Used data set: rev4.116_h12_magpie.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
+* Used data set: rev4.116+newSOC_v1_h12_magpie.tgz
+* md5sum: 873f6d28fcc878067665c0f8057ddc54
+* Repository: /p/projects/rd3mod/inputdata/output_1.27
 * 
-* Used data set: rev4.116_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
+* Used data set: rev4.116+newSOC_v1_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
+* md5sum: de2692fe225de8b222bfe881f1530112
+* Repository: /p/projects/rd3mod/inputdata/output_1.27
 * 
-* Used data set: rev4.116_h12_validation.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
+* Used data set: rev4.116+newSOC_v1_h12_validation.tgz
+* md5sum: 79c07d64667f35cbfdeaf3cd14b3d246
+* Repository: /p/projects/rd3mod/inputdata/output_1.27
 * 
-* Used data set: additional_data_rev4.59.tgz
+* Used data set: additional_data_rev4.60.tgz
 * md5sum: NA
 * Repository: https://rse.pik-potsdam.de/data/magpie/public
 * 
@@ -179,11 +179,11 @@ $title magpie
 * 
 * Regionscode: 62eff8f7
 * 
-* Regions data revision: 4.114
+* Regions data revision: 4.116
 * 
 * lpj2magpie settings:
 * * LPJmL data: MRI-ESM2-0:ssp370
-* * Revision: 4.114
+* * Revision: 4.116
 * 
 * aggregation settings:
 * * Input resolution: 0.5
@@ -195,7 +195,7 @@ $title magpie
 * * Call: withCallingHandlers(expr, message = messageHandler, warning = warningHandler,     error = errorHandler)
 * 
 * 
-* Last modification (input data): Sun Oct 27 00:37:36 2024
+* Last modification (input data): Thu Jan 23 12:44:17 2025
 * 
 *###################### R SECTION END (VERSION INFO) ###########################
 
@@ -219,7 +219,7 @@ $offlisting
 **************************MODEL SPECIFIC SCALARS********************************
 *                    Key parameters during model runs
 
-$setglobal c_timesteps  coup2100
+$setglobal c_timesteps  7
 $setglobal c_past  till_2010
 $setglobal c_title  default
 
@@ -260,7 +260,7 @@ $setglobal natveg  pot_forest_may24
 
 $setglobal employment  exo_may22
 $setglobal labor_prod  off
-$setglobal factor_costs  per_ton_fao_may22
+$setglobal factor_costs  sticky_feb18
 $setglobal landconversion  calib
 
 $setglobal transport  gtap_nov12
@@ -279,7 +279,7 @@ $setglobal awms  ipcc2006_aug16
 $setglobal ghg_policy  price_aug22
 $setglobal maccs  on_aug22
 $setglobal peatland  v2
-$setglobal som  static_jan19
+$setglobal som  threepool_may23
 
 $setglobal bioenergy  1stgen_priced_dec18
 $setglobal material  exo_flexreg_apr16

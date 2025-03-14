@@ -2,4 +2,5 @@ name,type,reason
 fm_croparea,input,questionnaire
 pm_climate_class,input,questionnaire
 vm_fallow,input,questionnaire
+vm_treecover,inoutnot_used
 vm_land_other,input,not_used
