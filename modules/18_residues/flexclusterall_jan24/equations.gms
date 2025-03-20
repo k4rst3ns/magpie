@@ -19,7 +19,7 @@
                  * f18_attributes_residue_ag(attributes,kcr);
 
  q18_sumreg_res_biomass_ag(i2,kcr,w,attributes) ..
-                 vm_res_biomass_ag(i2,kcr,w,attributes) =e=
+                 vm_res_biomass_ag(i2,kcr,w,attributes) =l=
                  sum(cell(i2,j2), v18_res_biomass_ag_clust(j2,kcr,w,attributes));
 
 *' The BG crop residue biomass `vm_res_biomass_bg` is calculated as a function of
@@ -28,8 +28,8 @@
  q18_prod_res_bg_clust(j2,kcr,w,dm_cnr) ..
                  v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr)
                  =e=
-                 vm_prod_kcr_w(j2,kcr,w) + 
-                   v18_res_biomass_ag_clust(j2,kcr,w,"dm") * f18_cgf("bg_to_ag",kcr)
+                 (vm_prod_kcr_w(j2,kcr,w) + 
+                   v18_res_biomass_ag_clust(j2,kcr,w,"dm")) * f18_cgf("bg_to_ag",kcr)
                  * f18_attributes_residue_bg(dm_cnr,kcr);
 
  q18_sumreg_res_biomass_bg(i2,kcr,w,dm_cnr) ..
@@ -66,7 +66,7 @@
                   * v18_res_biomass_ag_clust(j2,kcr,w,attributes);
 
  q18_sumreg_res_biomass_burn(i2,kcr,w,attributes) ..
-                 vm_res_ag_burn(i2,kcr,w,attributes) =e=
+                 vm_res_ag_burn(i2,kcr,w,attributes) =g=
                  sum(cell(i2,j2), v18_res_ag_burn_clust(j2,kcr,w,attributes));
 
 
@@ -82,7 +82,7 @@
 
  q18_translate(i2,kres,attributes)..
                   sum((w,cell(i2,j2),kres_kcr(kres,kcr)), v18_res_ag_removal_clust(j2,kcr,w,attributes))
-                  =e=
+                  =g=
                   vm_prod_reg(i2,kres) * fm_attributes(attributes,kres);
 
 *' Residues recycled to croplands in nutrients `vm_res_recycling(i2,"nr")` are

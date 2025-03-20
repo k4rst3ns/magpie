@@ -40,6 +40,7 @@ positive variables
          v59_cropland_transitions(i, tillage59, w, noncropland59)            bla
          v59_topsoilc_noncrop_previousstate(i, noncropland59, sPools59)      bla
          v59_topsoilc_actualstate(i, land, sPools59)                         bla
+        vm_cost_scm(j)                      Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
 ;
 
 variables
@@ -55,6 +56,7 @@ parameters
  ov59_cropland_transitions(t,i,tillage59,w,noncropland59,type)        bla
  ov59_topsoilc_noncrop_previousstate(t,i,noncropland59,sPools59,type) bla
  ov59_topsoilc_actualstate(t,i,land,sPools59,type)                    bla
+ ov_cost_scm(t,j,type)                                                Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
  ov_nr_som(t,i,type)                                                  Release of soil organic matter (Mt N per yr)
  ov_nr_som_fertilizer(t,i,type)                                       Uptake of soil organic matter from plants (Mt N per yr)
  oq59_steadystate_term_crop(t,i,sPools59,w,tillage59,type)            Steady-state for SOC stock on cropland (mio. tC)

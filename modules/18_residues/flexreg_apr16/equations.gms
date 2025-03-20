@@ -70,12 +70,12 @@
 
 
  q18_translate(i2,kres,attributes)..
-                  sum(kres_kcr(kres,kcr), v18_res_ag_removal(i2,kcr,attributes))
+                  sum((kres_kcr(kres,kcr),w), v18_res_ag_removal(i2,kcr,w,attributes))
                   =e=
                   vm_prod_reg(i2,kres) * fm_attributes(attributes,kres);
 
 *' Amount produced at cellular level is flexible, can be distributed as it wants 
- q18_prod_res_cell(j2,kres)..
+ q18_prod_res_cell(i2,kres)..
                   sum(cell(i2,j2), v18_prod_res(j2,kres))
                   =e=
                   vm_prod_reg(i2,kres) ;

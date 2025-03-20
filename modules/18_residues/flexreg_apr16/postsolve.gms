@@ -22,9 +22,8 @@
  oq18_prod_res_bg_reg(t,i,kcr,w,dm_cnr,"marginal")       = q18_prod_res_bg_reg.m(i,kcr,w,dm_cnr);
  oq18_res_field_balance(t,i,kcr,w,attributes,"marginal") = q18_res_field_balance.m(i,kcr,w,attributes);
  oq18_res_field_burn(t,i,kcr,w,attributes,"marginal")    = q18_res_field_burn.m(i,kcr,w,attributes);
- oq18_translate(t,i,kres,"marginal")                     = q18_translate.m(i,kres);
- oq18_translate2(t,i,kcr,w,attributes,"marginal")        = q18_translate2.m(i,kcr,w,attributes);
- oq18_prod_res_cell(t,j,kres,"marginal")                 = q18_prod_res_cell.m(j,kres);
+ oq18_translate(t,i,kres,attributes,"marginal")          = q18_translate.m(i,kres,attributes);
+ oq18_prod_res_cell(t,i,kres,"marginal")                 = q18_prod_res_cell.m(i,kres);
  oq18_res_recycling_cnr(t,i,kcr,w,c_nr,"marginal")       = q18_res_recycling_cnr.m(i,kcr,w,c_nr);
  oq18_res_recycling_pk(t,i,kcr,w,pk18,"marginal")        = q18_res_recycling_pk.m(i,kcr,w,pk18);
  oq18_cost_prod_res(t,i,kres,"marginal")                 = q18_cost_prod_res.m(i,kres);
@@ -40,9 +39,8 @@
  oq18_prod_res_bg_reg(t,i,kcr,w,dm_cnr,"level")          = q18_prod_res_bg_reg.l(i,kcr,w,dm_cnr);
  oq18_res_field_balance(t,i,kcr,w,attributes,"level")    = q18_res_field_balance.l(i,kcr,w,attributes);
  oq18_res_field_burn(t,i,kcr,w,attributes,"level")       = q18_res_field_burn.l(i,kcr,w,attributes);
- oq18_translate(t,i,kres,"level")                        = q18_translate.l(i,kres);
- oq18_translate2(t,i,kcr,w,attributes,"level")           = q18_translate2.l(i,kcr,w,attributes);
- oq18_prod_res_cell(t,j,kres,"level")                    = q18_prod_res_cell.l(j,kres);
+ oq18_translate(t,i,kres,attributes,"level")             = q18_translate.l(i,kres,attributes);
+ oq18_prod_res_cell(t,i,kres,"level")                    = q18_prod_res_cell.l(i,kres);
  oq18_res_recycling_cnr(t,i,kcr,w,c_nr,"level")          = q18_res_recycling_cnr.l(i,kcr,w,c_nr);
  oq18_res_recycling_pk(t,i,kcr,w,pk18,"level")           = q18_res_recycling_pk.l(i,kcr,w,pk18);
  oq18_cost_prod_res(t,i,kres,"level")                    = q18_cost_prod_res.l(i,kres);
@@ -58,9 +56,8 @@
  oq18_prod_res_bg_reg(t,i,kcr,w,dm_cnr,"upper")          = q18_prod_res_bg_reg.up(i,kcr,w,dm_cnr);
  oq18_res_field_balance(t,i,kcr,w,attributes,"upper")    = q18_res_field_balance.up(i,kcr,w,attributes);
  oq18_res_field_burn(t,i,kcr,w,attributes,"upper")       = q18_res_field_burn.up(i,kcr,w,attributes);
- oq18_translate(t,i,kres,"upper")                        = q18_translate.up(i,kres);
- oq18_translate2(t,i,kcr,w,attributes,"upper")           = q18_translate2.up(i,kcr,w,attributes);
- oq18_prod_res_cell(t,j,kres,"upper")                    = q18_prod_res_cell.up(j,kres);
+ oq18_translate(t,i,kres,attributes,"upper")             = q18_translate.up(i,kres,attributes);
+ oq18_prod_res_cell(t,i,kres,"upper")                    = q18_prod_res_cell.up(i,kres);
  oq18_res_recycling_cnr(t,i,kcr,w,c_nr,"upper")          = q18_res_recycling_cnr.up(i,kcr,w,c_nr);
  oq18_res_recycling_pk(t,i,kcr,w,pk18,"upper")           = q18_res_recycling_pk.up(i,kcr,w,pk18);
  oq18_cost_prod_res(t,i,kres,"upper")                    = q18_cost_prod_res.up(i,kres);
@@ -76,9 +73,8 @@
  oq18_prod_res_bg_reg(t,i,kcr,w,dm_cnr,"lower")          = q18_prod_res_bg_reg.lo(i,kcr,w,dm_cnr);
  oq18_res_field_balance(t,i,kcr,w,attributes,"lower")    = q18_res_field_balance.lo(i,kcr,w,attributes);
  oq18_res_field_burn(t,i,kcr,w,attributes,"lower")       = q18_res_field_burn.lo(i,kcr,w,attributes);
- oq18_translate(t,i,kres,"lower")                        = q18_translate.lo(i,kres);
- oq18_translate2(t,i,kcr,w,attributes,"lower")           = q18_translate2.lo(i,kcr,w,attributes);
- oq18_prod_res_cell(t,j,kres,"lower")                    = q18_prod_res_cell.lo(j,kres);
+ oq18_translate(t,i,kres,attributes,"lower")             = q18_translate.lo(i,kres,attributes);
+ oq18_prod_res_cell(t,i,kres,"lower")                    = q18_prod_res_cell.lo(i,kres);
  oq18_res_recycling_cnr(t,i,kcr,w,c_nr,"lower")          = q18_res_recycling_cnr.lo(i,kcr,w,c_nr);
  oq18_res_recycling_pk(t,i,kcr,w,pk18,"lower")           = q18_res_recycling_pk.lo(i,kcr,w,pk18);
  oq18_cost_prod_res(t,i,kres,"lower")                    = q18_cost_prod_res.lo(i,kres);
