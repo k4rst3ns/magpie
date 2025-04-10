@@ -14,7 +14,9 @@ dm_cnr(attributes) dry matter and nr
 dm_c(dm_cnr) dry matter and c
 /dm, c/
 
-
+cnpk18(attributes) subset of attributes containing carbon nitrogen P and K
+/c, nr, p , k/
+ 
 c_nr(dm_cnr) subset of cnpk containing carbon and nitrogen
 /c, nr/
 

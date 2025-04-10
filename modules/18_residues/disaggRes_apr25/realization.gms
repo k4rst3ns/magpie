@@ -26,12 +26,12 @@
 *' production in 1995.
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/18_residues/flexreg_apr16/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/18_residues/flexreg_apr16/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/18_residues/flexreg_apr16/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/18_residues/flexreg_apr16/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/18_residues/flexreg_apr16/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/18_residues/flexreg_apr16/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/18_residues/flexreg_apr16/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/18_residues/flexreg_apr16/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/18_residues/disaggRes_mar25/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/18_residues/disaggRes_mar25/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/18_residues/disaggRes_mar25/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/18_residues/disaggRes_mar25/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/18_residues/disaggRes_mar25/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/18_residues/disaggRes_mar25/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/18_residues/disaggRes_mar25/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/18_residues/disaggRes_mar25/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

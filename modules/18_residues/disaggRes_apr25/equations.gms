@@ -11,22 +11,32 @@
 *' of harvested area `vm_area` and production `vm_prod_reg`. `f18_cgf` contains
 *' slope and intercept parameters of the CGFs.
 
- q18_prod_res_ag_reg(i2,kcr,w,attributes) ..
-                 vm_res_biomass_ag(i2,kcr,w,attributes)
+ q18_sumreg_res_biomass_ag(i2,kcr,w,attributes) ..
+                 vm_res_biomass_ag(i2,kcr,w,attributes) =e=
+                 sum(cell(i2,j2), v18_res_biomass_ag_clust(j2,kcr,w,attributes));
+
+
+ q18_prod_res_ag_clust(j2,kcr,w,attributes) ..
+                 v18_res_biomass_ag_clust(j2,kcr,w,attributes)
                  =e=
-                 (sum(cell(i2,j2), vm_area(j2,kcr,w)) * sum(ct,f18_multicropping(ct,i2)) * f18_cgf("intercept",kcr)
-                 + sum(cell(i2,j2), vm_prod_kcr_w(j2,kcr,w)) * f18_cgf("slope",kcr))
+                 (vm_area(j2,kcr,w) * sum((ct, cell(i2,j2)), f18_multicropping(ct,i2)) * f18_cgf("intercept",kcr)
+                 + vm_prod_kcr_w(j2,kcr,w) * f18_cgf("slope",kcr))
                  * f18_attributes_residue_ag(attributes,kcr);
 
 *' The BG crop residue biomass `vm_res_biomass_bg` is calculated as a function of
 *' total aboveground biomass.
 
- q18_prod_res_bg_reg(i2,kcr,w,dm_cnr) ..
-                 vm_res_biomass_bg(i2,kcr,w,dm_cnr)
+
+ q18_prod_res_bg_clust(j2,kcr,w,dm_cnr) ..
+                 v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr)
                  =e=
-                 (sum(cell(i2,j2), vm_prod_kcr_w(j2,kcr,w)) + 
-                   vm_res_biomass_ag(i2,kcr,w,"dm")) * f18_cgf("bg_to_ag",kcr)
+                 (vm_prod_kcr_w(j2,kcr,w) + 
+                   v18_res_biomass_ag_clust(j2,kcr,w,"dm")) * f18_cgf("bg_to_ag",kcr)
                  * f18_attributes_residue_bg(dm_cnr,kcr);
+
+ q18_sumreg_res_biomass_bg(i2,kcr,w,dm_cnr) ..
+                 vm_res_biomass_bg(i2,kcr,w,dm_cnr) =e=
+                 sum(cell(i2,j2), v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr));
 
 *' In contrast to AG biomass, AG production `vm_res_biomass_ag(i,kcr,attributes)`
 *' is defined as the part of residues which is removed from the field. The
@@ -35,13 +45,13 @@
 *' The field balance equations ensures that the production of AG residues
 *' `vm_res_biomass_ag(i,kcr,attributes)` is properly assigned to different uses:
 *' removal, on-field burning and recycling of AG residues.
-
- q18_res_field_balance(i2,kcr,w,attributes) ..
-                  vm_res_biomass_ag(i2,kcr,w,attributes)
+ 
+ q18_res_field_balance_clust(j2,kcr,w,attributes) ..
+                  v18_res_biomass_ag_clust(j2,kcr,w,attributes)
                   =e=
-                  v18_res_ag_removal(i2,kcr,w,attributes)
-                  + vm_res_ag_burn(i2,kcr,w,attributes)
-                  + v18_res_ag_recycling(i2,kcr,w,attributes);
+                  v18_res_ag_removal_clust(j2,kcr,w,attributes)
+                  + v18_res_ag_burn_clust(j2,kcr,w,attributes)
+                  + v18_res_ag_recycling_clust(j2,kcr,w,attributes);
 
 *' The amount of residues burned on fields in a region `vm_res_ag_burn` is
 *' determined by the share (ic18_res_use_min_shr) of AG residue biomass.
@@ -50,13 +60,16 @@
 *' crop. For future time steps, these rates are scenario dependent, and either
 *' kept constant or reduced to 10% and 0% in 2050.
 
- q18_res_field_burn(i2,kcr,w,attributes) ..
-                  vm_res_ag_burn(i2,kcr,w,attributes)
+ q18_res_field_burn_clust(j2,kcr,w,attributes) ..
+                  v18_res_ag_burn_clust(j2,kcr,w,attributes)
                   =e=
-                  sum(ct, im_development_state(ct,i2) * i18_res_use_burn(ct,"high_income",kcr)
+                  sum((cell(i2,j2),ct), im_development_state(ct,i2) * i18_res_use_burn(ct,"high_income",kcr)
                   + (1-im_development_state(ct,i2)) * i18_res_use_burn(ct,"low_income",kcr))
-                  * vm_res_biomass_ag(i2,kcr,w,attributes);
+                  * v18_res_biomass_ag_clust(j2,kcr,w,attributes);
 
+ q18_sumreg_res_biomass_burn(i2,kcr,w,attributes) ..
+                 vm_res_ag_burn(i2,kcr,w,attributes) =e=
+                 sum(cell(i2,j2), v18_res_ag_burn_clust(j2,kcr,w,attributes));
 
 *' While the residue biomass is estiamted with a crop-specific nutrient
 *' composition (which is required for consistent nutrient budgets), the
@@ -68,18 +81,17 @@
 *' guarantees that mass balances are not violated while a homogeneous
 *' good is extracted from heterogeneous goods.
 
-
- q18_translate(i2,kres,attributes)..
-                  sum((kres_kcr(kres,kcr),w), v18_res_ag_removal(i2,kcr,w,attributes))
+ q18_translate(j2,kres,attributes)..
+                  sum((kres_kcr(kres,kcr),w), v18_res_ag_removal_clust(j2,kcr,w,attributes))
                   =e=
-                  vm_prod_reg(i2,kres) * fm_attributes(attributes,kres);
+                  v18_prod_res(j2,kres) * fm_attributes(attributes,kres);
 
-*' Amount produced at cellular level is flexible, can be distributed as it wants 
+*' sum to the regional amount of residues produced for the regional interface
+
  q18_prod_res_cell(i2,kres)..
                   sum(cell(i2,j2), v18_prod_res(j2,kres))
                   =e=
                   vm_prod_reg(i2,kres) ;
-
 
 *' Residues recycled to croplands in nutrients `vm_res_recycling(i2,"nr")` are
 *' calcualted based on the amount of AG residues left on field for recycling, the
@@ -87,12 +99,12 @@
 *' BG residues. They are calculated to be transmitted to the nitrogen budget
 *' module [50_nr_soil_budget].
 
- q18_res_recycling_cnr(i2,kcr,w,c_nr) ..
-                  vm_res_recycling(i2,kcr,w,c_nr)
+ q18_res_recycling_cnr_clust(j2,kcr,w,c_nr) ..
+                  v18_res_recycling_clust(j2,kcr,w,c_nr)
                   =e=
-                  v18_res_ag_recycling(i2,kcr,w,c_nr)
-                    + vm_res_ag_burn(i2,kcr,w,c_nr)*(1-f18_res_combust_eff(kcr))
-                    + vm_res_biomass_bg(i2,kcr,w,c_nr)
+                  v18_res_ag_recycling_clust(j2,kcr,w,c_nr)
+                    + v18_res_ag_burn_clust(j2,kcr,w,c_nr)*(1-f18_res_combust_eff(kcr))
+                    + v18_res_biomass_bg_clust(j2,kcr,w,c_nr)
                   ;
 
 *' Similar to the recycled nutrients, the potash recycling is determined by the
@@ -101,12 +113,16 @@
 *' removed aboveground crop residues have to be considered, while nutrients from
 *' burned AG as well as BG stay on the field.
 
- q18_res_recycling_pk(i2,kcr,w,pk18) ..
-                  vm_res_recycling(i2,kcr,w,pk18)
+ q18_res_recycling_pk_clust(j2,kcr,w,pk18) ..
+                  v18_res_recycling_clust(j2,kcr,w,pk18)
                   =e=
-                    v18_res_ag_recycling(i2,kcr,w,pk18)
-                    + vm_res_ag_burn(i2,kcr,w,pk18)
+                    v18_res_ag_recycling_clust(j2,kcr,w,pk18)
+                    + v18_res_ag_burn_clust(j2,kcr,w,pk18)
                   ;
+
+ q18_sumreg_res_recycling(i2,kcr,w,cnpk18) ..
+                 vm_res_recycling(i2,kcr,w,cnpk18) =e=
+                 sum(cell(i2,j2), v18_res_recycling_clust(j2,kcr,w,cnpk18));
 
 *' Costs of residue harvest are based on straw baling and hauling from 
 *' Budynski, Stephanie. 2020. Straw Manufacturing in Alberta (@budynski_straw_2020), 
