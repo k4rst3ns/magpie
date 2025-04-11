@@ -11,17 +11,17 @@
 *' of harvested area `vm_area` and production `vm_prod_reg`. `f18_cgf` contains
 *' slope and intercept parameters of the CGFs.
 
- q18_sumreg_res_biomass_ag(i2,kcr,w,attributes) ..
-                 vm_res_biomass_ag(i2,kcr,w,attributes) =e=
-                 sum(cell(i2,j2), v18_res_biomass_ag_clust(j2,kcr,w,attributes));
+ q18_sumreg_res_biomass_ag(i2,kcr,w,dm_cnr) ..
+                 vm_res_biomass_ag(i2,kcr,w,dm_cnr) =e=
+                 sum(cell(i2,j2), v18_res_biomass_ag_clust(j2,kcr,w,dm_cnr));
 
 
- q18_prod_res_ag_clust(j2,kcr,w,attributes) ..
-                 v18_res_biomass_ag_clust(j2,kcr,w,attributes)
+ q18_prod_res_ag_clust(j2,kcr,w,dm_cnr) ..
+                 v18_res_biomass_ag_clust(j2,kcr,w,dm_cnr)
                  =e=
                  (vm_area(j2,kcr,w) * sum((ct, cell(i2,j2)), f18_multicropping(ct,i2)) * f18_cgf("intercept",kcr)
                  + vm_prod_kcr_w(j2,kcr,w) * f18_cgf("slope",kcr))
-                 * f18_attributes_residue_ag(attributes,kcr);
+                 * f18_attributes_residue_ag(dm_cnr,kcr);
 
 *' The BG crop residue biomass `vm_res_biomass_bg` is calculated as a function of
 *' total aboveground biomass.
@@ -38,20 +38,20 @@
                  vm_res_biomass_bg(i2,kcr,w,dm_cnr) =e=
                  sum(cell(i2,j2), v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr));
 
-*' In contrast to AG biomass, AG production `vm_res_biomass_ag(i,kcr,attributes)`
+*' In contrast to AG biomass, AG production `vm_res_biomass_ag(i,kcr,dm_cnr)`
 *' is defined as the part of residues which is removed from the field. The
 *' difference between biomass and production is either burned on field or
 *' remains on the fields (either incorporated in soils or not) and decays.
 *' The field balance equations ensures that the production of AG residues
-*' `vm_res_biomass_ag(i,kcr,attributes)` is properly assigned to different uses:
+*' `vm_res_biomass_ag(i,kcr,dm_cnr)` is properly assigned to different uses:
 *' removal, on-field burning and recycling of AG residues.
  
- q18_res_field_balance_clust(j2,kcr,w,attributes) ..
-                  v18_res_biomass_ag_clust(j2,kcr,w,attributes)
+ q18_res_field_balance_clust(j2,kcr,w,dm_cnr) ..
+                  v18_res_biomass_ag_clust(j2,kcr,w,dm_cnr)
                   =e=
-                  v18_res_ag_removal_clust(j2,kcr,w,attributes)
-                  + v18_res_ag_burn_clust(j2,kcr,w,attributes)
-                  + v18_res_ag_recycling_clust(j2,kcr,w,attributes);
+                  v18_res_ag_removal_clust(j2,kcr,w,dm_cnr)
+                  + v18_res_ag_burn_clust(j2,kcr,w,dm_cnr)
+                  + v18_res_ag_recycling_clust(j2,kcr,w,dm_cnr);
 
 *' The amount of residues burned on fields in a region `vm_res_ag_burn` is
 *' determined by the share (ic18_res_use_min_shr) of AG residue biomass.
@@ -60,16 +60,16 @@
 *' crop. For future time steps, these rates are scenario dependent, and either
 *' kept constant or reduced to 10% and 0% in 2050.
 
- q18_res_field_burn_clust(j2,kcr,w,attributes) ..
-                  v18_res_ag_burn_clust(j2,kcr,w,attributes)
+ q18_res_field_burn_clust(j2,kcr,w,dm_cnr) ..
+                  v18_res_ag_burn_clust(j2,kcr,w,dm_cnr)
                   =e=
                   sum((cell(i2,j2),ct), im_development_state(ct,i2) * i18_res_use_burn(ct,"high_income",kcr)
                   + (1-im_development_state(ct,i2)) * i18_res_use_burn(ct,"low_income",kcr))
-                  * v18_res_biomass_ag_clust(j2,kcr,w,attributes);
+                  * v18_res_biomass_ag_clust(j2,kcr,w,dm_cnr);
 
- q18_sumreg_res_biomass_burn(i2,kcr,w,attributes) ..
-                 vm_res_ag_burn(i2,kcr,w,attributes) =e=
-                 sum(cell(i2,j2), v18_res_ag_burn_clust(j2,kcr,w,attributes));
+ q18_sumreg_res_biomass_burn(i2,kcr,w,dm_cnr) ..
+                 vm_res_ag_burn(i2,kcr,w,dm_cnr) =e=
+                 sum(cell(i2,j2), v18_res_ag_burn_clust(j2,kcr,w,dm_cnr));
 
 *' While the residue biomass is estiamted with a crop-specific nutrient
 *' composition (which is required for consistent nutrient budgets), the
@@ -81,10 +81,10 @@
 *' guarantees that mass balances are not violated while a homogeneous
 *' good is extracted from heterogeneous goods.
 
- q18_translate(j2,kres,attributes)..
-                  sum((kres_kcr(kres,kcr),w), v18_res_ag_removal_clust(j2,kcr,w,attributes))
+ q18_translate(j2,kres,dm_cnr)..
+                  sum((kres_kcr(kres,kcr),w), v18_res_ag_removal_clust(j2,kcr,w,dm_cnr))
                   =e=
-                  v18_prod_res(j2,kres) * fm_attributes(attributes,kres);
+                  v18_prod_res(j2,kres) * fm_attributes(dm_cnr,kres);
 
 *' sum to the regional amount of residues produced for the regional interface
 
