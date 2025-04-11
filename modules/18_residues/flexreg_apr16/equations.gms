@@ -28,12 +28,12 @@
                    vm_res_biomass_ag(i2,kcr,w,"dm")) * f18_cgf("bg_to_ag",kcr)
                  * f18_attributes_residue_bg(dm_cnr,kcr);
 
-*' In contrast to AG biomass, AG production `vm_res_biomass_ag(i,kcr,attributes)`
+*' In contrast to AG biomass, AG production `vm_res_biomass_ag(i,kcr,w,dm_cnr)`
 *' is defined as the part of residues which is removed from the field. The
 *' difference between biomass and production is either burned on field or
 *' remains on the fields (either incorporated in soils or not) and decays.
 *' The field balance equations ensures that the production of AG residues
-*' `vm_res_biomass_ag(i,kcr,attributes)` is properly assigned to different uses:
+*' `vm_res_biomass_ag(i,kcr,w,dm_cnr)` is properly assigned to different uses:
 *' removal, on-field burning and recycling of AG residues.
 
  q18_res_field_balance(i2,kcr,w,dm_cnr) ..

@@ -99,30 +99,17 @@
 *' BG residues. They are calculated to be transmitted to the nitrogen budget
 *' module [50_nr_soil_budget].
 
- q18_res_recycling_cnr_clust(j2,kcr,w,c_nr) ..
-                  v18_res_recycling_clust(j2,kcr,w,c_nr)
+ q18_res_recycling_cnr_clust(j2,kcr,w,dm_cnr) ..
+                  v18_res_recycling_clust(j2,kcr,w,dm_cnr)
                   =e=
-                  v18_res_ag_recycling_clust(j2,kcr,w,c_nr)
-                    + v18_res_ag_burn_clust(j2,kcr,w,c_nr)*(1-f18_res_combust_eff(kcr))
-                    + v18_res_biomass_bg_clust(j2,kcr,w,c_nr)
+                  v18_res_ag_recycling_clust(j2,kcr,w,dm_cnr)
+                    + v18_res_ag_burn_clust(j2,kcr,w,dm_cnr)*(1-f18_res_combust_eff(kcr))
+                    + v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr)
                   ;
 
-*' Similar to the recycled nutrients, the potash recycling is determined by the
-*' amount of AG residues with the potash content and the amounts of potash from
-*' burning residues. As P and K are not volatile and hardly water soluble, only
-*' removed aboveground crop residues have to be considered, while nutrients from
-*' burned AG as well as BG stay on the field.
-
- q18_res_recycling_pk_clust(j2,kcr,w,pk18) ..
-                  v18_res_recycling_clust(j2,kcr,w,pk18)
-                  =e=
-                    v18_res_ag_recycling_clust(j2,kcr,w,pk18)
-                    + v18_res_ag_burn_clust(j2,kcr,w,pk18)
-                  ;
-
- q18_sumreg_res_recycling(i2,kcr,w,cnpk18) ..
-                 vm_res_recycling(i2,kcr,w,cnpk18) =e=
-                 sum(cell(i2,j2), v18_res_recycling_clust(j2,kcr,w,cnpk18));
+ q18_sumreg_res_recycling(i2,kcr,w,dm_cnr) ..
+                 vm_res_recycling(i2,kcr,w,dm_cnr) =e=
+                 sum(cell(i2,j2), v18_res_recycling_clust(j2,kcr,w,dm_cnr));
 
 *' Costs of residue harvest are based on straw baling and hauling from 
 *' Budynski, Stephanie. 2020. Straw Manufacturing in Alberta (@budynski_straw_2020), 
