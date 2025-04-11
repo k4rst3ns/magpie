@@ -13,15 +13,15 @@ positive variables
  vm_res_ag_burn(i,kcr,w,attributes)         Residues burned on fields in respective attribute units DM GJ Nr P K WM C (mio. tX)
  vm_res_recycling(i,kcr,w,attributes)       Residues recycled to croplands in respective nutrients Nr P K units (mio. tX)
  vm_cost_prod_kres(i,kres)                  Production costs of harvesting crop residues (mio. USD17MER per yr)
+ v18_res_ag_removal_clust(j,kcr,w,attributes)   Removal of crop residues in respective attribute units DM GJ Nr P K WM C (mio. tX)
+ v18_res_ag_recycling_clust(j,kcr,w,attributes) Recylcing of crop residues to soils in respective attribute units DM GJ Nr P K WM C (mio. tX)
+ v18_res_recycling_clust(j,kcr,w,attributes)    Residues recycled to croplands in respective nutrients Nr P K units in each cluster (mio. tX)
 ;
 
 variables
  v18_res_biomass_ag_clust(j,kcr,w,attributes)   Production of aboveground residues in each cluster (mio. tDM)
  v18_res_biomass_bg_clust(j,kcr,w,attributes)   Production of belowground residues in each cluster (mio. tDM)
- v18_res_ag_removal_clust(j,kcr,w,attributes)   Removal of crop residues in respective attribute units DM GJ Nr P K WM C (mio. tX)
- v18_res_ag_recycling_clust(j,kcr,w,attributes) Recylcing of crop residues to soils in respective attribute units DM GJ Nr P K WM C (mio. tX)
  v18_res_ag_burn_clust(j,kcr,w,attributes)      Residues burned on fields in respective attribute units DM GJ Nr P K WM C in each cluster (mio. tX)
- v18_res_recycling_clust(j,kcr,w,attributes)    Residues recycled to croplands in respective nutrients Nr P K units in each cluster (mio. tX)
 ;
 
 equations
@@ -52,12 +52,12 @@ parameters
  ov_res_ag_burn(t,i,kcr,w,attributes,type)               Residues burned on fields in respective attribute units DM GJ Nr P K WM C (mio. tX)
  ov_res_recycling(t,i,kcr,w,attributes,type)             Residues recycled to croplands in respective nutrients Nr P K units (mio. tX)
  ov_cost_prod_kres(t,i,kres,type)                        Production costs of harvesting crop residues (mio. USD17MER per yr)
- ov18_res_biomass_ag_clust(t,j,kcr,w,attributes,type)    Production of aboveground residues in each cluster (mio. tDM)
- ov18_res_biomass_bg_clust(t,j,kcr,w,attributes,type)    Production of belowground residues in each cluster (mio. tDM)
  ov18_res_ag_removal_clust(t,j,kcr,w,attributes,type)    Removal of crop residues in respective attribute units DM GJ Nr P K WM C (mio. tX)
  ov18_res_ag_recycling_clust(t,j,kcr,w,attributes,type)  Recylcing of crop residues to soils in respective attribute units DM GJ Nr P K WM C (mio. tX)
- ov18_res_ag_burn_clust(t,j,kcr,w,attributes,type)       Residues burned on fields in respective attribute units DM GJ Nr P K WM C in each cluster (mio. tX)
  ov18_res_recycling_clust(t,j,kcr,w,attributes,type)     Residues recycled to croplands in respective nutrients Nr P K units in each cluster (mio. tX)
+ ov18_res_biomass_ag_clust(t,j,kcr,w,attributes,type)    Production of aboveground residues in each cluster (mio. tDM)
+ ov18_res_biomass_bg_clust(t,j,kcr,w,attributes,type)    Production of belowground residues in each cluster (mio. tDM)
+ ov18_res_ag_burn_clust(t,j,kcr,w,attributes,type)       Residues burned on fields in respective attribute units DM GJ Nr P K WM C in each cluster (mio. tX)
  oq18_prod_res_ag_clust(t,j,kcr,w,attributes,type)       Production constraint of aboveground residues (mio. tDM)
  oq18_sumreg_res_biomass_ag(t,i,kcr,w,attributes,type)   Regional above-ground residue biomass (mio. tX per yr)
  oq18_prod_res_bg_clust(t,j,kcr,w,dm_cnr,type)           Production constraint of belowground residues (mio. tDM)
