@@ -28,20 +28,20 @@ m_fillmissingyears(f59_topsoilc_density,"j");
 
 table f59_cinput_multiplier_residue(i,sPools59,kcr,tillage59) LPJ topsoil carbon density for natural vegetation (tC per ha)
 $ondelim
-$include "./modules/59_som/threepool_may23/input/f59_cinput_multiplier_residue.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_cinput_multiplier_residue.cs3"
 $offdelim
 ;
 
 table f59_cinput_multiplier_manure(i,sPools59,kli,tillage59) LPJ topsoil carbon density for natural vegetation (tC per ha)
 $ondelim
-$include "./modules/59_som/threepool_may23/input/f59_cinput_multiplier_manure.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_cinput_multiplier_manure.cs3"
 $offdelim
 ;
 
 
 table f59_litter_input(t_all,i,sPools59) LPJ topsoil carbon density for natural vegetation (tC per ha)
 $ondelim
-$include "./modules/59_som/threepool_may23/input/f59_litter_input.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_litter_input.cs3"
 $offdelim
 ;
 $if "%c59_som_scenario%" == "nocc" 
@@ -53,7 +53,7 @@ m_fillmissingyears(f59_litter_input,"i,sPools59");
 
 table f59_topsoilc_decay(t_all,i,sPools59,w,tillage59) Soil decay rates for all SOC sub-pools per year (1)
 $ondelim
-$include "./modules/59_som/threepool_may23/input/f59_topsoilc_decay.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_topsoilc_decay.cs3"
 $offdelim
 ;
 $if "%c59_som_scenario%" == "nocc" 
@@ -65,18 +65,18 @@ m_fillmissingyears(f59_topsoilc_decay,"i,sPools59,w,tillage59");
 
 table f59_topsoilc_actualstate(i,sPools59,lutypes59) LPJ topsoil carbon for different pools and lu types(million tC)
 $ondelim 
-$include "./modules/59_som/threepool_may23/input/f59_topsoilc_actualstate.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_topsoilc_actualstate.cs3"
 $offdelim
 ;
 
 table f59_topsoilc_naturalstate(i,sPools59,lutypes59) LPJ natural topsoil carbon for different pools and lu types(million tC)
 $ondelim
-$include "./modules/59_som/threepool_may23/input/f59_topsoilc_naturalstate.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_topsoilc_naturalstate.cs3"
 $offdelim
 ;
 
 table f59_land_y1990(t_pre59,i,land) land use in y1990 (million ha)
 $ondelim
-$include "./modules/59_som/threepool_may23/input/f59_land_y1990.cs3"
+$include "./modules/59_som/threepool_reg_may23/input/f59_land_y1990.cs3"
 $offdelim
 ;
