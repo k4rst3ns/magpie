@@ -1,0 +1,8 @@
+* list of files that are required here
+f59_land_y1990.cs3
+f59_cinput_multiplier_residue.cs3
+f59_cinput_multiplier_manure.cs3
+f59_litter_input.cs3
+f59_topsoilc_decay.cs3
+f59_topsoilc_actualstate.cs3
+f59_topsoilc_naturalstate.cs3

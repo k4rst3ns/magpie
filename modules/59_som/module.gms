@@ -19,4 +19,5 @@
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%som%" == "cellpool_jan23" $include "./modules/59_som/cellpool_jan23/realization.gms"
 $Ifi "%som%" == "static_jan19" $include "./modules/59_som/static_jan19/realization.gms"
+$Ifi "%som%" == "threepool_may23" $include "./modules/59_som/threepool_may23/realization.gms"
 *###################### R SECTION END (MODULETYPES) ############################

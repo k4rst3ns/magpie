@@ -8,11 +8,11 @@
 
 sets
 
-dm_nr(attributes) dry matter and nr
+dm_cnr(attributes) dry matter carbon and nr
 /dm, nr, c/
 
-pk18(npk) subset of npk containing P and K nutrients
-/p, k/
+cnr(dm_cnr) carbon and nr
+/nr, c/
 
 dev18 country develoment indicator
 /high_income,low_income/

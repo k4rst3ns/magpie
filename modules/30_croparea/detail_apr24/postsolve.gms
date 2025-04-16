@@ -14,6 +14,8 @@
  ov30_penalty(t,j,rota30,"marginal")               = v30_penalty.m(j,rota30);
  ov30_betr_missing(t,j,"marginal")                 = v30_betr_missing.m(j);
  ov30_crop_area(t,i,"marginal")                    = v30_crop_area.m(i);
+ ov_prod_kcr_w(t,j,kcr,w,"marginal")               = vm_prod_kcr_w.m(j,kcr,w);
+ oq30_prod_kcr_w(t,j,kcr,w,"marginal")             = q30_prod_kcr_w.m(j,kcr,w);
  oq30_prod(t,j,kcr,"marginal")                     = q30_prod.m(j,kcr);
  oq30_betr_missing(t,j,"marginal")                 = q30_betr_missing.m(j);
  oq30_rotation_penalty(t,i,"marginal")             = q30_rotation_penalty.m(i);
@@ -33,6 +35,8 @@
  ov30_penalty(t,j,rota30,"level")                  = v30_penalty.l(j,rota30);
  ov30_betr_missing(t,j,"level")                    = v30_betr_missing.l(j);
  ov30_crop_area(t,i,"level")                       = v30_crop_area.l(i);
+ ov_prod_kcr_w(t,j,kcr,w,"level")                  = vm_prod_kcr_w.l(j,kcr,w);
+ oq30_prod_kcr_w(t,j,kcr,w,"level")                = q30_prod_kcr_w.l(j,kcr,w);
  oq30_prod(t,j,kcr,"level")                        = q30_prod.l(j,kcr);
  oq30_betr_missing(t,j,"level")                    = q30_betr_missing.l(j);
  oq30_rotation_penalty(t,i,"level")                = q30_rotation_penalty.l(i);
@@ -52,6 +56,8 @@
  ov30_penalty(t,j,rota30,"upper")                  = v30_penalty.up(j,rota30);
  ov30_betr_missing(t,j,"upper")                    = v30_betr_missing.up(j);
  ov30_crop_area(t,i,"upper")                       = v30_crop_area.up(i);
+ ov_prod_kcr_w(t,j,kcr,w,"upper")                  = vm_prod_kcr_w.up(j,kcr,w);
+ oq30_prod_kcr_w(t,j,kcr,w,"upper")                = q30_prod_kcr_w.up(j,kcr,w);
  oq30_prod(t,j,kcr,"upper")                        = q30_prod.up(j,kcr);
  oq30_betr_missing(t,j,"upper")                    = q30_betr_missing.up(j);
  oq30_rotation_penalty(t,i,"upper")                = q30_rotation_penalty.up(i);
@@ -71,6 +77,8 @@
  ov30_penalty(t,j,rota30,"lower")                  = v30_penalty.lo(j,rota30);
  ov30_betr_missing(t,j,"lower")                    = v30_betr_missing.lo(j);
  ov30_crop_area(t,i,"lower")                       = v30_crop_area.lo(i);
+ ov_prod_kcr_w(t,j,kcr,w,"lower")                  = vm_prod_kcr_w.lo(j,kcr,w);
+ oq30_prod_kcr_w(t,j,kcr,w,"lower")                = q30_prod_kcr_w.lo(j,kcr,w);
  oq30_prod(t,j,kcr,"lower")                        = q30_prod.lo(j,kcr);
  oq30_betr_missing(t,j,"lower")                    = q30_betr_missing.lo(j);
  oq30_rotation_penalty(t,i,"lower")                = q30_rotation_penalty.lo(i);

@@ -25,9 +25,11 @@ positive variables
  v30_penalty(j,rota30)                Penalty for violating rotational constraints (mio. USD17MER)
  v30_betr_missing(j)                  Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                     Total regional crop production area (mio. ha)
+ vm_prod_kcr_w(j,kcr,w)               Agricultural production per crop group and irrigation type (mio. tDM per yr)
 ;
 
 equations
+ q30_prod_kcr_w(j,kcr,w)            Irrigation type specific production of cropped products (mio. tDM per yr)
  q30_prod(j,kcr)                      Production of cropped products (mio. tDM)
  q30_betr_missing(j)                Missing bioenergy tree land towards target (mio. ha)
  q30_rotation_penalty(i)              Total penalty for rotational constraint violations (mio. USD17MER)
@@ -51,6 +53,8 @@ parameters
  ov30_penalty(t,j,rota30,type)               Penalty for violating rotational constraints (mio. USD17MER)
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
+ ov_prod_kcr_w(t,j,kcr,w,type)               Agricultural production per crop group and irrigation type (mio. tDM per yr)
+ oq30_prod_kcr_w(t,j,kcr,w,type)             Irrigation type specific production of cropped products (mio. tDM per yr)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  oq30_rotation_penalty(t,i,type)             Total penalty for rotational constraint violations (mio. USD17MER)

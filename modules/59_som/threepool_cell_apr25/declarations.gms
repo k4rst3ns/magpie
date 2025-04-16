@@ -1,0 +1,74 @@
+*** |  (C) 2008-2023 Potsdam Institute for Climate Impact Research (PIK)
+*** |  authors, and contributors see CITATION.cff file. This file is part
+*** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+*** |  AGPL-3.0, you are granted additional permissions described in the
+*** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
+*** |  Contact: magpie@pik-potsdam.de
+
+parameters
+          i59_cinput_multiplier_residue(j, sPools59, kcr)                 Carbon input to soil pool input multipliers (1)
+          i59_topsoilc_decay_max1(t, j, sPools59, w, tillage59)           Soil decay rates for all SOC sub-pools per year cut at 1 (1)
+          pc59_topsoilc_decay_timestep(j, sPools59, w, tillage59)         Soil decay rates for all SOC sub-pools per time steps length (1)
+          p59_topsoilc_density_pre(t_all, j, land, sPools59)              Soil carbon density of the upper layer per hectare before solve (tC per ha)
+          p59_topsoilc_density_post(t_all, j, land, sPools59)             Soil carbon density of the upper layer per hectare after solve (tC per ha)
+          p59_topsoilc_actualstate(j, land, sPools59)                     Actual soil carbon stock per land type (mio. tC)
+          p59_topsoilc_naturalstate(t_all, j, land, sPools59)             Natural soil carbon stock per land type (mio. tC)
+          pc59_topsoilc_natural_steadystate(j, land, sPools59)            Natural steady state soil carbon stpock (mio. tC)
+          pc59_topsoilc_naturalstate_previous(j, land, sPools59)          Natural state of the time step before (mio. tC)
+          i59_subsoilc_density(t_all,j)                                   Subsoil carbon density of per hectare (tC per ha)
+          p59_land_before(j,land)                                         Land area in previous time step (mio. ha)
+;
+
+equations
+         q59_steadystate_term_crop(j, sPools59, w, tillage59)                    Steady-state for SOC stock on cropland (mio. tC)
+         q59_previousstate_term_crop(j, sPools59, w, tillage59)               bla
+         q59_lutransitions_to_cropareas(j, noncropland59)                    bla
+         q59_actualstate_crop(j, sPools59)                                   bla
+         q59_steadystate_term_noncrop(j, noncropland59, sPools59)            bla
+         q59_previousstate_term_noncrop(j, noncropland59, sPools59)             Steady-state for SOC on various non-cropland types (mio. tC)
+         q59_actualstate_noncrop(j, noncropland59, sPools59)                 bla
+         q59_carbon_soil(j, land, stockType)                                 bla
+         q59_nr_som(i)                                                          bla
+         q59_nr_som_fertilizer2(i)                                              bla
+         q59_nr_som_fertilizer(i)                                               bla
+;
+
+positive variables
+         v59_topsoilc_crop_steadystate(j, sPools59, w, tillage59)             bla
+         v59_topsoilc_noncrop_steadystate(j, noncropland59, sPools59)        bla
+         v59_topsoilc_crop_previousstate(j, sPools59, w, tillage59)           bla
+         v59_cropland_transitions(j, tillage59, w, noncropland59)            bla
+         v59_topsoilc_noncrop_previousstate(j, noncropland59, sPools59)      bla
+         v59_topsoilc_actualstate(j, land, sPools59)                         bla
+        vm_cost_scm(j)                      Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
+;
+
+variables
+         vm_nr_som(i)                                       Release of soil organic matter (Mt N per yr)
+         vm_nr_som_fertilizer(i)                            Uptake of soil organic matter from plants (Mt N per yr)
+;
+
+*#################### R SECTION START (OUTPUT DECLARATIONS) ####################
+parameters
+ ov59_topsoilc_crop_steadystate(t,i,sPools59,w,tillage59,type)        bla
+ ov59_topsoilc_noncrop_steadystate(t,i,noncropland59,sPools59,type)   bla
+ ov59_topsoilc_crop_previousstate(t,i,sPools59,w,tillage59,type)      bla
+ ov59_cropland_transitions(t,i,tillage59,w,noncropland59,type)        bla
+ ov59_topsoilc_noncrop_previousstate(t,i,noncropland59,sPools59,type) bla
+ ov59_topsoilc_actualstate(t,i,land,sPools59,type)                    bla
+ ov_cost_scm(t,j,type)                                                Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
+ ov_nr_som(t,i,type)                                                  Release of soil organic matter (Mt N per yr)
+ ov_nr_som_fertilizer(t,i,type)                                       Uptake of soil organic matter from plants (Mt N per yr)
+ oq59_steadystate_term_crop(t,i,sPools59,w,tillage59,type)            Steady-state for SOC stock on cropland (mio. tC)
+ oq59_previousstate_term_crop(t,i,sPools59,w,tillage59,type)          bla
+ oq59_lutransitions_to_cropareas(t,i,noncropland59,type)              bla
+ oq59_actualstate_crop(t,i,sPools59,type)                             bla
+ oq59_steadystate_term_noncrop(t,i,noncropland59,sPools59,type)       bla
+ oq59_previousstate_term_noncrop(t,i,noncropland59,sPools59,type)     Steady-state for SOC on various non-cropland types (mio. tC)
+ oq59_actualstate_noncrop(t,i,noncropland59,sPools59,type)            bla
+ oq59_carbon_soil(t,i,land,stockType,type)                            bla
+ oq59_nr_som(t,i,type)                                                bla
+ oq59_nr_som_fertilizer2(t,i,type)                                    bla
+ oq59_nr_som_fertilizer(t,i,type)                                     bla
+;
+*##################### R SECTION END (OUTPUT DECLARATIONS) #####################

@@ -20,9 +20,11 @@ positive variables
  vm_carbon_stock_croparea(j,ag_pools)   Carbon stock in croparea (tC)
  v30_betr_missing(j)                    Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                       Total regional crop production area (mio. ha)
+ vm_prod_kcr_w(j,kcr,w)                 Agricultural production per crop group and irrigation type (mio. tDM per yr)
 ;
 
 equations
+ q30_prod_kcr_w(j,kcr,w)            Irrigation type specific production of cropped products (mio. tDM per yr)
  q30_prod(j,kcr)                    Production of cropped products (mio. tDM)
  q30_betr_missing(j)                Missing bioenergy tree land towards target (mio. ha)
  q30_cost(i)                        Cost (mio. USD17MER)
@@ -41,6 +43,8 @@ parameters
  ov_carbon_stock_croparea(t,j,ag_pools,type) Carbon stock in croparea (tC)
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
+ ov_prod_kcr_w(t,j,kcr,w,type)               Agricultural production per crop group and irrigation type (mio. tDM per yr)
+ oq30_prod_kcr_w(t,j,kcr,w,type)             Irrigation type specific production of cropped products (mio. tDM per yr)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  oq30_cost(t,i,type)                         Cost (mio. USD17MER)

@@ -17,7 +17,7 @@
 *' @authors Benjamin Leon Bodirsky
 
 *###################### R SECTION START (MODULETYPES) ##########################
-$Ifi "%residues%" == "flexcluster_jul23" $include "./modules/18_residues/flexcluster_jul23/realization.gms"
+$Ifi "%residues%" == "disaggRes_apr25" $include "./modules/18_residues/disaggRes_apr25/realization.gms"
 $Ifi "%residues%" == "flexreg_apr16" $include "./modules/18_residues/flexreg_apr16/realization.gms"
 $Ifi "%residues%" == "off" $include "./modules/18_residues/off/realization.gms"
 *###################### R SECTION END (MODULETYPES) ############################

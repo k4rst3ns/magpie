@@ -24,19 +24,14 @@
 *' on @wirsenius_human_2000, @lal_world_2005 and @feller_dungung_2007. If different CGFs are available
 *' for crops within a crop group, we build a weighted average based on the
 *' production in 1995.
-*' 
-*' This realization enforces cluster-level agricultural residue production, based on agricultural production
-*' at the same level. However, other uses such as burning and recycling are allowed to be balanced at the 
-*' regional level, in order to reduce computational complexity.
-
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/18_residues/flexcluster_jul23/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/18_residues/flexcluster_jul23/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/18_residues/flexcluster_jul23/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/18_residues/flexcluster_jul23/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/18_residues/flexcluster_jul23/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/18_residues/flexcluster_jul23/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/18_residues/flexcluster_jul23/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/18_residues/flexcluster_jul23/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/18_residues/disaggRes_apr25/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/18_residues/disaggRes_apr25/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/18_residues/disaggRes_apr25/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/18_residues/disaggRes_apr25/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/18_residues/disaggRes_apr25/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/18_residues/disaggRes_apr25/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/18_residues/disaggRes_apr25/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/18_residues/disaggRes_apr25/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################
