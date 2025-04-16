@@ -31,8 +31,8 @@
  oq18_sumreg_res_biomass_burn(t,i,kcr,w,dm_cnr,"marginal") = q18_sumreg_res_biomass_burn.m(i,kcr,w,dm_cnr);
  oq18_translate(t,j,kres,dm_cnr,"marginal")                = q18_translate.m(j,kres,dm_cnr);
  oq18_prod_res_cell(t,i,kres,"marginal")                   = q18_prod_res_cell.m(i,kres);
- oq18_res_recycling_cnr_clust(t,j,kcr,w,dm_cnr,"marginal") = q18_res_recycling_cnr_clust.m(j,kcr,w,dm_cnr);
- oq18_sumreg_res_recycling(t,i,kcr,w,dm_cnr,"marginal")    = q18_sumreg_res_recycling.m(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr_clust(t,j,kcr,w,cnr,"marginal")    = q18_res_recycling_cnr_clust.m(j,kcr,w,cnr);
+ oq18_sumreg_res_recycling(t,i,kcr,w,cnr,"marginal")       = q18_sumreg_res_recycling.m(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"marginal")                   = q18_cost_prod_res.m(i,kres);
  ov18_prod_res(t,j,kres,"level")                           = v18_prod_res.l(j,kres);
  ov_res_biomass_ag(t,i,kcr,w,dm_cnr,"level")               = vm_res_biomass_ag.l(i,kcr,w,dm_cnr);
@@ -55,8 +55,8 @@
  oq18_sumreg_res_biomass_burn(t,i,kcr,w,dm_cnr,"level")    = q18_sumreg_res_biomass_burn.l(i,kcr,w,dm_cnr);
  oq18_translate(t,j,kres,dm_cnr,"level")                   = q18_translate.l(j,kres,dm_cnr);
  oq18_prod_res_cell(t,i,kres,"level")                      = q18_prod_res_cell.l(i,kres);
- oq18_res_recycling_cnr_clust(t,j,kcr,w,dm_cnr,"level")    = q18_res_recycling_cnr_clust.l(j,kcr,w,dm_cnr);
- oq18_sumreg_res_recycling(t,i,kcr,w,dm_cnr,"level")       = q18_sumreg_res_recycling.l(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr_clust(t,j,kcr,w,cnr,"level")       = q18_res_recycling_cnr_clust.l(j,kcr,w,cnr);
+ oq18_sumreg_res_recycling(t,i,kcr,w,cnr,"level")          = q18_sumreg_res_recycling.l(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"level")                      = q18_cost_prod_res.l(i,kres);
  ov18_prod_res(t,j,kres,"upper")                           = v18_prod_res.up(j,kres);
  ov_res_biomass_ag(t,i,kcr,w,dm_cnr,"upper")               = vm_res_biomass_ag.up(i,kcr,w,dm_cnr);
@@ -79,8 +79,8 @@
  oq18_sumreg_res_biomass_burn(t,i,kcr,w,dm_cnr,"upper")    = q18_sumreg_res_biomass_burn.up(i,kcr,w,dm_cnr);
  oq18_translate(t,j,kres,dm_cnr,"upper")                   = q18_translate.up(j,kres,dm_cnr);
  oq18_prod_res_cell(t,i,kres,"upper")                      = q18_prod_res_cell.up(i,kres);
- oq18_res_recycling_cnr_clust(t,j,kcr,w,dm_cnr,"upper")    = q18_res_recycling_cnr_clust.up(j,kcr,w,dm_cnr);
- oq18_sumreg_res_recycling(t,i,kcr,w,dm_cnr,"upper")       = q18_sumreg_res_recycling.up(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr_clust(t,j,kcr,w,cnr,"upper")       = q18_res_recycling_cnr_clust.up(j,kcr,w,cnr);
+ oq18_sumreg_res_recycling(t,i,kcr,w,cnr,"upper")          = q18_sumreg_res_recycling.up(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"upper")                      = q18_cost_prod_res.up(i,kres);
  ov18_prod_res(t,j,kres,"lower")                           = v18_prod_res.lo(j,kres);
  ov_res_biomass_ag(t,i,kcr,w,dm_cnr,"lower")               = vm_res_biomass_ag.lo(i,kcr,w,dm_cnr);
@@ -103,8 +103,8 @@
  oq18_sumreg_res_biomass_burn(t,i,kcr,w,dm_cnr,"lower")    = q18_sumreg_res_biomass_burn.lo(i,kcr,w,dm_cnr);
  oq18_translate(t,j,kres,dm_cnr,"lower")                   = q18_translate.lo(j,kres,dm_cnr);
  oq18_prod_res_cell(t,i,kres,"lower")                      = q18_prod_res_cell.lo(i,kres);
- oq18_res_recycling_cnr_clust(t,j,kcr,w,dm_cnr,"lower")    = q18_res_recycling_cnr_clust.lo(j,kcr,w,dm_cnr);
- oq18_sumreg_res_recycling(t,i,kcr,w,dm_cnr,"lower")       = q18_sumreg_res_recycling.lo(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr_clust(t,j,kcr,w,cnr,"lower")       = q18_res_recycling_cnr_clust.lo(j,kcr,w,cnr);
+ oq18_sumreg_res_recycling(t,i,kcr,w,cnr,"lower")          = q18_sumreg_res_recycling.lo(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"lower")                      = q18_cost_prod_res.lo(i,kres);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
 

@@ -34,8 +34,8 @@ equations
  q18_sumreg_res_biomass_burn(i,kcr,w,dm_cnr)  Regional burned residue biomass (mio. tX per yr)
  q18_translate(j,kres,dm_cnr)           Transformation of the multiple crop residues into supply balance crop redisues in respective attribute units DM GJ Nr P K WM C (mio. tX) 
  q18_prod_res_cell(i,kres)                  Allows for distribution of residues to cellular level (mio. tDM)
- q18_res_recycling_cnr_clust(j,kcr,w,dm_cnr)        Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
- q18_sumreg_res_recycling(i,kcr,w,dm_cnr)     Regional recycled residue biomass (mio. tX per yr)
+ q18_res_recycling_cnr_clust(j,kcr,w,cnr)        Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
+ q18_sumreg_res_recycling(i,kcr,w,cnr)     Regional recycled residue biomass (mio. tX per yr)
  q18_cost_prod_res(i,kres)                  Production costs of harvesting crop residues (mio. USD17MER)
 ;
 
@@ -66,8 +66,8 @@ parameters
  oq18_sumreg_res_biomass_burn(t,i,kcr,w,dm_cnr,type) Regional burned residue biomass (mio. tX per yr)
  oq18_translate(t,j,kres,dm_cnr,type)                Transformation of the multiple crop residues into supply balance crop redisues in respective attribute units DM GJ Nr P K WM C (mio. tX)
  oq18_prod_res_cell(t,i,kres,type)                   Allows for distribution of residues to cellular level (mio. tDM)
- oq18_res_recycling_cnr_clust(t,j,kcr,w,dm_cnr,type) Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
- oq18_sumreg_res_recycling(t,i,kcr,w,dm_cnr,type)    Regional recycled residue biomass (mio. tX per yr)
+ oq18_res_recycling_cnr_clust(t,j,kcr,w,cnr,type)    Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
+ oq18_sumreg_res_recycling(t,i,kcr,w,cnr,type)       Regional recycled residue biomass (mio. tX per yr)
  oq18_cost_prod_res(t,i,kres,type)                   Production costs of harvesting crop residues (mio. USD17MER)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

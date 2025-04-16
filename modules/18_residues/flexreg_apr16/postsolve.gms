@@ -24,7 +24,7 @@
  oq18_res_field_burn(t,i,kcr,w,dm_cnr,"marginal")    = q18_res_field_burn.m(i,kcr,w,dm_cnr);
  oq18_translate(t,i,kres,dm_cnr,"marginal")          = q18_translate.m(i,kres,dm_cnr);
  oq18_prod_res_reg(t,i,kres,"marginal")              = q18_prod_res_reg.m(i,kres);
- oq18_res_recycling_cnr(t,i,kcr,w,dm_cnr,"marginal") = q18_res_recycling_cnr.m(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr(t,i,kcr,w,cnr,"marginal")    = q18_res_recycling_cnr.m(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"marginal")             = q18_cost_prod_res.m(i,kres);
  ov18_prod_res(t,j,kres,"level")                     = v18_prod_res.l(j,kres);
  ov_res_biomass_ag(t,i,kcr,w,dm_cnr,"level")         = vm_res_biomass_ag.l(i,kcr,w,dm_cnr);
@@ -40,7 +40,7 @@
  oq18_res_field_burn(t,i,kcr,w,dm_cnr,"level")       = q18_res_field_burn.l(i,kcr,w,dm_cnr);
  oq18_translate(t,i,kres,dm_cnr,"level")             = q18_translate.l(i,kres,dm_cnr);
  oq18_prod_res_reg(t,i,kres,"level")                 = q18_prod_res_reg.l(i,kres);
- oq18_res_recycling_cnr(t,i,kcr,w,dm_cnr,"level")    = q18_res_recycling_cnr.l(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr(t,i,kcr,w,cnr,"level")       = q18_res_recycling_cnr.l(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"level")                = q18_cost_prod_res.l(i,kres);
  ov18_prod_res(t,j,kres,"upper")                     = v18_prod_res.up(j,kres);
  ov_res_biomass_ag(t,i,kcr,w,dm_cnr,"upper")         = vm_res_biomass_ag.up(i,kcr,w,dm_cnr);
@@ -56,7 +56,7 @@
  oq18_res_field_burn(t,i,kcr,w,dm_cnr,"upper")       = q18_res_field_burn.up(i,kcr,w,dm_cnr);
  oq18_translate(t,i,kres,dm_cnr,"upper")             = q18_translate.up(i,kres,dm_cnr);
  oq18_prod_res_reg(t,i,kres,"upper")                 = q18_prod_res_reg.up(i,kres);
- oq18_res_recycling_cnr(t,i,kcr,w,dm_cnr,"upper")    = q18_res_recycling_cnr.up(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr(t,i,kcr,w,cnr,"upper")       = q18_res_recycling_cnr.up(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"upper")                = q18_cost_prod_res.up(i,kres);
  ov18_prod_res(t,j,kres,"lower")                     = v18_prod_res.lo(j,kres);
  ov_res_biomass_ag(t,i,kcr,w,dm_cnr,"lower")         = vm_res_biomass_ag.lo(i,kcr,w,dm_cnr);
@@ -72,7 +72,7 @@
  oq18_res_field_burn(t,i,kcr,w,dm_cnr,"lower")       = q18_res_field_burn.lo(i,kcr,w,dm_cnr);
  oq18_translate(t,i,kres,dm_cnr,"lower")             = q18_translate.lo(i,kres,dm_cnr);
  oq18_prod_res_reg(t,i,kres,"lower")                 = q18_prod_res_reg.lo(i,kres);
- oq18_res_recycling_cnr(t,i,kcr,w,dm_cnr,"lower")    = q18_res_recycling_cnr.lo(i,kcr,w,dm_cnr);
+ oq18_res_recycling_cnr(t,i,kcr,w,cnr,"lower")       = q18_res_recycling_cnr.lo(i,kcr,w,cnr);
  oq18_cost_prod_res(t,i,kres,"lower")                = q18_cost_prod_res.lo(i,kres);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
 

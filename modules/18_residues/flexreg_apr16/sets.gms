@@ -8,8 +8,11 @@
 
 sets
 
-dm_cnr(attributes) dry matter and nr
+dm_cnr(attributes) dry matter carbon and nr
 /dm, nr, c/
+
+cnr(dm_cnr) carbon and nr
+/nr, c/
 
 dev18 country develoment indicator
 /high_income,low_income/

@@ -24,7 +24,7 @@ equations
  q18_res_field_burn(i,kcr,w,dm_cnr)     Fixing of the residues amount burned in a region in respective attribute units DM GJ Nr P K WM C (mio. tX)
  q18_translate(i,kres,dm_cnr)           Transformation of the multiple crop residues into supply balance crop redisues in respective attribute units DM GJ Nr P K WM C (mio. tX) 
  q18_prod_res_reg(i,kres)                 Allows for distribution of residues to cellular level (mio. tDM)
- q18_res_recycling_cnr(i,kcr,w,dm_cnr)       Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
+ q18_res_recycling_cnr(i,kcr,w,cnr)       Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
  q18_cost_prod_res(i,kres)                  Production costs of harvesting crop residues (mio. USD17MER)
 ;
 
@@ -48,7 +48,7 @@ parameters
  oq18_res_field_burn(t,i,kcr,w,dm_cnr,type)    Fixing of the residues amount burned in a region in respective attribute units DM GJ Nr P K WM C (mio. tX)
  oq18_translate(t,i,kres,dm_cnr,type)          Transformation of the multiple crop residues into supply balance crop redisues in respective attribute units DM GJ Nr P K WM C (mio. tX)
  oq18_prod_res_reg(t,i,kres,type)              Allows for distribution of residues to cellular level (mio. tDM)
- oq18_res_recycling_cnr(t,i,kcr,w,dm_cnr,type) Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
+ oq18_res_recycling_cnr(t,i,kcr,w,cnr,type)    Nutrient recycling of carbon and reaactive nitrogen (mio. tX)
  oq18_cost_prod_res(t,i,kres,type)             Production costs of harvesting crop residues (mio. USD17MER)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

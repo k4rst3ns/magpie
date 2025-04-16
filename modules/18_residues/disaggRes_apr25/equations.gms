@@ -20,7 +20,7 @@
                  v18_res_biomass_ag_clust(j2,kcr,w,dm_cnr)
                  =e=
                  (vm_area(j2,kcr,w) * sum((ct, cell(i2,j2)), f18_multicropping(ct,i2)) * f18_cgf("intercept",kcr)
-                 + vm_prod_kcr_w(j2,kcr,w) * f18_cgf("slope",kcr))
+                  + vm_prod_kcr_w(j2,kcr,w) * f18_cgf("slope",kcr))
                  * f18_attributes_residue_ag(dm_cnr,kcr);
 
 *' The BG crop residue biomass `vm_res_biomass_bg` is calculated as a function of
@@ -30,7 +30,7 @@
  q18_prod_res_bg_clust(j2,kcr,w,dm_cnr) ..
                  v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr)
                  =e=
-                 (vm_prod_kcr_w(j2,kcr,w) + 
+                 (vm_prod_kcr_w(j2,kcr,w) +
                    v18_res_biomass_ag_clust(j2,kcr,w,"dm")) * f18_cgf("bg_to_ag",kcr)
                  * f18_attributes_residue_bg(dm_cnr,kcr);
 
@@ -99,17 +99,17 @@
 *' BG residues. They are calculated to be transmitted to the nitrogen budget
 *' module [50_nr_soil_budget].
 
- q18_res_recycling_cnr_clust(j2,kcr,w,dm_cnr) ..
-                  v18_res_recycling_clust(j2,kcr,w,dm_cnr)
+ q18_res_recycling_cnr_clust(j2,kcr,w,cnr) ..
+                  v18_res_recycling_clust(j2,kcr,w,cnr)
                   =e=
-                  v18_res_ag_recycling_clust(j2,kcr,w,dm_cnr)
-                    + v18_res_ag_burn_clust(j2,kcr,w,dm_cnr)*(1-f18_res_combust_eff(kcr))
-                    + v18_res_biomass_bg_clust(j2,kcr,w,dm_cnr)
+                  v18_res_ag_recycling_clust(j2,kcr,w,cnr)
+                    + v18_res_ag_burn_clust(j2,kcr,w,cnr)*(1-f18_res_combust_eff(kcr))
+                    + v18_res_biomass_bg_clust(j2,kcr,w,cnr)
                   ;
 
- q18_sumreg_res_recycling(i2,kcr,w,dm_cnr) ..
-                 vm_res_recycling(i2,kcr,w,dm_cnr) =e=
-                 sum(cell(i2,j2), v18_res_recycling_clust(j2,kcr,w,dm_cnr));
+ q18_sumreg_res_recycling(i2,kcr,w,cnr) ..
+                 vm_res_recycling(i2,kcr,w,cnr) =e=
+                 sum(cell(i2,j2), v18_res_recycling_clust(j2,kcr,w,cnr));
 
 *' Costs of residue harvest are based on straw baling and hauling from 
 *' Budynski, Stephanie. 2020. Straw Manufacturing in Alberta (@budynski_straw_2020), 
