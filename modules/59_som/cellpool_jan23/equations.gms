@@ -45,8 +45,8 @@ q59_som_target_noncropland(j2,noncropland59) ..
 
 q59_som_pool(j2,land) ..
                v59_som_pool(j2,land)
-               =e= sum(ct,i59_lossrate(ct)) * v59_som_target(j2,land)
-                   + (1 - sum(ct,i59_lossrate(ct))) *
+               =e= sum(ct,i59_lossrate(ct,j2)) * v59_som_target(j2,land)
+                   + (1 - sum(ct,i59_lossrate(ct,j2))) *
                    sum((ct,land_from), p59_carbon_density(ct,j2,land_from) *
                      vm_lu_transitions(j2,land_from,land))
                ;
@@ -68,7 +68,7 @@ q59_carbon_soil(j2,land,stockType) ..
 
 q59_nr_som(j2) ..
            vm_nr_som(j2)
-           =e= sum(ct,i59_lossrate(ct))/m_timestep_length*1/15
+           =e= sum(ct,i59_lossrate(ct,j2))/m_timestep_length*1/15
                * (sum((ct,land_from), p59_carbon_density(ct,j2,land_from) *
                    vm_lu_transitions(j2,land_from,"crop"))
                - v59_som_target(j2,"crop"))

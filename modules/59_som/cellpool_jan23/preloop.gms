@@ -42,7 +42,20 @@ vm_carbon_stock.l(j,noncropland59,"soilc",stockType) = pcm_carbon_stock(j,noncro
 *' of a lossrate of 15% per year resulting in 44% in 5 years, 80% in 10 years
 *' and 96% in 20 years. The lossrate for a given timestep is than calculate by
 
-i59_lossrate(t)=1-0.85**m_yeardiff(t);
+if (s59_lossrate_spatial = 1,
+
+  i59_annualrate_climate("temperate_dry")   = 0.989;
+  i59_annualrate_climate("temperate_moist") = 0.991;
+  i59_annualrate_climate("tropical_dry")    = 0.971;
+  i59_annualrate_climate("tropical_moist")  = 0.965;
+
+  i59_annualrate(j) = sum(climate59, sum(clcl_climate59(clcl,climate59),
+                        pm_climate_class(j,clcl)) * i59_annualrate_climate(climate59));
+else
+  i59_annualrate(j) = 0.85; 
+);
+
+i59_lossrate(t,j)=1-i59_annualrate(j)**m_yeardiff(t);
 
 *' The stock change factors are implemented for cropland subsystems divided by
 *' MAgPIE crop types as well as potentially for tillage and input management.

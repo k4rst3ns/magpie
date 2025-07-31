@@ -6,7 +6,9 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 parameters
-          i59_lossrate(t)                      Rate of loss or recovery of SOM pool per timestep (1)
+          i59_annualrate_climate(climate59)    Rate of approaching long term equilibrium of SOM pool per year per climate (1)
+          i59_annualrate(j)                    Rate of approaching long term equilibrium of SOM pool per year per cell (1)
+          i59_lossrate(t,j)                    Rate of loss or recovery of SOM pool per timestep (1)
           p59_carbon_density(t_all,j,land)     Soil carbon density of a hectare of land (tC per ha)
           pc59_carbon_density(j,land)          Soil carbon density of a hectare of land between time steps (tC per ha)
           i59_tillage_share(i,tillage59)       Share of land under tillage class (1)

@@ -8,11 +8,12 @@
 scalars
   s59_nitrogen_uptake  Maximum plant available nitrogen from soil organic matter loss (tN per ha)        / 0.2 /
   s59_fader_functional_form       Switch for functional form of faders (1) / 1 / 
-  s59_scm_target                  Share of soil carbon management on total cropland in target year (1) / 0 /
+  s59_scm_target                  Share of soil carbon management on total cropland in target year (1) / 0.3 /
   s59_scm_target_noselect         Share of soil carbon management on total cropland in target year (1) / 0 /
   s59_scm_scenario_start          Soil carbon management scenario start year / 2025 /
   s59_scm_scenario_target         Soil carbon management scenario target year / 2050 /
   s59_cost_scm_recur              Soil carbon management recurring cost (USD17MER per ha) / 65 /
+  s59_lossrate_spatial            Switch for spatial explicit rates for soil loss rate / 0 /
 ;
 
 *' @code 
