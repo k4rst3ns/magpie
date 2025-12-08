@@ -42,11 +42,27 @@ sets
    a809090,
    l909090r808080,
    l908080r807070,
-   l909595r809090
+   l909595r809090,
+   test50
    /
 
    trade_groups21 Trade groups
    / easytrade,hardtrade /
+
+   trade_stddev21 Standard deviation of observed bilateral trade
+   /  meansd5, maxsd5, minsd5, meansd10, maxsd10,  minsd10,  meansd15,
+    maxsd15,  minsd15 /
+
+    
+   trade_bloc21 Geopolitical trade blocs
+      / China_trade, US_trade, Europe_trade /
+
+   bloc_regions21(trade_bloc21, i) Mapping of regions to trade blocs
+      / China_trade . (CHA, OAS, SSA, REF, IND)
+        US_trade    . (USA, LAM, JPN, CAZ, MEA)
+        Europe_trade. (EUR, NEU) /
+;
+
 
 ;
 
@@ -55,3 +71,6 @@ alias(h,h_ex);
 alias(h,h_im);
 alias(i,i_ex);
 alias(i,i_im);
+alias(i,i_ex2);
+alias(i,i_im2);
+
