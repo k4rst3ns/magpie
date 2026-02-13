@@ -27,7 +27,21 @@ pc59_som_pool(j,"primforest") = pc59_som_pool(j,"primforest") -
 
 p59_carbon_density(t,j,land)$(pcm_land(j,land) > 1e-10) = pc59_som_pool(j,land) / pcm_land(j,land);
 
-* create soil carbon management target scenario
-i59_scm_target(t,j) = i59_scm_scenario_fader(t) * 
-  (s59_scm_target * sum(cell(i,j), p59_country_weight(i))
-  + s59_scm_target_noselect * sum(cell(i,j), 1-p59_country_weight(i)));
+* Initialize cropland area by crop type and irrigation for first timestep
+* For later timesteps, update from previous timestep solution
+if (sum(t_past, 1) = 0,
+  pc59_area(j,kcr,w) = fm_croparea(t,j,w,kcr);
+else
+  pc59_area(j,kcr,w) = vm_area.l(j,kcr,w);
+);
+
+* Convert share target to absolute area target at regional level using previous period's cropland area
+* This decouples the SCM target from current cropland area decisions while allowing spatial flexibility
+* Only count crops eligible for SCM (annuals only, exclude perennials and rice)
+i59_scm_target_area(t,i) = i59_scm_scenario_fader(t) * 
+  (s59_scm_target * p59_country_weight(i) * sum((cell(i,j),kscm59,w), pc59_area(j,kscm59,w))
+  + s59_scm_target_noselect * (1-p59_country_weight(i)) * sum((cell(i,j),kscm59,w), pc59_area(j,kscm59,w)));
+
+* Exclude perennials and rice from soil carbon management
+* SCM practices (cover crops, reduced tillage) are not compatible with perennial crops or flooded rice
+v59_area_scm.fx(j,knoscm59,w,"scm") = 0;

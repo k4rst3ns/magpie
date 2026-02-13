@@ -13,6 +13,7 @@ scalars
   s59_scm_scenario_start          Soil carbon management scenario start year / 2025 /
   s59_scm_scenario_target         Soil carbon management scenario target year / 2050 /
   s59_cost_scm_recur              Soil carbon management recurring cost (USD17MER per ha) / 65 /
+  s59_scm_max_share_per_cell      Maximum share of SCM on cropland per cell to prevent clustering (1) / 1 /
 ;
 
 *' @code 
