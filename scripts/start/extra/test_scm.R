@@ -62,7 +62,7 @@ for (scen in mitiScenarios) {
   # Run 2: No SCM with new cellpool_feb26
   cfg$gms$som <- "cellpool_feb26"
   cfg$gms$s59_scm_target <- 0
-  cfg$gms$c59_scm_reference_year <- -1
+  cfg$gms$s59_scm_reference_year <- -1
   cfg$title <- .title(version, scen, "feb26_noSCM")
   start_run(cfg, codeCheck = FALSE)
   
@@ -75,14 +75,14 @@ for (scen in mitiScenarios) {
   # Run 4: cellpool_feb26 with fixed reference year 2025 and 0.3 share
   cfg$gms$som <- "cellpool_feb26"
   cfg$gms$s59_scm_target <- 0.3
-  cfg$gms$c59_scm_reference_year <- 2025
+  cfg$gms$s59_scm_reference_year <- 2025
   cfg$title <- .title(version, scen, "feb26_scm30pct_ref2025")
   start_run(cfg, codeCheck = FALSE)
   
   # Run 5: cellpool_feb26 with dynamic (-1) and 0.3 share
   cfg$gms$som <- "cellpool_feb26"
   cfg$gms$s59_scm_target <- 0.3
-  cfg$gms$c59_scm_reference_year <- -1
+  cfg$gms$s59_scm_reference_year <- -1
   cfg$title <- .title(version, scen, "feb26_scm30pct_dynamic")
   start_run(cfg, codeCheck = FALSE)
 }
