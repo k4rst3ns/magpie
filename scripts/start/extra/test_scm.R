@@ -24,50 +24,66 @@ EU_countries <- c("ALA", "AUT", "BEL", "BGR", "CYP", "CZE", "DEU", "DNK", "ESP",
                   "HUN", "IMN", "IRL", "ITA", "JEY", "LTU", "LUX", "LVA", "MLT", 
                   "NLD", "POL", "PRT", "ROU", "SVK", "SVN", "SWE")
 
-cdrRegions <- list(glo = all_iso_countries, eu = EU_countries)
-
-### General settings
-cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
-
 ### SCM settings
 cfg$gms$s59_scm_scenario_start  <- 2025   # def = 2025
 cfg$gms$s59_scm_scenario_target <- 2050   # def = 2050            
+cfg$gms$policy_countries59      <- EU_countries
 
-# Define test scenarios
-# Note: Both realizations now have the same features, feb26 is kept for comparison
-scmRealization <- c("cellpool_jan23", "cellpool_feb26")
-scmTarget      <- c(scmZero = 0, scmLow = 0.15, scmHigh = 0.30)  # 0%, 15%, 30% cropland SCM share
-scmRefYear     <- c(dynamic = -1, ref2020 = 2020, ref2025 = 2025)  # -1=dynamic, or fixed year
-cdrRegion      <- c("eu", "glo")
+# Mitigation scenarios
+mitiScenarios <- c("npi", "rcp2p6")
 
-.title <- function(version = NULL, realization = NULL, target = NULL, refYear = NULL, region = NULL){
-  return(paste(version, realization, target, refYear, region, sep = "_"))
+.title <- function(version = NULL, miti = NULL, scmConfig = NULL){
+  return(paste(version, miti, scmConfig, sep = "_"))
 }
 
-for (realization in scmRealization) {
-  cfg$gms$som <- realization
+for (scen in mitiScenarios) {
   
-  for (cdrReg in cdrRegion) {
-    cfg$gms$policy_countries59 <- cdrRegions[[cdrReg]]
+  if (scen == "npi") {
+    # NPi - BAU
+    cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
     
-    for (targetName in names(scmTarget)) {
-      targetValue <- scmTarget[targetName]
-      cfg$gms$s59_scm_target <- targetValue
-      
-      for (refYearName in names(scmRefYear)) {
-        refYearValue <- scmRefYear[refYearName]
-        
-        # Skip fixed reference year tests when SCM target is zero (no point)
-        if (targetValue == 0 && refYearValue > 0) {
-          next
-        }
-        
-        # Set reference year
-        cfg$gms$c59_scm_reference_year <- refYearValue
-        
-        cfg$title <- .title(version, realization, targetName, refYearName, cdrReg)
-        start_run(cfg, codeCheck = FALSE)
-      }
-    }
+  } else if (scen == "rcp2p6") {
+    # 2° - MAU
+    cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
+    cfg$gms$c56_mute_ghgprices_until <- "y2030"
+    cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg1000")
+    cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg1000")
+    
+  } else {
+    stop("wrong miti setup")
   }
+  
+  # Run 1: No SCM with old cellpool_jan23
+  cfg$gms$som <- "cellpool_jan23"
+  cfg$gms$s59_scm_target <- 0
+  cfg$title <- .title(version, scen, "jan23_noSCM")
+  start_run(cfg, codeCheck = FALSE)
+  
+  # Run 2: No SCM with new cellpool_feb26
+  cfg$gms$som <- "cellpool_feb26"
+  cfg$gms$s59_scm_target <- 0
+  cfg$gms$c59_scm_reference_year <- -1
+  cfg$title <- .title(version, scen, "feb26_noSCM")
+  start_run(cfg, codeCheck = FALSE)
+  
+  # Run 3: cellpool_jan23 with 0.3 share
+  cfg$gms$som <- "cellpool_jan23"
+  cfg$gms$s59_scm_target <- 0.3
+  cfg$title <- .title(version, scen, "jan23_scm30pct")
+  start_run(cfg, codeCheck = FALSE)
+  
+  # Run 4: cellpool_feb26 with fixed reference year 2025 and 0.3 share
+  cfg$gms$som <- "cellpool_feb26"
+  cfg$gms$s59_scm_target <- 0.3
+  cfg$gms$c59_scm_reference_year <- 2025
+  cfg$title <- .title(version, scen, "feb26_scm30pct_ref2025")
+  start_run(cfg, codeCheck = FALSE)
+  
+  # Run 5: cellpool_feb26 with dynamic (-1) and 0.3 share
+  cfg$gms$som <- "cellpool_feb26"
+  cfg$gms$s59_scm_target <- 0.3
+  cfg$gms$c59_scm_reference_year <- -1
+  cfg$title <- .title(version, scen, "feb26_scm30pct_dynamic")
+  start_run(cfg, codeCheck = FALSE)
 }
+
