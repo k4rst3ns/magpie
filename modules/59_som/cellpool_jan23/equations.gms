@@ -11,20 +11,19 @@
 *' as the sum over all crop types and management regimes is calculated  by taking 
 *' carbon shares (`cratio`) of the natural reference `f59_topsoilc_density` with
 *' (1) crop and irrigation type specific assumptions `i59_cratio` for all cropareas,
-*' (2) based on the absolute area of dedicated soil carbon managament (SCM) `v59_area_scm`
-*'     an additional increase of `i59_cratio_scm - 1` for these areas,
+*' (2) based on the share of dedicated soil carbon managament (SCM) `i59_scm_target`
+*'     on cropareas an additional increase of `i59_cratio_scm - 1` for these areas,
 *' (3+4) dedicated factors `i59_cratio_fallow` and `i59_cratio_treecover` for fallow
 *'       and treecover areas 
 *' leading to on overall target stock given by
 
 q59_som_target_cropland(j2) ..
               v59_som_target(j2,"crop")
-                =e= (
-                      sum((kcr,w), vm_area(j2,kcr,w) * i59_cratio(j2,kcr,w))
-                      + sum((kcr,w), v59_area_scm(j2,kcr,w,"scm") * i59_cratio(j2,kcr,w) * (i59_cratio_scm(j2) - 1))
-                      + vm_fallow(j2) * i59_cratio_fallow(j2) 
-                      + vm_treecover(j2) * i59_cratio_treecover
-                    )
+                =e= (sum((kcr,w), vm_area(j2,kcr,w) * i59_cratio(j2,kcr,w)) + 
+                     sum((kcr,w,ct), vm_area(j2,kcr,w) * i59_scm_target(ct,j2) *
+                     i59_cratio(j2,kcr,w) * (i59_cratio_scm(j2) - 1))
+                     + vm_fallow(j2) * i59_cratio_fallow(j2) 
+                     + vm_treecover(j2) * i59_cratio_treecover)
                     * sum(ct,f59_topsoilc_density(ct,j2));
 
 *' as well as for all non cropland given by
@@ -94,31 +93,10 @@ q59_nr_som_fertilizer2(j2) ..
 *' Here we assume a maximum of 200 kg on the expanded area.
 
 
-*' The total area under each crop type and irrigation regime must equal the 
-*' sum of SCM and non-SCM managed area
-
-  q59_area_scm_tot(j2,kcr,w) ..
-    sum(scmtype59, v59_area_scm(j2,kcr,w,scmtype59))
-    =e= vm_area(j2,kcr,w);
-
-*' The total area under soil carbon management must equal the absolute area target
-*' at the regional level. The target is calculated from the share target times 
-*' the cropland area of the previous timestep, allowing spatial flexibility across clusters.
-
-  q59_scm_target_constraint(i2) ..
-    sum(cell(i2,j2), sum((kcr,w), v59_area_scm(j2,kcr,w,"scm")))
-    =e= sum(ct, i59_scm_target_area(ct,i2));
-
-*' To prevent clustering of SCM in cells with highest carbon stocks, 
-*' limit SCM area per cell to a maximum share of the cell's total cropland area
-
-  q59_scm_max_per_cell(j2) ..
-    sum((kscm59,w), v59_area_scm(j2,kscm59,w,"scm"))
-    =l= sum((kscm59,w), vm_area(j2,kscm59,w)) * s59_scm_max_share_per_cell;
-
-*' Cost for soil carbon management are based on the actual area under SCM
+*' Cost for soil carbon management are based on a per hectare value
 
   q59_cost_scm(j2) ..
     vm_cost_scm(j2) =e= 
-      sum((kcr,w), v59_area_scm(j2,kcr,w,"scm")) * s59_cost_scm_recur;
+      sum((kcr,w), vm_area(j2,kcr,w)) *
+       sum(ct, i59_scm_target(ct,j2)) * s59_cost_scm_recur;
 

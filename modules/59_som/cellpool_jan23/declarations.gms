@@ -11,8 +11,7 @@ parameters
           pc59_carbon_density(j,land)          Soil carbon density of a hectare of land between time steps (tC per ha)
           i59_tillage_share(i,tillage59)       Share of land under tillage class (1)
           i59_input_share(i,inputs59)          Share of land under input class (1)
-          i59_scm_target_area(t,i)             Target area for soil carbon management at regional level in absolute terms (mio. ha)
-          pc59_area(j,kcr,w)                   Cropland area by crop type and irrigation from previous timestep (mio. ha)
+          i59_scm_target(t,j)                  Target for the share of cropland under soil carbon managament (1)
           i59_cratio(j,kcr,w)                  Ratio of carbon density of land relative to natural vegetaion (1)
           i59_cratio_fallow(j)                 Ratio of carbon density of fallow land relative to natural vegetation (1)
           i59_cratio_treecover                 Ratio of carbon density of tree cover on cropland relative to natural vegetation (1)
@@ -33,17 +32,13 @@ equations
          q59_nr_som_fertilizer(j)                         Bound of nitrogen fertilizer of soil organic matter loss (Mt N per yr)
          q59_nr_som_fertilizer2(j)                        Fraction of soil organic matter loss take is taken up by plants (Mt N per yr)
          q59_carbon_soil(j,land,stockType)                Soil carbon content calculation (mio. tC)
-         q59_cost_scm(j)                                  Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
-         q59_area_scm_tot(j,kcr,w)                        SCM and non-SCM area must sum to total cropland area (mio. ha)
-         q59_scm_target_constraint(i)                     Total SCM area equals regional target (mio. ha)
-         q59_scm_max_per_cell(j)                          Upper bound on SCM area per cell to prevent clustering (mio. ha)
+         q59_cost_scm(j)                                  Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)       
 ;
 
 positive variables
          v59_som_target(j,land)           Long-term target state of C pool (mio. tC)
          v59_som_pool(j,land)             Soil organic matter pool (mio. tC)
          vm_cost_scm(j)                   Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
-         v59_area_scm(j,kcr,w,scmtype59)  Cropland area disaggregated by SCM implementation (mio. ha)
 ;
 
 variables
