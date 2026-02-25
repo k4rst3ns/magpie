@@ -25,6 +25,8 @@ cfg$input['validation']  <- "rev4.127DCBilatTest2_36f73207_92e02314_validation.t
 cfg$input['calibration'] <- "calibration_H16_FAO_20Jun25.tgz"
 cfg$input['cellular']    <- "rev4.127DCBilatTest2_36f73207_582d657c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-ba4466a8.tgz"
 
+cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_eu_h16"
+
 cfg$title <- paste(dev, rev, "defaultNPi2025", sep = "-")
 start_run(cfg)
 
@@ -38,5 +40,3 @@ cfg$gms$c56_mute_ghgprices_until <- "y2030"
 cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
 cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
 start_run(cfg)
-~                                                                                                                                                                                                                  
-~                                                
