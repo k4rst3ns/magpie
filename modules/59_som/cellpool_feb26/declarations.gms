@@ -57,6 +57,7 @@ parameters
  ov59_som_target(t,j,land,type)                      Long-term target state of C pool (mio. tC)
  ov59_som_pool(t,j,land,type)                        Soil organic matter pool (mio. tC)
  ov_cost_scm(t,j,type)                               Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
+ ov59_area_scm(t,j,kcr,w,scmtype59,type)             Cropland area disaggregated by SCM implementation (mio. ha)
  ov_nr_som(t,j,type)                                 Release of soil organic matter (Mt N per yr)
  ov_nr_som_fertilizer(t,j,type)                      Uptake of soil organic matter from plants (Mt N per yr)
  oq59_som_target_cropland(t,j,type)                  Estimates the long-term target state of cropland (mio. tC)
@@ -67,5 +68,8 @@ parameters
  oq59_nr_som_fertilizer2(t,j,type)                   Fraction of soil organic matter loss take is taken up by plants (Mt N per yr)
  oq59_carbon_soil(t,j,land,stockType,type)           Soil carbon content calculation (mio. tC)
  oq59_cost_scm(t,j,type)                             Recurring cost for soil carbon management on cropland (mio. USD17MER per yr)
+ oq59_area_scm_tot(t,j,kcr,w,type)                   SCM and non-SCM area must sum to total cropland area (mio. ha)
+ oq59_scm_target_constraint(t,i,type)                Total SCM area equals regional target (mio. ha)
+ oq59_scm_max_per_cell(t,j,type)                     Upper bound on SCM area per cell to prevent clustering (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
