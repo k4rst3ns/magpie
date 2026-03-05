@@ -12,7 +12,7 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-12"
+version <- "EUCDR-15rel"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
@@ -38,14 +38,15 @@ cfg$gms$s59_scm_scenario_target <- 2050   # def = 2050
 
 ### biochar settings
 cfg$gms$c63_biochar_simulation_mode <- "mag"
+cfg$gms$s63_bc_yield_response_max <- 0 # no yield response
 cfg$gms$c63_biochar_prod <- "stylized"
 cfg$gms$s63_bcScen_stylized_startyear <- 2025
 cfg$gms$s63_bcScen_stylized_targetyear <- 2050
 
 miti      <- c("npi", "rcp2p6")
-agfScen   <- c(agfZero = 0, agfHigh = 0.03) # 3% cropland share treecover
-scmScen   <- c(scmZero = 0, scmHigh = 0.3)  # 30% cropland SOCM share
-bcScen    <- c(bcZero = 0 , bcHigh = 550)   # 550 PJ biochar prod ~ +3% cropland share for be crops
+agfScen   <- c(agfZero = 0, agfHigh = 0.03, agfTwic = 0.06) # 3%/6% cropland share treecover
+scmScen   <- c(scmZero = 0, scmHigh = 0.3,  scmTwic = 0.6)  # 30%/60% cropland SOCM share
+bcScen    <- c(bcZero = 0,  bcHigh = 550,   bcTwic = 1100)  # 550/1100 PJ biochar prod
 regionSet <- c("h12")
 cdrSet    <- c("eu", "glo")
 
@@ -95,6 +96,15 @@ for(scen in miti){
     .startRun("agfHigh", "scmZero", "bcZero")
     #HighHighHigh
     .startRun("agfHigh", "scmHigh", "bcHigh")
+    #TwicTwicTwic
+    .startRun("agfTwic", "scmTwic", "bcTwic")
+    #ZeroZeroTwic
+    .startRun("agfZero", "scmZero", "bcTwic")
+    #ZeroTwicZero
+    .startRun("agfZero", "scmTwic", "bcZero")
+    #TwicZeroZero
+    .startRun("agfTwic", "scmZero", "bcZero")
       
   }
 }
+
