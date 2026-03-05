@@ -31,10 +31,13 @@ cfg$gms$s29_treecover_scenario_target <- 2050   # def = 2050
 cfg$gms$s29_fader_functional_form <- 1   # linear
 cfg$gms$s29_treecover_keep <- 1          # keep them
 cfg$gms$s29_treecover_plantation <- 1    # plantations
+cfg$gms$s29_treecover_reference_year <- 2025   # fixed reference year for absolute target ### NEW SETTING
 
 ### soil carbon management
 cfg$gms$s59_scm_scenario_start  <- 2025   # def = 2025
-cfg$gms$s59_scm_scenario_target <- 2050   # def = 2050            
+cfg$gms$s59_scm_scenario_target <- 2050   # def = 2050
+cfg$gms$s59_scm_reference_year  <- 2025   # fixed reference year for absolute target ### NEW SETTING
+cfg$gms$s59_scm_max_share_per_cell <- 1   # max SCM share per cell ### NEW SETTING
 
 ### biochar settings
 cfg$gms$c63_biochar_simulation_mode <- "mag"
@@ -43,9 +46,9 @@ cfg$gms$s63_bcScen_stylized_startyear <- 2025
 cfg$gms$s63_bcScen_stylized_targetyear <- 2050
 
 miti      <- c("npi", "rcp2p6")
-agfScen   <- c(agfZero = 0, agfHigh = 0.03) # 3% cropland share treecover
-scmScen   <- c(scmZero = 0, scmHigh = 0.3)  # 30% cropland SOCM share
-bcScen    <- c(bcZero = 0 , bcHigh = 550)   # 550 PJ biochar prod ~ +3% cropland share for be crops
+agfScen   <- c(agfZero = 0, agfHigh = 0.03, agfTwic = 0.06) # 3%/6% cropland share treecover
+scmScen   <- c(scmZero = 0, scmHigh = 0.3,  scmTwic = 0.6)  # 30%/60% cropland SOCM share
+bcScen    <- c(bcZero = 0,  bcHigh = 550,   bcTwic = 1100)  # 550/1100 PJ biochar prod
 regionSet <- c("h12")
 cdrSet    <- c("eu", "glo")
 
@@ -95,6 +98,14 @@ for(scen in miti){
     .startRun("agfHigh", "scmZero", "bcZero")
     #HighHighHigh
     .startRun("agfHigh", "scmHigh", "bcHigh")
+    #TwicTwicTwic
+    .startRun("agfTwic", "scmTwic", "bcTwic")
+    #ZeroZeroTwic
+    .startRun("agfZero", "scmZero", "bcTwic")
+    #ZeroTwicZero
+    .startRun("agfZero", "scmTwic", "bcZero")
+    #TwicZeroZero
+    .startRun("agfTwic", "scmZero", "bcZero")
       
   }
 }
