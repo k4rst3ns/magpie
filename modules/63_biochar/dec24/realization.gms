@@ -1,4 +1,4 @@
-*** |  (C) 2008-2024 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2025 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -11,6 +11,8 @@
 *' Biochar production drives feedstock demand, which can be fulfilled by
 *' dedicated cultivation of fast-growing biomass as well as by residues.
 *'
+*' The interface `vm_cdr_bc` includes the expected CDR based on stable biochar C.
+*' The reward for CDR is calculated in the [56_ghg_policy] module.
 
 *####################### R SECTION START (PHASES) ##############################
 $Ifi "%phase%" == "sets" $include "./modules/63_biochar/dec24/sets.gms"
