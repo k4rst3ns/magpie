@@ -1,4 +1,4 @@
-*** |  (C) 2008-2024 Potsdam Institute for Climate Impact Research (PIK)
+*** |  (C) 2008-2025 Potsdam Institute for Climate Impact Research (PIK)
 *** |  authors, and contributors see CITATION.cff file. This file is part
 *** |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
 *** |  AGPL-3.0, you are granted additional permissions described in the
@@ -77,6 +77,19 @@ q63_c_sequestration_biochar(i2) ..
           f63_biochar_attributes("c",bc_sys63)
           * v63_biochar_prod(i2,bc_sys63,feedstock63)
           / f63_biochar_attributes("ge",bc_sys63))
+          ;
+
+
+*' Information about biochar carbon removal is only passed to the `56_ghg_policy`
+*' module when the standalone mode (`mag`) is active (`s63_simulation_mode_mag`
+*' is set to 1). This is done via the interface `vm_cdr_bc`.
+*' In coupled REMIND–MAgPIE mode (`rem-mag`), biochar-related carbon dioxide
+*' removal is accounted for and rewarded within REMIND, and the interface
+*' `vm_cdr_bc` remains zero to prevent double counting of CDR revenues.
+
+q63_cdr_biochar(i2) ..
+      vm_cdr_bc(i2) =e=
+          s63_simulation_mode_mag * v63_c_stable_biochar(i2)
           ;
 
 
