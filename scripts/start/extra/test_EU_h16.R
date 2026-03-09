@@ -18,7 +18,7 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 dev <- "EURtestsH16"
-rev <- "01"
+rev <- "02"
 
 cfg$input['regional']    <- "rev4.130EUtest_8359c7e7_magpie.tgz"
 cfg$input['validation']  <- "rev4.130EUtest_8359c7e7_c9f905aa_validation.tgz"
@@ -27,16 +27,42 @@ cfg$input['cellular']    <- "rev4.130EUtest_8359c7e7_582d657c_cellularmagpie_c20
 
 cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_eu_h16"
 
-cfg$title <- paste(dev, rev, "defaultNPi2025", sep = "-")
+############ old selfsuff_reduced trade ##########
+
+trade <- "oldTrade"
+
+cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")
 start_run(cfg)
 
-cfg$title <- paste(dev, rev, "NDC", sep = "-")
+cfg$title <- paste(dev, rev, "NDC", trade, sep = "-")
 cfg       <- setScenario(cfg, "NDC")
 start_run(cfg)
 
-cfg$title <- paste(dev, rev, "PkBu1000", sep = "-")
+cfg$title <- paste(dev, rev, "PkBu1000", trade, sep = "-")
 cfg       <- setScenario(cfg, "NDC")
 cfg$gms$c56_mute_ghgprices_until <- "y2030"
 cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
 cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
 start_run(cfg)
+
+############ bilateral trade ##########
+
+trade         <- "bilateral"
+cfg$gms$trade <- "selfsuff_reduced_bilateral22"
+
+cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")
+start_run(cfg)
+
+cfg$title <- paste(dev, rev, "NDC", trade, sep = "-")
+cfg       <- setScenario(cfg, "NDC")
+start_run(cfg)
+
+cfg$title <- paste(dev, rev, "PkBu1000", trade, sep = "-")
+cfg       <- setScenario(cfg, "NDC")
+cfg$gms$c56_mute_ghgprices_until <- "y2030"
+cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
+cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
+start_run(cfg)
+
+
+
