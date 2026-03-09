@@ -20,6 +20,8 @@ source("config/default.cfg")
 dev <- "EURtestsH12"
 rev <- "02"
 
+cfg$input['additional'] <- "additional_data_rev4.64.tgz" #NPI/NDC fix for EUN
+
 ############ old selfsuff_reduced trade ##########
 
 trade <- "oldTrade"

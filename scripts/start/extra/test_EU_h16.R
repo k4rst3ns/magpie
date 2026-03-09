@@ -24,6 +24,7 @@ cfg$input['regional']    <- "rev4.130EUtest_8359c7e7_magpie.tgz"
 cfg$input['validation']  <- "rev4.130EUtest_8359c7e7_c9f905aa_validation.tgz"
 cfg$input['calibration'] <- "calibration_H16_EUtest_23Feb26.tgz"
 cfg$input['cellular']    <- "rev4.130EUtest_8359c7e7_582d657c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-ba4466a8.tgz"
+cfg$input['additional'] <- "additional_data_rev4.64.tgz" #NPI/NDC fix for EUN
 
 cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_eu_h16"
 
