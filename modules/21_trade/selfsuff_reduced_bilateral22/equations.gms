@@ -5,83 +5,77 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-*' @equations
-*' In the comparative advantage pool, the active constraint ensures that superregional and thus global supply is larger or equal to demand.
-*' This means that production can be freely allocated globally based on comparative advantages.
-
+*' Global production must cover global supply plus calibration balance flows.
+*' This ensures that total world production is sufficient to meet all demand,
+*' regardless of how trade distributes products across regions.
  q21_trade_glo(k_trade)..
-  sum(i2 ,vm_prod_reg(i2,k_trade)) =g=
- sum(i2, vm_supply(i2,k_trade)) + sum(ct,f21_trade_balanceflow(ct,k_trade));
+  sum(i2, vm_prod_reg(i2,k_trade)) =g=
+  sum(i2, vm_supply(i2,k_trade)) + sum((ct, i2), f21_trade_regional_balanceflow(ct, i2, k_trade));
 
-*' amount produced superregionally must be equal to supply + net trade
+
+*' Regional material balance: production within a super-region must cover
+*' domestic supply minus imports plus exports, adjusted by calibration balance
+*' flows. Imports are the sum of trade flowing into region i from all exporters;
+*' exports are the sum of trade flowing out of region i to all importers.
 q21_trade_bilat(h2,k_trade)..
  sum(supreg(h2, i2), vm_prod_reg(i2, k_trade)) =g= sum(supreg(h2,i2), vm_supply(i2, k_trade) -
-                              sum(i_ex, v21_trade(i_ex, i2, k_trade))  + sum(i_im, v21_trade(i2, i_im, k_trade)));
-*'
-*' For non-tradable commodites, the regional supply should be larger or equal to the regional demand.
+                              sum(i_ex, v21_trade(i_ex, i2, k_trade))  + sum(i_im, v21_trade(i2, i_im, k_trade)) +
+                              sum(ct, f21_trade_export_balanceflow(ct, i2, k_trade)) +
+                              sum(ct, f21_trade_regional_balanceflow(ct, i2, k_trade)));
+
+*' For non-tradable commodities, the regional supply should be larger or equal to the regional demand.
  q21_notrade(h2,k_notrade)..
   sum(supreg(h2,i2),vm_prod_reg(i2,k_notrade)) =g= sum(supreg(h2,i2), vm_supply(i2,k_notrade));
 
-*' The following equation indicates the regional trade constraint for the self-sufficiency pool.
-*' The share of regional demand that has to be fulfilled through the self-sufficiency pool is
-*' determined by a trade balance reduction factor for each commodity  `i21_trade_bal_reduction(ct,k_trade)`
-*' according to the following equations [@schmitz_trading_2012].
-*' If the trade balance reduction equals 1 (`f21_self_suff(ct,i2,k_trade) = 1`), all demand enters the self-sufficiency pool.
-*' If it equals 0, all demand enters the comparative advantage pool.
 
-*' Lower bound for production.
+*' Lower bound on bilateral trade: each exporter-importer flow must be at least
+*' the importer's supply multiplied by the historical import supply ratio
+*' (optionally scaled by `i21_import_supply_scenario`), minus a flexibility
+*' window defined by the historical standard deviation times the liberalization
+*' factor. A larger `i21_stddev_lib_factor` widens the window and allows trade
+*' to deviate further below the historical pattern.
+q21_trade_lower(i_ex,i_im,k_trade)..
+ v21_trade(i_ex,i_im,k_trade) =g=
+    vm_supply(i_im,k_trade)
+    * sum(ct, i21_import_supply_historical(i_ex,i_im,ct,k_trade) * i21_import_supply_scenario(ct)
+       - i21_stddev_lib_factor(ct) * i21_trade_bilat_stddev(ct,i_ex,i_im,k_trade));
 
- q21_trade_reg(h2,k_trade)..
- sum(supreg(h2,i2),vm_prod_reg(i2,k_trade)) =g=
- ((sum(supreg(h2,i2),vm_supply(i2,k_trade)) + v21_excess_prod(h2,k_trade))
- *sum(ct,i21_trade_bal_reduction(ct,k_trade)))
- $(sum(ct,f21_self_suff(ct,h2,k_trade) >= 1))
- + (sum(supreg(h2,i2),vm_supply(i2,k_trade))*sum(ct,f21_self_suff(ct,h2,k_trade))
- *sum(ct,i21_trade_bal_reduction(ct,k_trade)))
- $(sum(ct,f21_self_suff(ct,h2,k_trade) < 1))
- - v21_import_for_feasibility(h2,k_trade);
 
-*' Upper bound for production.
+*' Upper bound on bilateral trade: each exporter-importer flow must not exceed
+*' the importer's supply multiplied by the historical import supply ratio,
+*' plus the flexibility window (standard deviation times liberalization factor).
+*' Together with `q21_trade_lower`, these bounds create a corridor around the
+*' historical bilateral trade pattern within which the optimizer can adjust
+*' flows to minimize total costs.
+q21_trade_upper(i_ex,i_im,k_trade)..
+ v21_trade(i_ex,i_im,k_trade) =l=
+    vm_supply(i_im,k_trade)
+    * sum(ct, i21_import_supply_historical(i_ex,i_im,ct,k_trade)
+       + i21_stddev_lib_factor(ct) * i21_trade_bilat_stddev(ct,i_ex,i_im,k_trade));
 
- q21_trade_reg_up(h2,k_trade) ..
- sum(supreg(h2,i2),vm_prod_reg(i2,k_trade)) =l=
- ((sum(supreg(h2,i2),vm_supply(i2,k_trade)) + v21_excess_prod(h2,k_trade))/sum(ct,i21_trade_bal_reduction(ct,k_trade)))
- $(sum(ct,f21_self_suff(ct,h2,k_trade) >= 1))
- + (sum(supreg(h2,i2),vm_supply(i2,k_trade))*sum(ct,f21_self_suff(ct,h2,k_trade))/sum(ct,i21_trade_bal_reduction(ct,k_trade)))
- $(sum(ct,f21_self_suff(ct,h2,k_trade) < 1));
 
-*' The global excess demand of each tradable good `v21_excess_demad` equals to
-*' the sum over all the imports of importing regions.
+*' Tariff costs for each exporting region are the sum over all bilateral flows
+*' of the traded volume times the bilateral specific duty tariff rate (USD/tDM).
+*' Tariffs are assigned to the exporting region.
+q21_costs_tariffs(i2,k_trade)..
+ v21_cost_tariff_reg(i2,k_trade) =e= sum((ct,i_im), v21_trade(i2,i_im,k_trade) * i21_trade_tariff(ct,i2,i_im,k_trade));
 
- q21_excess_dem(k_trade)..
- v21_excess_dem(k_trade) =g=
- (sum(h2, sum(supreg(h2,i2),vm_supply(i2,k_trade))*(1 - sum(ct,f21_self_suff(ct,h2,k_trade)))
- $(sum(ct,f21_self_suff(ct,h2,k_trade)) < 1))
- + sum(ct,f21_trade_balanceflow(ct,k_trade))) + sum(h2, v21_import_for_feasibility(h2,k_trade));
 
-*' Distributing the global excess demand to exporting regions is based on regional export shares [@schmitz_trading_2012].
-*' Export shares are derived from FAO data (see @schmitz_trading_2012 for details). They are 0 for importing regions.
-
- q21_excess_supply(h2,k_trade)..
- v21_excess_prod(h2,k_trade) =e=
- v21_excess_dem(k_trade)*sum(ct,f21_exp_shr(ct,h2,k_trade));
-
-*' Trade tariffs are associated with exporting regions. They are dependent on net exports and tariff levels.
- q21_costs_tariffs(i2,k_trade)..
- v21_cost_tariff_reg(i2,k_trade) =g=
-  sum(i_im, sum(ct, i21_trade_tariff(ct, i2,i_im,k_trade)) * v21_trade(i2,i_im,k_trade));
- 
-*' Trade margins costs assigned currently to exporting region. Margins at region level 
+*' Transport margin costs (freight and insurance) for each exporting region are
+*' the sum of bilateral margin rates times traded volumes across all importers.
+*' Margins are defined at the region-pair level, reflecting actual transport
+*' distances between specific world regions.
 q21_costs_margins(i2,k_trade)..
  v21_cost_margin_reg(i2,k_trade) =g=
   sum(i_im, i21_trade_margin(i2,i_im,k_trade) * v21_trade(i2,i_im,k_trade));
 
-*' regional trade values are the sum of transport margin and tariff costs
+*' Regional trade costs per commodity are the sum of tariff and transport margin
+*' costs. These feed into the objective function via `vm_cost_trade`.
 q21_cost_trade_reg(i2,k_trade)..
   v21_cost_trade_reg(i2,k_trade) =g=
-  v21_cost_tariff_reg(i2,k_trade) + v21_cost_margin_reg(i2,k_trade) 
- + sum(supreg(h2,i2), v21_import_for_feasibility(h2,k_trade)) * s21_cost_import;
+  v21_cost_tariff_reg(i2,k_trade) + v21_cost_margin_reg(i2,k_trade);
 
-*' Regional trade costs are the costs for each region aggregated over all the tradable commodities.
+*' Total trade costs per region, aggregated over all tradable commodities.
+*' This variable enters the global objective function.
  q21_cost_trade(i2)..
  vm_cost_trade(i2) =e= sum(k_trade, v21_cost_trade_reg(i2,k_trade));
