@@ -34,6 +34,7 @@ cfg$gms$s29_treecover_plantation <- 1    # plantations
 cfg$gms$s29_treecover_reference_year <- 2025   # fixed reference year for absolute target ### NEW SETTING
 
 ### soil carbon management
+cfg$gms$som                     <- "cellpool_feb26"
 cfg$gms$s59_scm_scenario_start  <- 2025   # def = 2025
 cfg$gms$s59_scm_scenario_target <- 2050   # def = 2050
 cfg$gms$s59_scm_reference_year  <- 2025   # fixed reference year for absolute target ### NEW SETTING
