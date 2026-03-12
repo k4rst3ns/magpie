@@ -12,7 +12,7 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-15abs"
+version <- "EUCDR-16"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
@@ -53,7 +53,7 @@ agfScen   <- c(agfZero = 0, agfHigh = 0.03, agfTwic = 0.06) # 3%/6% cropland sha
 scmScen   <- c(scmZero = 0, scmHigh = 0.3,  scmTwic = 0.6)  # 30%/60% cropland SOCM share
 bcScen    <- c(bcZero = 0,  bcHigh = 550,   bcTwic = 1100)  # 550/1100 PJ biochar prod
 regionSet <- c("h12")
-cdrSet    <- c("eu", "glo")
+cdrSet    <- c("eu")
 
 .title <- function(version = NULL, miti = NULL, agf = NULL, scm = NULL, bc = NULL, cdr = NULL){
   return(paste(version, miti, agf, scm, bc, cdr, sep = "_"))
