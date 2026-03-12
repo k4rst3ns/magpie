@@ -60,7 +60,7 @@ cdrSet    <- c("eu")
 }
 
 for(scen in miti){
-  for (cdrReg in c("eu", "glo")){     
+  for (cdrReg in cdrSet){     
     
     if(scen == "npi") {
 
