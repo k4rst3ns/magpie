@@ -115,6 +115,6 @@ p59_carbon_density(t,j,land) = 0;
 pc59_carbon_density(j,land) = 0;
 pc59_carbon_density(j,land)$(pc59_land_before(j,land) > 1e-10) = pc59_som_pool(j,land) / pc59_land_before(j,land);
 
-* Initialize reference area snapshot to zero
+* Initialize total cropland reference snapshot to zero
 * Will be filled in presolve when using fixed year mode (s59_scm_reference_year > 0)
-p59_area_scm_reference(j,kcr,w) = 0;
+p59_land_scm_reference(j) = 0;

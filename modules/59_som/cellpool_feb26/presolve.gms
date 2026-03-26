@@ -35,30 +35,30 @@ else
   pc59_area(j,kcr,w) = vm_area.l(j,kcr,w);
 );
 
-* Store cropland area snapshot when we reach the reference year (if using fixed year mode)
+* Store total cropland snapshot when we reach the reference year (if using fixed year mode)
 * This snapshot is then used for all subsequent SCM target calculations
 * NOTE: s59_scm_reference_year should be <= s59_scm_scenario_start to ensure
 *       the snapshot is taken before the SCM policy begins
 if (s59_scm_reference_year > 0,
   if (m_year(t) = s59_scm_reference_year,
-    p59_area_scm_reference(j,kcr,w) = pc59_area(j,kcr,w);
+    p59_land_scm_reference(j) = pcm_land(j,"crop");
   );
 );
 
 * Convert share target to absolute area target at regional level
 * Mode selection:
-*   s59_scm_reference_year = -1: Use previous timestep cropland area (dynamic mode)
-*   s59_scm_reference_year > 0:  Use fixed reference year cropland area (fixed year mode)
-* This decouples the SCM target from current cropland area decisions while allowing spatial flexibility
-* Only count crops eligible for SCM (annuals only, exclude perennials and rice)
+*   s59_scm_reference_year = -1: Use previous timestep total cropland area (dynamic mode)
+*   s59_scm_reference_year > 0:  Use fixed reference year total cropland area (fixed year mode)
+* Reference area is total cropland (consistent with treecover target, avoids perverse incentive)
+* SCM is still applied only on annual crops (kscm59) - not perennials or rice
 if (s59_scm_reference_year <= 0,
-  i59_scm_target_area(t,i) = i59_scm_scenario_fader(t) * 
-    (s59_scm_target * p59_country_weight(i) * sum((cell(i,j),kscm59,w), pc59_area(j,kscm59,w))
-    + s59_scm_target_noselect * (1-p59_country_weight(i)) * sum((cell(i,j),kscm59,w), pc59_area(j,kscm59,w)));
+  i59_scm_target_area(t,i) = i59_scm_scenario_fader(t) *
+    (s59_scm_target * p59_country_weight(i) * sum(cell(i,j), pcm_land(j,"crop"))
+    + s59_scm_target_noselect * (1-p59_country_weight(i)) * sum(cell(i,j), pcm_land(j,"crop")));
 else
-  i59_scm_target_area(t,i) = i59_scm_scenario_fader(t) * 
-    (s59_scm_target * p59_country_weight(i) * sum((cell(i,j),kscm59,w), p59_area_scm_reference(j,kscm59,w))
-    + s59_scm_target_noselect * (1-p59_country_weight(i)) * sum((cell(i,j),kscm59,w), p59_area_scm_reference(j,kscm59,w)));
+  i59_scm_target_area(t,i) = i59_scm_scenario_fader(t) *
+    (s59_scm_target * p59_country_weight(i) * sum(cell(i,j), p59_land_scm_reference(j))
+    + s59_scm_target_noselect * (1-p59_country_weight(i)) * sum(cell(i,j), p59_land_scm_reference(j)));
 );
 
 * Exclude perennials and rice from soil carbon management

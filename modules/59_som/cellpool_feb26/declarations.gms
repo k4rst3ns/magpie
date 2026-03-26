@@ -13,7 +13,7 @@ parameters
           i59_input_share(i,inputs59)          Share of land under input class (1)
           i59_scm_target_area(t,i)             Target area for soil carbon management at regional level in absolute terms (mio. ha)
           pc59_area(j,kcr,w)                   Cropland area by crop type and irrigation from previous timestep (mio. ha)
-          p59_area_scm_reference(j,kcr,w)      Cropland area snapshot for SCM target calculation when using fixed reference year (mio. ha)
+          p59_land_scm_reference(j)            Total cropland area snapshot for SCM target calculation when using fixed reference year (mio. ha)
           i59_cratio(j,kcr,w)                  Ratio of carbon density of land relative to natural vegetaion (1)
           i59_cratio_fallow(j)                 Ratio of carbon density of fallow land relative to natural vegetation (1)
           i59_cratio_treecover                 Ratio of carbon density of tree cover on cropland relative to natural vegetation (1)
