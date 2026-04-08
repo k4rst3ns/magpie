@@ -36,11 +36,11 @@ cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")
 start_run(cfg)
 
 cfg$title <- paste(dev, rev, "NDC", trade, sep = "-")
-cfg       <- setScenario(cfg, "NDC")
+cfg       <- gms::setScenario(cfg, "NDC")
 start_run(cfg)
 
 cfg$title <- paste(dev, rev, "PkBu1000", trade, sep = "-")
-cfg       <- setScenario(cfg, "NDC")
+cfg       <- gms::setScenario(cfg, "NDC")
 cfg$gms$c56_mute_ghgprices_until <- "y2030"
 cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
 cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
@@ -62,11 +62,11 @@ cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")
 start_run(cfg)
 
 cfg$title <- paste(dev, rev, "NDC", trade, sep = "-")
-cfg       <- setScenario(cfg, "NDC")
+cfg       <- gms::setScenario(cfg, "NDC")
 start_run(cfg)
 
 cfg$title <- paste(dev, rev, "PkBu1000", trade, sep = "-")
-cfg       <- setScenario(cfg, "NDC")
+cfg       <- gms::setScenario(cfg, "NDC")
 cfg$gms$c56_mute_ghgprices_until <- "y2030"
 cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
 cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
