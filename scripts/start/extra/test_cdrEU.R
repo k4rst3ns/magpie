@@ -12,11 +12,13 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-16"
+version <- "EUCDR-18_H12"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
 source("config/default.cfg")
+
+cfg$input['calibration'] <- "calibration_H12_12Mar26.tgz"
 
 EU_countries <- c("ALA", "AUT", "BEL", "BGR", "CYP", "CZE", "DEU", "DNK", "ESP", 
                   "EST", "FIN", "FRA", "FRO", "GBR", "GGY", "GIB", "GRC", "HRV", 
@@ -48,7 +50,7 @@ cfg$gms$s63_bcScen_stylized_startyear <- 2025
 cfg$gms$s63_bcScen_stylized_targetyear <- 2050
 cfg$gms$s63_bc_yield_response_max <- 0 
 
-miti      <- c("npi", "rcp2p6")
+miti      <- c("npi", "2deg", "1p5deg")
 agfScen   <- c(agfZero = 0, agfHigh = 0.03, agfTwic = 0.06) # 3%/6% cropland share treecover
 scmScen   <- c(scmZero = 0, scmHigh = 0.3,  scmTwic = 0.6)  # 30%/60% cropland SOCM share
 bcScen    <- c(bcZero = 0,  bcHigh = 550,   bcTwic = 1100)  # 550/1100 PJ biochar prod
@@ -67,7 +69,7 @@ for(scen in miti){
       # NPi - BAU
       cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
 
-    } else if (scen == "rcp2p6") {
+    } else if (scen == "2deg") {
 
       # 2° - MAU
       cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
@@ -75,7 +77,17 @@ for(scen in miti){
       cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg1000")
       cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg1000")
 
+    } else if (scen == "1p5deg") {
+
+      # 1.5° - MAU+
+      cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
+      cfg$gms$c56_mute_ghgprices_until <- "y2030"
+      cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg650")
+      cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg650")
+
     } else {stop("wrong miti setup")}
+
+
  
       .startRun <- function(agf, scm, bc) {
       cfg$gms$policy_countries29   <- cdrRegions[[cdrReg]]
