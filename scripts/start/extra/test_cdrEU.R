@@ -12,7 +12,7 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-18_H12"
+version <- "EUCDR-19_H12"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
@@ -56,72 +56,74 @@ scmScen   <- c(scmZero = 0, scmHigh = 0.3,  scmTwic = 0.6)  # 30%/60% cropland S
 bcScen    <- c(bcZero = 0,  bcHigh = 550,   bcTwic = 1100)  # 550/1100 PJ biochar prod
 regionSet <- c("h12")
 cdrSet    <- c("eu")
+tradeScen <- c(selfsuff = "selfsuff_reduced", bilateral = "selfsuff_reduced_bilateral22")
 
-.title <- function(version = NULL, miti = NULL, agf = NULL, scm = NULL, bc = NULL, cdr = NULL){
-  return(paste(version, miti, agf, scm, bc, cdr, sep = "_"))
+.title <- function(version = NULL, miti = NULL, agf = NULL, scm = NULL, bc = NULL, trd = NULL){
+  return(paste(version, miti, agf, scm, bc, trd, sep = "_"))
 }
 
 for(scen in miti){
-  for (cdrReg in cdrSet){     
-    
-    if(scen == "npi") {
+  for (cdrReg in cdrSet){
+    for (trd in names(tradeScen)){
 
-      # NPi - BAU
-      cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
+      if(scen == "npi") {
 
-    } else if (scen == "2deg") {
+        # NPi - BAU
+        cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
 
-      # 2° - MAU
-      cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
-      cfg$gms$c56_mute_ghgprices_until <- "y2030"
-      cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg1000")
-      cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg1000")
+      } else if (scen == "2deg") {
 
-    } else if (scen == "1p5deg") {
+        # 2° - MAU
+        cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
+        cfg$gms$c56_mute_ghgprices_until <- "y2030"
+        cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg1000")
+        cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg1000")
 
-      # 1.5° - MAU+
-      cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
-      cfg$gms$c56_mute_ghgprices_until <- "y2030"
-      cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg650")
-      cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg650")
+      } else if (scen == "1p5deg") {
 
-    } else {stop("wrong miti setup")}
+        # 1.5° - MAU+
+        cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
+        cfg$gms$c56_mute_ghgprices_until <- "y2030"
+        cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg650")
+        cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg650")
 
+      } else {stop("wrong miti setup")}
 
- 
       .startRun <- function(agf, scm, bc) {
-      cfg$gms$policy_countries29   <- cdrRegions[[cdrReg]]
-      cfg$gms$s29_treecover_target <- agfScen[agf]
+        cfg$gms$trade              <- tradeScen[trd]
+        cfg$gms$policy_countries29 <- cdrRegions[[cdrReg]]
+        cfg$gms$s29_treecover_target <- agfScen[agf]
 
-      cfg$gms$policy_countries59  <- cdrRegions[[cdrReg]]
-      cfg$gms$s59_scm_target      <- scmScen[scm]
+        cfg$gms$policy_countries59  <- cdrRegions[[cdrReg]]
+        cfg$gms$s59_scm_target      <- scmScen[scm]
 
-      cfg$gms$scen_countries63    <- cdrRegions[[cdrReg]]
-      cfg$gms$s63_bcScen_stylized_target <- bcScen[bc]
+        cfg$gms$scen_countries63    <- cdrRegions[[cdrReg]]
+        cfg$gms$s63_bcScen_stylized_target <- bcScen[bc]
 
-      cfg$title <- .title(version, scen, agf, scm, bc, cdrReg)
-      start_run(cfg, codeCheck = FALSE)
-    } 
+        cfg$title <- .title(version, scen, agf, scm, bc, trd)
+        start_run(cfg, codeCheck = FALSE)
+      }
 
-    #ZeroZeroZero
-    .startRun("agfZero", "scmZero", "bcZero")
-    #ZeroZeroHigh      
-    .startRun("agfZero", "scmZero", "bcHigh")
-    #ZeroHighZero
-    .startRun("agfZero", "scmHigh", "bcZero")
-    #HighLowLow
-    .startRun("agfHigh", "scmZero", "bcZero")
-    #HighHighHigh
-    .startRun("agfHigh", "scmHigh", "bcHigh")
-    #TwicTwicTwic
-    .startRun("agfTwic", "scmTwic", "bcTwic")
-    #ZeroZeroTwic
-    .startRun("agfZero", "scmZero", "bcTwic")
-    #ZeroTwicZero
-    .startRun("agfZero", "scmTwic", "bcZero")
-    #TwicZeroZero
-    .startRun("agfTwic", "scmZero", "bcZero")
-      
+      #ZeroZeroZero
+      .startRun("agfZero", "scmZero", "bcZero")
+      #ZeroZeroHigh
+      .startRun("agfZero", "scmZero", "bcHigh")
+      #ZeroHighZero
+      .startRun("agfZero", "scmHigh", "bcZero")
+      #HighLowLow
+      .startRun("agfHigh", "scmZero", "bcZero")
+      #HighHighHigh
+      .startRun("agfHigh", "scmHigh", "bcHigh")
+      #TwicTwicTwic
+      .startRun("agfTwic", "scmTwic", "bcTwic")
+      #ZeroZeroTwic
+      .startRun("agfZero", "scmZero", "bcTwic")
+      #ZeroTwicZero
+      .startRun("agfZero", "scmTwic", "bcZero")
+      #TwicZeroZero
+      .startRun("agfTwic", "scmZero", "bcZero")
+
+    }
   }
 }
 
