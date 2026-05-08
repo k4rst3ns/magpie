@@ -161,15 +161,15 @@ biogasList  <- applyScenMap(biogasList,  scenMap)
 .writeOut <- function(lst, filename) {
   if (length(lst) == 0) { warning("No data for: ", filename); return(invisible(NULL)) }
   out <- do.call(mbind, lst)
-  write.magpie(out, file.path("output", filename))
+  write.report(out, file.path("output", filename), model = "MAgPIE")
   cat("Written: output/", filename, "\n", sep = "")
   return(invisible(out))
 }
 
 cat("\n====== Writing outputs ======\n")
-.writeOut(supplyList,  "biomass_supply.csv")
-.writeOut(cropResList, "biomass_potential_cropres.csv")
-.writeOut(woodResList, "biomass_potential_woodres.csv")
-.writeOut(biogasList,  "biomass_potential_biogas.csv")
+.writeOut(supplyList,  "biomass_supply.mif")
+.writeOut(cropResList, "biomass_potential_cropres.mif")
+.writeOut(woodResList, "biomass_potential_woodres.mif")
+.writeOut(biogasList,  "biomass_potential_biogas.mif")
 
 cat("\n====== Extraction Complete ======\n")
