@@ -46,39 +46,6 @@ expandYears <- function(x, years) {
   return(template)
 }
 
-# Shorten scenario names by stripping the common prefix and suffix shared across
-# all scenarios, keeping only the part that actually differs.
-# E.g. c("SSP2-Ref-c400", "SSP2-PkBudg500-c400") -> c("Ref", "PkBudg500")
-shortenScenNames <- function(nms) {
-  if (length(nms) <= 1) return(nms)
-  chars <- strsplit(nms, "")
-  minLen <- min(lengths(chars))
-
-  prefixEnd <- 0L
-  for (i in seq_len(minLen)) {
-    if (length(unique(vapply(chars, `[`, character(1), i))) == 1L) prefixEnd <- i else break
-  }
-  # Trim prefix back to last separator boundary
-  prefix <- substr(nms[1], 1L, prefixEnd)
-  prefix <- sub("[-_.]?[^-_.]*$", "", prefix)
-
-  suffixStart <- nchar(nms[1]) + 1L
-  for (i in seq_len(minLen - nchar(prefix))) {
-    tokens <- vapply(chars, function(ch) ch[length(ch) - i + 1L], character(1))
-    if (length(unique(tokens)) == 1L) suffixStart <- nchar(nms[1]) - i + 1L else break
-  }
-  # Trim suffix forward to next separator boundary
-  suffix <- substr(nms[1], suffixStart, nchar(nms[1]))
-  suffix <- sub("^[^-_.]*[-_.]?", "", suffix)
-
-  short <- substr(nms, nchar(prefix) + 1L, nchar(nms) - nchar(suffix))
-  short <- gsub("^[-_.]|[-_.]$", "", short)   # trim dangling separators
-
-  # Fallback: if trimming produced empty or non-unique names, keep originals
-  if (any(nchar(short) == 0L) || anyDuplicated(short)) return(nms)
-  short
-}
-
 # Apply a full->short name mapping by fixed-string substitution on magpie names
 applyScenMap <- function(lst, mapping) {
   lapply(lst, function(x) {
@@ -108,8 +75,8 @@ for (i in seq_along(outputdir)) {
   cat("Processing", scen, "...\n")
 
   # ---- Output 1: Supply (wood fuel + manure fuel) --------------------------------
-  woodFuel   <- extractWoodFuel(gdx)
-  manureFuel <- extractManureFuel(gdx)
+  woodFuel   <- reportWoodFuel(gdx)
+  manureFuel <- reportManureFuel(gdx)
   allYears   <- sort(unique(c(getYears(woodFuel), getYears(manureFuel))))
   supplyList[[scen]] <- mbind(
     addScen(expandYears(woodFuel,   allYears), scen),
@@ -119,7 +86,7 @@ for (i in seq_along(outputdir)) {
   # ---- Output 2: Potential crop residues (4 parameter specs) --------------------
   specResults <- lapply(names(.cropResSpecs), function(specName) {
     params <- .cropResSpecs[[specName]]
-    res <- extractCropResidues2ndBE(gdx,
+    res <- reportCropResidues2ndBE(gdx,
                                     collectionFraction      = params["collectionFraction"],
                                     minDensityForExtraction = params["minDensityForExtraction"])
     res <- add_dimension(res, dim = 3.1, add = "spec", nm = specName)
@@ -129,11 +96,11 @@ for (i in seq_along(outputdir)) {
   cropResList[[scen]] <- mbind(lapply(specResults, expandYears, years = allYearsCR))
 
   # ---- Output 3: Potential wood processing residues -----------------------------
-  woodRes <- extractProcessingWoodResidues(gdx)
+  woodRes <- reportProcessingWoodResidues(gdx)
   woodResList[[scen]] <- addScen(woodRes, scen)
 
   # ---- Output 4: Biogas feedstock potential -------------------------------------
-  biogas <- extractBiogasFeedstock(gdx)
+  biogas <- reportBiogasFeedstock(gdx)
   biogasList[[scen]] <- addScen(biogas, scen)
 
   cat("\u2713", scen, "complete\n\n")
@@ -146,7 +113,7 @@ if (!is.null(missing)) {
 
 # ---- Shorten scenario names to the differing part only -------------------------
 allScens  <- names(supplyList)   # same set across all lists
-shortScens <- shortenScenNames(allScens)
+shortScens <- mip::shorten_legend(allScens, identical_only = TRUE, sep = c(" ", "-", "|", "_"))
 scenMap    <- setNames(shortScens, allScens)
 
 cat("\nScenario name mapping:\n")
@@ -172,4 +139,4 @@ cat("\n====== Writing outputs ======\n")
 .writeOut(woodResList, "biomass_potential_woodres.mif")
 .writeOut(biogasList,  "biomass_potential_biogas.mif")
 
-cat("\n====== Extraction Complete ======\n")
+cat("\n====== Biomass Extraction Complete ======\n")
