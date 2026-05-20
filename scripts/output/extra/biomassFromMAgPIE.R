@@ -10,7 +10,7 @@
 # comparison script: TRUE
 # ---------------------------------------------------------------
 
-# Version 1.0, Kristine Karstens
+# Version 1.1, Kristine Karstens
 
 library(lucode2)
 library(magclass)
@@ -37,7 +37,9 @@ cat("\n====== Biomass for REMIND - MAgPIE Data Extraction ======\n")
   cf0p1_md4 = c(collectionFraction = 0.1, minDensityForExtraction = 4)
 )
 
-addScen <- function(x, scen) addDim(x, dim = 3.1, dimName = "scenario", item = scen)
+addScen <- function(x, scen) {
+  addDim(x, dim = 3.1, dimName = "scenario", item = scen)
+}
 
 expandYears <- function(x, years) {
   if (all(years %in% getYears(x))) return(x[, years, ])
@@ -46,92 +48,91 @@ expandYears <- function(x, years) {
   return(template)
 }
 
-# Apply a full->short name mapping by fixed-string substitution on magpie names
-applyScenMap <- function(x, mapping) {
-  nms <- getNames(x)
-  for (full in names(mapping)) nms <- gsub(full, mapping[full], nms, fixed = TRUE)
-  getNames(x) <- nms
-  x
+.writeOut <- function(x, filename) {
+  if (is.null(x)) { warning("No data for: ", filename); return(invisible(NULL)) }
+  write.csv(as.data.frame(x, rev = 3), 
+            file.path("output", paste0(filename, ".csv")),
+            row.names = FALSE)
 }
 
-supply    <- NULL
-cropRes   <- NULL
-woodRes   <- NULL
-biogas    <- NULL
-scenarios <- NULL
-missing   <- NULL
-
-for (i in seq_along(outputdir)) {
-  gdx <- file.path(outputdir[i], "fulldata.gdx")
-  if (!file.exists(gdx)) {
-    missing <- c(missing, outputdir[i])
-    next
+# Loop over all scenarios, apply extractFn(gdx, shortScen) for each, combine
+# all results, and write to filename in one go.
+collectOutput <- function(validDirs, scenarios, scenMap, extractFn, filename) {
+  results <- NULL
+  for (i in seq_along(validDirs)) {
+    shortScen <- scenMap[[scenarios[i]]]
+    cat(" ", shortScen, "...\n")
+    results <- mbind(results, extractFn(file.path(validDirs[i], "fulldata.gdx"), shortScen))
   }
+  .writeOut(results, filename)
+}
 
-  cfg  <- gms::loadConfig(file.path(outputdir[i], "config.yml"))
-  scen <- cfg$title
-  cat("Processing", scen, "...\n")
-  scenarios <- c(scenarios, scen)
+# ---- Per-output extract functions --------------------------------------------
 
-  # ---- Output 1: Supply (wood fuel + manure fuel) --------------------------------
+extractSupply <- function(gdx, shortScen) {
   woodFuel   <- reportWoodFuel(gdx)
   manureFuel <- reportManureFuel(gdx)
   allYears   <- sort(unique(c(getYears(woodFuel), getYears(manureFuel))))
-  supply <- mbind(supply,
-    addScen(expandYears(woodFuel,   allYears), scen),
-    addScen(expandYears(manureFuel, allYears), scen)
+  mbind(
+    addScen(expandYears(woodFuel,   allYears), shortScen),
+    addScen(expandYears(manureFuel, allYears), shortScen)
   )
+}
 
-  # ---- Output 2: Potential crop residues (4 parameter specs) --------------------
+extractCropRes <- function(gdx, shortScen) {
   specResults <- lapply(names(.cropResSpecs), function(specName) {
     params <- .cropResSpecs[[specName]]
     res <- reportCropResidues2ndBE(gdx,
                                    collectionFraction      = params["collectionFraction"],
                                    minDensityForExtraction = params["minDensityForExtraction"])
     res <- addDim(res, dim = 3.1, dimName = "spec", item = specName)
-    addScen(res, scen)
+    addScen(res, shortScen)
   })
-  allYearsCR <- sort(unique(unlist(lapply(specResults, getYears))))
-  cropRes <- mbind(cropRes, mbind(lapply(specResults, expandYears, years = allYearsCR)))
-
-  # ---- Output 3: Potential wood processing residues -----------------------------
-  woodRes <- mbind(woodRes, addScen(reportProcessingWoodResidues(gdx), scen))
-
-  # ---- Output 4: Biogas feedstock potential -------------------------------------
-  biogas <- mbind(biogas, addScen(reportBiogasFeedstock(gdx), scen))
-
-  cat("✓", scen, "complete\n\n")
+  allYears <- sort(unique(unlist(lapply(specResults, getYears))))
+  mbind(lapply(specResults, expandYears, years = allYears))
 }
 
-if (!is.null(missing)) {
-  warning(paste0("Runs with missing fulldata.gdx:", missing))
+extractWoodRes <- function(gdx, shortScen) {
+  addScen(reportProcessingWoodResidues(gdx), shortScen)
 }
 
-# ---- Shorten scenario names to the differing part only -------------------------
+extractBiogas <- function(gdx, shortScen) {
+  addScen(reportBiogasFeedstock(gdx), shortScen)
+}
+
+# ---- Pass 1: scan configs to collect scenario names --------------------------
+scenarios <- character(0)
+validDirs <- character(0)
+missing   <- character(0)
+
+for (dir in outputdir) {
+  gdx <- file.path(dir, "fulldata.gdx")
+  if (!file.exists(gdx)) { missing <- c(missing, dir); next }
+  cfg       <- gms::loadConfig(file.path(dir, "config.yml"))
+  scenarios <- c(scenarios, cfg$title)
+  validDirs <- c(validDirs, dir)
+}
+
+if (length(missing) > 0) warning("Runs with missing fulldata.gdx: ", paste(missing, collapse = ", "))
+
+# ---- Compute shortened scenario names ----------------------------------------
 shortScens <- mip::shorten_legend(scenarios, identical_only = TRUE, sep = c(" ", "-", "|", "_"))
 scenMap    <- setNames(shortScens, scenarios)
 
 cat("\nScenario name mapping:\n")
 for (i in seq_along(scenarios)) cat(" ", scenarios[i], "->", shortScens[i], "\n")
 
-supply  <- applyScenMap(supply,  scenMap)
-cropRes <- applyScenMap(cropRes, scenMap)
-woodRes <- applyScenMap(woodRes, scenMap)
-biogas  <- applyScenMap(biogas,  scenMap)
+# ---- Pass 2: extract each output across all scenarios ------------------------
+cat("\n-- Supply (wood fuel + manure fuel) --\n")
+collectOutput(validDirs, scenarios, scenMap, extractSupply, "biomass_supply")
 
-# ---- Write collected outputs ---------------------------------------------------
-.writeOut <- function(x, filename) {
-  if (is.null(x)) {
-    warning("No data for: ", filename)
-    return(invisible(NULL))
-  }
-  write.report(x, file.path("output", filename), model = "MAgPIE")
-}
+cat("\n-- Potential crop residues --\n")
+collectOutput(validDirs, scenarios, scenMap, extractCropRes, "biomass_potential_cropres")
 
-cat("\n====== Writing outputs ======\n")
-.writeOut(supply,  "biomass_supply.mif")
-.writeOut(cropRes, "biomass_potential_cropres.mif")
-.writeOut(woodRes, "biomass_potential_woodres.mif")
-.writeOut(biogas,  "biomass_potential_biogas.mif")
+cat("\n-- Potential wood processing residues --\n")
+collectOutput(validDirs, scenarios, scenMap, extractWoodRes, "biomass_potential_woodres")
+
+cat("\n-- Biogas feedstock potential --\n")
+collectOutput(validDirs, scenarios, scenMap, extractBiogas, "biomass_potential_biogas")
 
 cat("\n====== Biomass Extraction Complete ======\n")
