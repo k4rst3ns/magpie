@@ -12,7 +12,7 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-19_H12"
+version <- "EUCDR-21_H12"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
@@ -70,22 +70,25 @@ for(scen in miti){
 
         # NPi - BAU
         cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
+        cfg$gms$c56_mute_ghgprices_until <- "y2030"
+        cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-NPi2025"
+        cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-NPi2025" 
 
       } else if (scen == "2deg") {
 
         # 2° - MAU
         cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
         cfg$gms$c56_mute_ghgprices_until <- "y2030"
-        cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg1000")
-        cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg1000")
+        cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
+        cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
 
       } else if (scen == "1p5deg") {
 
         # 1.5° - MAU+
         cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
         cfg$gms$c56_mute_ghgprices_until <- "y2030"
-        cfg$gms$c56_pollutant_prices <- paste0("R34M410-SSP2-PkBudg650")
-        cfg$gms$c60_2ndgen_biodem    <- paste0("R34M410-SSP2-PkBudg650")
+        cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg650"
+        cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg650"
 
       } else {stop("wrong miti setup")}
 
