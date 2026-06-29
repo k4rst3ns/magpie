@@ -18,11 +18,13 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
-cfg$recalibrate <- FALSE
-cfg$recalibrate_landconversion_cost <- TRUE
-cfg$title <- "calib_run_H15"
-cfg$output <- c("rds_report")
-cfg$force_replace <- TRUE
-cfg$qos <- "priority"
-start_run(cfg,codeCheck=FALSE)
-magpie4::submitCalibration("H15_FAO")
+cfg$recalibrate    <- FALSE
+cfg$recalibrate_landconversion_cost    <- TRUE
+cfg$calib_accuracy_landconversion_cost <- 0.05
+cfg$level_gradient_mix                 <- 0.5 # def = 0.3
+cfg$title          <- "calib_run_H12"
+cfg$output         <- c("rds_report")
+cfg$force_replace  <- TRUE
+cfg$qos            <- "priority"
+start_run(cfg, codeCheck = FALSE)
+magpie4::submitCalibration("H12EUtest")
