@@ -24,7 +24,7 @@ cfg$input['regional']    <- "rev4.130EUtest_h12_magpie.tgz"
 cfg$input['validation']  <- "rev4.130EUtest_h12_92e02314_validation.tgz"
 cfg$input['calibration'] <- "calibration_H12_12Mar26.tgz"
 cfg$input['cellular']    <- "rev4.130EUtest_h12_1b5c3817_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1.tgz"
-cfg$input['additional'] <- "additional_data_rev4.64.tgz" #NPI/NDC fix for EUN
+cfg$input['additional']  <- "additional_data_rev4.67.tgz" #NPI/NDC fix for EUN
 
 ############ old selfsuff_reduced trade ##########
 
