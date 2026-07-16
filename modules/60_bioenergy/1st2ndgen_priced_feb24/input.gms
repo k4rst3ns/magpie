@@ -39,7 +39,7 @@ scalars
   s60_bioenergy_1st_price first generation bioenergy per-GJ price (USD17MER per GJ) / 0 /
   s60_bioenergy_2nd_price second generation bioenergy price (USD17MER per GJ) / 0 /
   s60_2ndgen_bioenergy_dem_min Minimum dedicated 2nd generation bioenergy demand assumed in each region during SSP2-fix (mio. GJ per yr) / 1 /
-  s60_begr_ge_discount             Grass quality discount for begr energy content (0=no discount, 1=no value) / 0 /
+  s60_begr_ge_discount             Grass quality discount for begr energy content / 0 /
 ;
 
 $setglobal c60_price_implementation  lin
