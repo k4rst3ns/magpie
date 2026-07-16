@@ -28,14 +28,16 @@ positive variables
 ;
 
 equations
- q14_yield_crop(j,kcr,w)             Crop yields (tDM per ha per yr)
- q14_yield_past(j,w)                 Pasture yields (tDM per ha per yr)
-;
+ q14_yield_crop(j,knbe14,w)             Crop yields (tDM per ha per yr)
+ q14_yield_past(j,w)                     Pasture yields (tDM per ha per yr)
+ q14_yield_crop_be(j,kbe14,w)            Bioenergy crop yields with dampened TC (tDM per ha per yr)
+ ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_yld(t,j,kve,w,type)          Yields (variable because of technical change) (tDM per ha per yr)
- oq14_yield_crop(t,j,kcr,w,type) Crop yields (tDM per ha per yr)
- oq14_yield_past(t,j,w,type)     Pasture yields (tDM per ha per yr)
+ oq14_yield_crop(t,j,kcr,w,type)     Crop yields (tDM per ha per yr)
+ oq14_yield_crop_be(t,j,kbe14,w,type) Bioenergy crop yields (tDM per ha per yr)
+ oq14_yield_past(t,j,w,type)         Pasture yields (tDM per ha per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

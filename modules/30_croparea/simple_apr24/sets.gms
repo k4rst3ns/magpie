@@ -10,7 +10,7 @@ sets
        / cereals_r, rice_r, cer_rice_r, fieldoil_r, soybean_r, rapeseed_r,
          sunflower_r, groundnut_r, oilpalm_r, puls_r, potato_r, cassava_r,
          roots_r, sugr_cane_r, sugr_beet_r, others_r, foddr_r, fiber_r,
-         begr_r, betr_r /
+         begr_r, betr_r, kbe30_r /
 
   crpmax30(crp30) Maximum crop rotation
   crpmin30(crp30) Minimum crop rotation
@@ -33,8 +33,9 @@ sets
          others_r    . (others)
          foddr_r     . (foddr)
          fiber_r     . (cottn_pro)
-         begr_r      . (begr)
-         betr_r      . (betr)  /
+          begr_r      . (begr)
+          betr_r      . (betr)
+          kbe30_r     . (begr, betr)  /
 
    kbe30(kcr) bio energy activities
         / betr, begr /

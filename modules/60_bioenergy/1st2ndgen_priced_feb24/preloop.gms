@@ -16,6 +16,8 @@ p60_country_switch(scen_countries60) = 1;
 * Countries are weighted by their population size.
 p60_region_BE_shr(t_all,i) = sum(i_to_iso(i,iso), p60_country_switch(iso) * im_pop_iso(t_all,iso)) / sum(i_to_iso(i,iso), im_pop_iso(t_all,iso));
 
+i60_ge_effective(kall) = fm_attributes("ge",kall) * (1 - s60_begr_ge_discount$(sameas(kall,"begr")));
+
 $ifthen "%c60_2ndgen_biodem%" == "coupling"
   i60_bioenergy_dem(t,i) = f60_bioenergy_dem_coupling(t,i);
 $elseif "%c60_2ndgen_biodem%" == "emulator"

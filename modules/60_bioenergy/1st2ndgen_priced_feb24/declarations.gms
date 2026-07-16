@@ -14,7 +14,8 @@ parameters
  i60_2ndgen_bioenergy_subsidy(t)                  Global 2nd generation bioenergy subsidy (USD17MER per GHJ)
  p60_region_BE_shr(t_all,i)                       Bioenergy demand share of the region (1)
  p60_country_switch(iso)                          Switch indicating whether country is selected for selected bioenergy demand scenario (1)
-;
+ i60_ge_effective(kall)                           Effective energy content of bioenergy carriers (GJ per tDM)
+ ;
 
 positive variables
  vm_dem_bioen(i,kall)                       Regional bioenergy demand  (mio. tDM per yr)
