@@ -32,9 +32,9 @@ source("config/default.cfg")
 # C/D: 1 = unchanged, lower = more effect (kept this direction deliberately,
 #      see scenarios/scenario_detail.md for rationale)
 
-eroiScen <- c(eroiZero = 0, eroiLow = 0.1,  eroiMed = 0.2,  eroiHigh = 0.3)   # s14_eroi_yield_penalty_max
-geScen   <- c(geZero   = 0, geLow   = 0.05, geMed   = 0.15, geHigh   = 0.25) # s60_begr_ge_discount
-rotScen  <- c(rotZero  = 1, rotLow  = 0.9,  rotMed  = 0.7,  rotHigh  = 0.5)  # s30_kbe_rotation_max_shr
+eroiScen <- c(eroiZero = 0, eroiLow = 0.15, eroiMed = 0.3,  eroiHigh = 0.5)   # s14_eroi_yield_penalty_max
+geScen   <- c(geZero   = 0, geLow   = 0.10, geMed   = 0.20, geHigh   = 0.50) # s60_begr_ge_discount
+rotScen  <- c(rotZero  = 1, rotLow  = 0.10, rotMed  = 0.05, rotHigh  = 0.01)  # s30_kbe_rotation_max_shr
 tauScen  <- c(tauZero  = 1, tauLow  = 0.75, tauMed  = 0.5,  tauHigh  = 0.25) # s14_be_tau_share
 
 miti <- c("npi", "2deg", "1p5deg")
@@ -63,12 +63,19 @@ for (scen in miti) {
   } else {stop("wrong miti setup")}
 
   .startRun <- function(eroi, ge, rot, tau, check = FALSE) {
-    cfg$gms$s14_eroi_yield_penalty_max <- eroiScen[eroi]
-    cfg$gms$s60_begr_ge_discount       <- geScen[ge]
-    cfg$gms$s30_kbe_rotation_max_shr   <- rotScen[rot]
-    cfg$gms$s14_be_tau_share           <- tauScen[tau]
+    eroiVal <- eroiScen[eroi][[1]]
+    geVal   <- geScen[ge][[1]]
+    rotVal  <- rotScen[rot][[1]]
+    tauVal  <- tauScen[tau][[1]]
 
-    cfg$title <- .title(version, scen, eroi, ge, rot, tau)
+    cfg$gms$s14_eroi_yield_penalty_max <- eroiVal
+    cfg$gms$s60_begr_ge_discount       <- geVal
+    cfg$gms$s30_kbe_rotation_max_shr   <- rotVal
+    cfg$gms$s14_be_tau_share           <- tauVal
+
+    fmt <- function(v) gsub("\\.", "p", sprintf("%g", v))
+
+    cfg$title <- .title(version, scen, paste0("eroi", fmt(eroiVal)), paste0("ge", fmt(geVal)), paste0("rot", fmt(rotVal)), paste0("tau", fmt(tauVal)))
     start_run(cfg, codeCheck = check)
   }
 
