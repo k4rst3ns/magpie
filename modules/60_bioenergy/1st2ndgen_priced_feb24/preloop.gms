@@ -21,8 +21,7 @@ i60_ge_effective(kall) = fm_attributes("ge",kall) * (1 - s60_begr_ge_discount$(s
 $ifthen "%c60_2ndgen_biodem%" == "coupling"
   i60_bioenergy_dem(t,i) = f60_bioenergy_dem_coupling(t,i);
 $elseif "%c60_2ndgen_biodem%" == "emulator"
-  i60_bioenergy_dem(t,i) = f60_bioenergy_dem_emulator(t) * s60_biodem_scaler * 1000
-    * sum(i_to_iso(i,iso), im_pop_iso(t,iso)) / sum((i2,i_to_iso(i2,iso2)), im_pop_iso(t,iso2));
+  i60_bioenergy_dem(t,i) = f60_bioenergy_dem_emulator(t) * s60_biodem_scaler * 1000 / card(i);
 $elseif "%c60_2ndgen_biodem%" == "none"
   i60_bioenergy_dem(t,i) = 0;
 ** Harmonize until sm_fix_SSP2 if not coupled or emulator 

@@ -28,7 +28,7 @@ geScen   <- c(geZero   = 0,                geLow   = 0.05, geHigh  = 0.15)
 rotScen  <- c(rotZero  = 1,                rotLow  = 0.30, rotHigh = 0.10)
 tauScen  <- c(tauZero  = 1,                tauLow  = 0.75, tauHigh = 0.50)
 biodemScen <- c(biodem20 = 20, biodem50 = 50, biodem100 = 100,
-                biodem150 = 150, biodem200 = 200, biodem300 = 300)
+                biodem200 = 200, biodem350 = 350, biodem600 = 600)
 
 # ---- 2-degree scenario setup (fixed across all runs) --------------------
 
@@ -36,6 +36,7 @@ cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
 cfg$gms$c56_mute_ghgprices_until <- "y2030"
 cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
 cfg$gms$c60_2ndgen_biodem <- "emulator"
+cfg$gms$c60_biodem_level <- 0
 
 # ---- Constraint combinations (11 patterns) ------------------------------
 
