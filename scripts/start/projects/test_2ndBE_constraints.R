@@ -16,7 +16,7 @@
 library(magpie4)
 library(magclass)
 
-version <- "2ndBE-03_H12"
+version <- "BE04"
 
 source("scripts/start_functions.R")
 source("config/default.cfg")
@@ -29,8 +29,8 @@ rotScen  <- c(rotZero  = 1,                rotLow  = 0.30, rotHigh = 0.10)
 tauScen  <- c(tauZero  = 1,                tauLow  = 0.75, tauHigh = 0.50)
 biodemScen <- c(biodem50 = 50, biodem100 = 100,
                 biodem200 = 200, biodem350 = 350, biodem600 = 600)
-tradeScen  <- c(tradeSelfsuff = "selfsuff_reduced",
-                tradeBilat    = "selfsuff_reduced_bilateral22")
+tradeScen  <- c(def = "selfsuff_reduced",
+                bil = "selfsuff_reduced_bilateral22")
 
 # ---- 2-degree scenario setup (fixed across all runs) --------------------
 
@@ -87,7 +87,7 @@ for (t in names(tradeScen)) {
       cfg$title <- paste(
         version,
         t,
-        paste0("biodem", fmt(biodemScen[b])),
+        paste0("dem", fmt(biodemScen[b])),
         paste0("eroi", fmt(eroiScen[eroi])),
         paste0("ge",   fmt(geScen[ge])),
         paste0("rot",  fmt(rotScen[rot])),
