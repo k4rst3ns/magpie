@@ -16,7 +16,7 @@
 library(magpie4)
 library(magclass)
 
-version <- "2ndBE-02_H12"
+version <- "2ndBE-03_H12"
 
 source("scripts/start_functions.R")
 source("config/default.cfg")
@@ -27,8 +27,10 @@ eroiScen <- c(eroiZero = 0,                eroiLow = 0.15, eroiHigh = 0.5)
 geScen   <- c(geZero   = 0,                geLow   = 0.05, geHigh  = 0.15)
 rotScen  <- c(rotZero  = 1,                rotLow  = 0.30, rotHigh = 0.10)
 tauScen  <- c(tauZero  = 1,                tauLow  = 0.75, tauHigh = 0.50)
-biodemScen <- c(biodem20 = 20, biodem50 = 50, biodem100 = 100,
+biodemScen <- c(biodem50 = 50, biodem100 = 100,
                 biodem200 = 200, biodem350 = 350, biodem600 = 600)
+tradeScen  <- c(tradeSelfsuff = "selfsuff_reduced",
+                tradeBilat    = "selfsuff_reduced_bilateral22")
 
 # ---- 2-degree scenario setup (fixed across all runs) --------------------
 
@@ -60,32 +62,41 @@ fmt <- function(v) gsub("\\.", "p", sprintf("%g", v))
 
 # ---- Main loop ----------------------------------------------------------
 
-for (b in names(biodemScen)) {
+firstRun <- TRUE
 
-  cfg$gms$s60_biodem_scaler <- biodemScen[b]
+for (t in names(tradeScen)) {
 
-  for (i in seq_along(combos)) {
+  cfg$gms$trade <- tradeScen[t]
 
-    eroi <- combos[[i]][1]
-    ge   <- combos[[i]][2]
-    rot  <- combos[[i]][3]
-    tau  <- combos[[i]][4]
+  for (b in names(biodemScen)) {
 
-    cfg$gms$s14_eroi_yield_penalty_max <- eroiScen[eroi]
-    cfg$gms$s60_begr_ge_discount       <- geScen[ge]
-    cfg$gms$s30_kbe_rotation_max_shr   <- rotScen[rot]
-    cfg$gms$s14_be_tau_share           <- tauScen[tau]
+    cfg$gms$s60_biodem_scaler <- biodemScen[b]
 
-    cfg$title <- paste(
-      version,
-      paste0("biodem", fmt(biodemScen[b])),
-      paste0("eroi", fmt(eroiScen[eroi])),
-      paste0("ge",   fmt(geScen[ge])),
-      paste0("rot",  fmt(rotScen[rot])),
-      paste0("tau",  fmt(tauScen[tau])),
-      sep = "_"
-    )
+    for (i in seq_along(combos)) {
 
-    start_run(cfg, codeCheck = (i == 1 && b == names(biodemScen)[1]))
+      eroi <- combos[[i]][1]
+      ge   <- combos[[i]][2]
+      rot  <- combos[[i]][3]
+      tau  <- combos[[i]][4]
+
+      cfg$gms$s14_eroi_yield_penalty_max <- eroiScen[eroi]
+      cfg$gms$s60_begr_ge_discount       <- geScen[ge]
+      cfg$gms$s30_kbe_rotation_max_shr   <- rotScen[rot]
+      cfg$gms$s14_be_tau_share           <- tauScen[tau]
+
+      cfg$title <- paste(
+        version,
+        t,
+        paste0("biodem", fmt(biodemScen[b])),
+        paste0("eroi", fmt(eroiScen[eroi])),
+        paste0("ge",   fmt(geScen[ge])),
+        paste0("rot",  fmt(rotScen[rot])),
+        paste0("tau",  fmt(tauScen[tau])),
+        sep = "_"
+      )
+
+      start_run(cfg, codeCheck = firstRun)
+      firstRun <- FALSE
+    }
   }
 }
