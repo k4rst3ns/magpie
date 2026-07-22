@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: 2nd-generation bioenergy uptake constraints test runs v2
+# description: 2nd-generation bioenergy uptake constraints test runs v5
 # ----------------------------------------------------------
 
 ######################################
@@ -16,21 +16,23 @@
 library(magpie4)
 library(magclass)
 
-version <- "BE04"
+version <- "BE05"
 
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-# ---- Scenario dimensions (3 levels each: Zero / Low / High) --------------
+# ---- Scenario dimensions ---------------------------------------------------
 
-eroiScen <- c(eroiZero = 0,                eroiLow = 0.15, eroiHigh = 0.5)
-geScen   <- c(geZero   = 0,                geLow   = 0.05, geHigh  = 0.15)
-rotScen  <- c(rotZero  = 1,                rotLow  = 0.30, rotHigh = 0.10)
-tauScen  <- c(tauZero  = 1,                tauLow  = 0.75, tauHigh = 0.50)
-biodemScen <- c(biodem50 = 50, biodem100 = 100,
-                biodem200 = 200, biodem350 = 350, biodem600 = 600)
+eroiScen <- c(eroiZero = 0,    eroiLow = 0.15, eroiHigh = 0.5)
+geScen   <- c(geZero   = 0,    geLow   = 0.05, geHigh  = 0.15)
+rotScen  <- c(rotZero  = 1,    rotLow  = 0.30, rotHigh = 0.10)
+tauScen  <- c(tauZero  = 1,    tauLow  = 0.75, tauHigh = 0.50)
+
+biodemScen <- c(dem20 = 20, dem50 = 50, dem100 = 100, dem200 = 200,
+                dem300 = 300, dem400 = 400, dem500 = 500, dem600 = 600)
 tradeScen  <- c(def = "selfsuff_reduced",
                 bil = "selfsuff_reduced_bilateral22")
+pastScen   <- c(woPS = 0, wiPS = 0.25)
 
 # ---- 2-degree scenario setup (fixed across all runs) --------------------
 
@@ -39,6 +41,7 @@ cfg$gms$c56_mute_ghgprices_until <- "y2030"
 cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
 cfg$gms$c60_2ndgen_biodem <- "emulator"
 cfg$gms$c60_biodem_level <- 0
+cfg$output <- c("rds_report")
 
 # ---- Constraint combinations (11 patterns) ------------------------------
 
@@ -68,35 +71,39 @@ for (t in names(tradeScen)) {
 
   cfg$gms$trade <- tradeScen[t]
 
-  for (b in names(biodemScen)) {
+  for (p in names(pastScen)) {
 
-    cfg$gms$s60_biodem_scaler <- biodemScen[b]
+    cfg$gms$s14_yld_past_switch <- pastScen[p]
 
-    for (i in seq_along(combos)) {
+    for (b in names(biodemScen)) {
 
-      eroi <- combos[[i]][1]
-      ge   <- combos[[i]][2]
-      rot  <- combos[[i]][3]
-      tau  <- combos[[i]][4]
+      cfg$gms$s60_biodem_scaler <- biodemScen[b]
 
-      cfg$gms$s14_eroi_yield_penalty_max <- eroiScen[eroi]
-      cfg$gms$s60_begr_ge_discount       <- geScen[ge]
-      cfg$gms$s30_kbe_rotation_max_shr   <- rotScen[rot]
-      cfg$gms$s14_be_tau_share           <- tauScen[tau]
+      for (i in seq_along(combos)) {
 
-      cfg$title <- paste(
-        version,
-        t,
-        paste0("dem", fmt(biodemScen[b])),
-        paste0("eroi", fmt(eroiScen[eroi])),
-        paste0("ge",   fmt(geScen[ge])),
-        paste0("rot",  fmt(rotScen[rot])),
-        paste0("tau",  fmt(tauScen[tau])),
-        sep = "_"
-      )
+        eroi <- combos[[i]][1]
+        ge   <- combos[[i]][2]
+        rot  <- combos[[i]][3]
+        tau  <- combos[[i]][4]
 
-      start_run(cfg, codeCheck = firstRun)
-      firstRun <- FALSE
+        cfg$gms$s14_eroi_yield_penalty_max <- eroiScen[eroi]
+        cfg$gms$s60_begr_ge_discount       <- geScen[ge]
+        cfg$gms$s30_kbe_rotation_max_shr   <- rotScen[rot]
+        cfg$gms$s14_be_tau_share           <- tauScen[tau]
+
+        cfg$title <- paste(
+          version, t, p,
+          paste0("dem", fmt(biodemScen[b])),
+          paste0("eroi", fmt(eroiScen[eroi])),
+          paste0("ge",   fmt(geScen[ge])),
+          paste0("rot",  fmt(rotScen[rot])),
+          paste0("tau",  fmt(tauScen[tau])),
+          sep = "_"
+        )
+
+        start_run(cfg, codeCheck = firstRun)
+        firstRun <- FALSE
+      }
     }
   }
 }
