@@ -18,14 +18,12 @@ source("scripts/start_functions.R")
 #start MAgPIE run
 source("config/default.cfg")
 dev <- "EURtestsH21"
-rev <- "04"
+rev <- "05"
 
-cfg$input['regional']    <- "rev4.130EUtest_2b1450bc_magpie.tgz"
-cfg$input['validation']  <- "rev4.130EUtest_2b1450bc_e5902f5f_validation.tgz"
+cfg$input['regional']    <- "rev4.133EUtest_H21EU_magpie.tgz"
+cfg$input['validation']  <- "rev4.133EUtest_H21EU_e5902f5f_validation.tgz"
 cfg$input['calibration'] <- "calibration_H21_EUtest_12Mar26.tgz"
-cfg$input['cellular']    <- "rev4.130EUtest_2b1450bc_f4a4836c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-42ca0ffb.tgz"
-cfg$input['additional']  <- "additional_data_rev4.67.tgz" #NPI/NDC fix for EUN
-
+cfg$input['cellular']    <- "rev4.133EUtest_H21EU_f4a4836c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-42ca0ffb.tgz"
 cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_eu_h21"
 
 ############ old selfsuff_reduced trade ##########
@@ -50,12 +48,12 @@ start_run(cfg)
 
 trade <- "bilateral"
 source("config/default.cfg")
-cfg$input['regional']    <- "rev4.130EUtest_2b1450bc_magpie.tgz"
-cfg$input['validation']  <- "rev4.130EUtest_2b1450bc_e5902f5f_validation.tgz"
+cfg$input['regional']    <- "rev4.133EUtest_H21EU_magpie.tgz"
+cfg$input['validation']  <- "rev4.133EUtest_H21EU_e5902f5f_validation.tgz"
 cfg$input['calibration'] <- "calibration_H21_EUtest_12Mar26.tgz"
-cfg$input['cellular']    <- "rev4.130EUtest_2b1450bc_f4a4836c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-42ca0ffb.tgz"
-cfg$input['additional']  <- "additional_data_rev4.64.tgz" #NPI/NDC fix for EUN
+cfg$input['cellular']    <- "rev4.133EUtest_H21EU_f4a4836c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-42ca0ffb.tgz"
 cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_eu_h21"
+
 cfg$gms$trade <- "selfsuff_reduced_bilateral22"
 
 cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")

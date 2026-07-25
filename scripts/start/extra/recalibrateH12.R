@@ -17,19 +17,19 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
-cfg$input['regional']    <- "rev4.133EUtest_H21EU_magpie.tgz"
-cfg$input['validation']  <- "rev4.133EUtest_H21EU_e5902f5f_validation.tgz"
-cfg$input['calibration'] <- "calibration_H21_EUtest_12Mar26.tgz"
-cfg$input['cellular']    <- "rev4.133EUtest_H21EU_f4a4836c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-42ca0ffb.tgz"
+cfg$input['regional']    <- "rev4.133EUtest_h12_magpie.tgz"
+cfg$input['validation']  <- "rev4.133EUtest_h12_92e02314_validation.tgz"
+cfg$input['calibration'] <- "calibration_H12_FAO_01Apr26.tgz"
+cfg$input['cellular']    <- "rev4.133EUtest_h12_1b5c3817_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1.tgz"
 
 cfg$results_folder <- "output/:title:"
 cfg$recalibrate    <- FALSE
 cfg$recalibrate_landconversion_cost    <- TRUE
 cfg$calib_accuracy_landconversion_cost <- 0.05
 cfg$level_gradient_mix                 <- 0.5 # def = 0.3
-cfg$title          <- "calib_run_H21"
+cfg$title          <- "calib_run_H12"
 cfg$output         <- c("rds_report")
 cfg$force_replace  <- TRUE
 cfg$qos            <- "priority"
 start_run(cfg, codeCheck = FALSE)
-magpie4::submitCalibration("H21EUtest")
+magpie4::submitCalibration("H12EUtest")

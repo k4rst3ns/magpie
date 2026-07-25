@@ -17,10 +17,11 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
-cfg$input['regional']    <- "rev4.131EUtest_H16EU_magpie.tgz"
-cfg$input['validation']  <- "rev4.131EUtest_H16EU_c9f905aa_validation.tgz"
-cfg$input['calibration'] <- "calibration_H16EU_23Jan26.tgz"
-cfg$input['cellular']    <- "rev4.131EUtest_H16EU_582d657c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-ba4466a8.tgz"
+
+cfg$input['regional']    <- "rev4.133EUtest_H16EU_magpie.tgz"
+cfg$input['validation']  <- "rev4.133EUtest_H16EU_c9f905aa_validation.tgz"
+cfg$input['calibration'] <- "calibration_H16_EUtest_12Mar26.tgz"
+cfg$input['cellular']    <- "rev4.133EUtest_H16EU_582d657c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-ba4466a8.tgz"
 
 cfg$results_folder <- "output/:title:"
 cfg$recalibrate    <- FALSE
