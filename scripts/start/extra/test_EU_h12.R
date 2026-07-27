@@ -6,66 +6,60 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # --------------------------------------------------------
-# description: test runs for EUR using h12 setup
+# description: scenario runs for EUR using h12 setup
+#              varying trade realizations, REMIND data versions,
+#              and mitigation scenarios
 # --------------------------------------------------------
 
 library(magpie4)
 library(magclass)
 
-# Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
-
-#start MAgPIE run
 source("config/default.cfg")
+
 dev <- "EURtestsH12"
-rev <- "05"
+rev <- "06"
 
 cfg$input['regional']    <- "rev4.133EUtest_h12_magpie.tgz"
 cfg$input['validation']  <- "rev4.133EUtest_h12_92e02314_validation.tgz"
-cfg$input['calibration'] <- "calibration_H12_FAO_01Apr26.tgz"
+cfg$input['calibration'] <- "calibration_H12EUtest_26Jul26.tgz"
 cfg$input['cellular']    <- "rev4.133EUtest_h12_1b5c3817_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1.tgz"
 
-############ old selfsuff_reduced trade ##########
+cfg$results_folder <- "output/:title:"
+cfg$force_replace  <- TRUE
 
-trade <- "oldTrade"
+remind <- c(old = "R34M410", new = "R36M414")
+trade  <- c(oldTrade = "selfsuff_reduced", bilateral = "selfsuff_reduced_bilateral22")
+miti   <- c("npi", "2deg", "1p5deg")
 
-cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")
-start_run(cfg)
+remindData <- list(
+  R34M410 = c(npi = "NPi2025", `2deg` = "PkBudg1000", `1p5deg` = "PkBudg650"),
+  R36M414 = c(npi = "NPi2025", `2deg` = "PkBudg1000", `1p5deg` = "PkBudg750")
+)
 
-cfg$title <- paste(dev, rev, "NDC", trade, sep = "-")
-cfg       <- gms::setScenario(cfg, "NDC")
-start_run(cfg)
+for (remindVer in names(remind)) {
+  for (trd in names(trade)) {
+    for (scen in miti) {
 
-cfg$title <- paste(dev, rev, "PkBu1000", trade, sep = "-")
-cfg       <- gms::setScenario(cfg, "NDC")
-cfg$gms$c56_mute_ghgprices_until <- "y2030"
-cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
-cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
-start_run(cfg)
+      cfg$gms$trade <- trade[trd]
 
-############ bilateral trade ##########
+      if (scen == "npi") {
+        cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
+      } else {
+        cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
+      }
 
-trade <- "bilateral"
-source("config/default.cfg")
+      cfg$gms$c56_mute_ghgprices_until     <- "y2030"
+      cfg$gms$c56_pollutant_prices <- paste0(remind[remindVer], "-SSP2-", remindData[[remindVer]][scen])
+      cfg$gms$c60_2ndgen_biodem    <- paste0(remind[remindVer], "-SSP2-", remindData[[remindVer]][scen])
+      cfg$gms$c60_biodem_baseline  <- paste0(remind[remindVer], "-SSP2-NPi2025")
 
-cfg$input['regional']    <- "rev4.133EUtest_h12_magpie.tgz"
-cfg$input['validation']  <- "rev4.133EUtest_h12_92e02314_validation.tgz"
-cfg$input['calibration'] <- "calibration_H12_FAO_01Apr26.tgz"
-cfg$input['cellular']    <- "rev4.133EUtest_h12_1b5c3817_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1.tgz"
+      if (trd == "bilateral") {
+        cfg$gms$c60_res_2ndgenBE_dem <- "off"
+      }
 
-cfg$gms$trade <- "selfsuff_reduced_bilateral22"
-
-cfg$title <- paste(dev, rev, "defaultNPi2025", trade, sep = "-")
-start_run(cfg)
-
-cfg$title <- paste(dev, rev, "NDC", trade, sep = "-")
-cfg       <- gms::setScenario(cfg, "NDC")
-start_run(cfg)
-
-cfg$title <- paste(dev, rev, "PkBu1000", trade, sep = "-")
-cfg       <- gms::setScenario(cfg, "NDC")
-cfg$gms$c56_mute_ghgprices_until <- "y2030"
-cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
-cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
-start_run(cfg)
-
+      cfg$title <- paste(dev, rev, scen, trd, remindVer, sep = "-")
+      start_run(cfg, codeCheck = FALSE)
+    }
+  }
+}

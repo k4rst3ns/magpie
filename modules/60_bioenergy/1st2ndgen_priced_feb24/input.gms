@@ -44,6 +44,7 @@ scalars
 $setglobal c60_price_implementation  lin
 $setglobal c60_2ndgen_biodem  R34M410-SSP2-NPi2025
 $setglobal c60_2ndgen_biodem_noselect  R34M410-SSP2-NPi2025
+$setglobal c60_biodem_baseline  R34M410-SSP2-NPi2025
 
 
 $if "%c60_2ndgen_biodem%" == "coupling" table f60_bioenergy_dem_coupling(t_all,i) Bioenergy demand (regional) (mio. GJ per yr)
