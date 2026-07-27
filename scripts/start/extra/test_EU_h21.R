@@ -34,8 +34,8 @@ trade  <- c(oldTrade = "selfsuff_reduced", bilateral = "selfsuff_reduced_bilater
 miti   <- c("npi", "2deg", "1p5deg")
 
 remindData <- list(
-  R34M410 = c(npi = "NPi2025", `2deg` = "PkBudg1000", `1p5deg` = "PkBudg650"),
-  R36M414 = c(npi = "NPi2025", `2deg` = "PkBudg1000", `1p5deg` = "PkBudg750")
+  old = c(npi = "NPi2025", `2deg` = "PkBudg1000", `1p5deg` = "PkBudg650"),
+  new = c(npi = "NPi2025", `2deg` = "PkBudg1000", `1p5deg` = "PkBudg750")
 )
 
 for (remindVer in names(remind)) {
