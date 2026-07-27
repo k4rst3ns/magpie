@@ -45,9 +45,11 @@ for (remindVer in names(remind)) {
       cfg$gms$trade <- trade[trd]
 
       if (scen == "npi") {
-        cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
+        # rcp excluded: setScenario would overwrite cfg$input['cellular'] with h12 default
+        cfg <- gms::setScenario(cfg, c("SSP2", "NPI"))
       } else {
-        cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
+        # rcp excluded: setScenario would overwrite cfg$input['cellular'] with h12 default
+        cfg <- gms::setScenario(cfg, c("SSP2", "NDC"))
       }
 
       cfg$gms$c56_mute_ghgprices_until     <- "y2030"
