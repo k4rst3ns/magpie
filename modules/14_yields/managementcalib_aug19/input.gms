@@ -19,6 +19,8 @@ s14_use_yield_calib                Switch for using or not using yield calibrati
 s14_minimum_growing_stock          Minimum growing stock for timber harvest in natural vegetation (tDM per ha) / 5 /
 s14_yld_past_switch                Spillover parameter for translating technological change in the crop sector into pasture yieldincreases  (1)     / 0.25 /
 s14_yld_reduction_soil_loss        Decline of land productivity in areas with severe soil loss (1)     / 0.08 /
+s14_eroi_yield_penalty_max        Energy Return On Investment yield penalty for bioenergy crops / 0 /
+s14_be_tau_share                  Share of technological change passed through to bioenergy crop yields / 1 /
 sm_carbon_fraction                 Carbon fraction of dry matter (tC per tDM) / 0.5 /
 ;
 

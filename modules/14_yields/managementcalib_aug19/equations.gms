@@ -11,13 +11,13 @@
 
 *' Technological change can increase the initial calibrated yields by:
 
-q14_yield_crop(j2,kcr,w) ..
- vm_yld(j2,kcr,w) =e= sum(ct,i14_yields_calib(ct,j2,kcr,w)) *
+q14_yield_crop(j2,knbe14,w) ..
+ vm_yld(j2,knbe14,w) =e= sum(ct,i14_yields_calib(ct,j2,knbe14,w)) *
                          vm_tau(j2,"crop") / sum((cell(i2,j2), supreg(h2,i2)), fm_tau1995(h2));
 
-*' For the current time step of the optimization, cellular yields of irrigated
-*' and rainfed crops are calculated by multiplying calibrated input yields from
-*' LPJmL with the intensification rate relative to the initial time step 1995.
+q14_yield_crop_be(j2,kbe14,w) ..
+ vm_yld(j2,kbe14,w) =e= sum(ct,i14_yields_calib(ct,j2,kbe14,w)) *
+   (1 + s14_be_tau_share*(vm_tau(j2,"crop") / sum((cell(i2,j2), supreg(h2,i2)), fm_tau1995(h2)) - 1));
 
 ***PASTURE YIELD CALCULATIONS*******************************************
 
