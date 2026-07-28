@@ -25,7 +25,7 @@ cfg$input['validation']  <- "rev4.133EUtest_H21EU_e5902f5f_validation.tgz"
 cfg$input['calibration'] <- "calibration_H21EUtest_26Jul26.tgz"
 cfg$input['cellular']    <- "rev4.133EUtest_H21EU_f4a4836c_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1_clusterweight-42ca0ffb.tgz"
 
-cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_eu_h21"
+cfg$output[[match("rds_report", cfg$output)]] <- "extra/rds_report_aggr_region"
 cfg$results_folder <- "output/:title:"
 cfg$force_replace  <- TRUE
 
