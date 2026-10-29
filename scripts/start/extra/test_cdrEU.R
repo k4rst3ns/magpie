@@ -12,13 +12,11 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-21_H12"
+version <- "EUCDR-22newRemind_H12"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
 source("config/default.cfg")
-
-cfg$input['calibration'] <- "calibration_H12_12Mar26.tgz"
 
 EU_countries <- c("ALA", "AUT", "BEL", "BGR", "CYP", "CZE", "DEU", "DNK", "ESP", 
                   "EST", "FIN", "FRA", "FRO", "GBR", "GGY", "GIB", "GRC", "HRV", 
@@ -51,12 +49,16 @@ cfg$gms$s63_bcScen_stylized_targetyear <- 2050
 cfg$gms$s63_bc_yield_response_max <- 0 
 
 miti      <- c("npi", "2deg", "1p5deg")
-agfScen   <- c(agfZero = 0, agfHigh = 0.03, agfTwic = 0.06) # 3%/6% cropland share treecover
-scmScen   <- c(scmZero = 0, scmHigh = 0.3,  scmTwic = 0.6)  # 30%/60% cropland SOCM share
-bcScen    <- c(bcZero = 0,  bcHigh = 550,   bcTwic = 1100)  # 550/1100 PJ biochar prod
+agfScen   <- c(agfZero = 0, agfLow = 0.015, agfHigh = 0.03, agfTwic = 0.06) # 1.5%/3%/6% cropland share treecover
+scmScen   <- c(scmZero = 0, scmLow= 0.15,   scmHigh = 0.3,  scmTwic = 0.6)  # 15%/30%/60% cropland SOCM share
+bcScen    <- c(bcZero = 0,  bcLow = 325,    bcHigh = 650,   bcTwic = 1300)  # 325/650/1100 PJ biochar prod
 regionSet <- c("h12")
 cdrSet    <- c("eu")
-tradeScen <- c(selfsuff = "selfsuff_reduced", bilateral = "selfsuff_reduced_bilateral22")
+tradeScen <- c(bilateral = "selfsuff_reduced_bilateral22")
+
+# for bilateral trade cropping pattern differ a lot, so residues for 2nd BE drive demand for crops
+# for now switch them off!
+cfg$gms$c60_res_2ndgenBE_dem <- "off" 
 
 .title <- function(version = NULL, miti = NULL, agf = NULL, scm = NULL, bc = NULL, trd = NULL){
   return(paste(version, miti, agf, scm, bc, trd, sep = "_"))
@@ -71,24 +73,32 @@ for(scen in miti){
         # NPi - BAU
         cfg <- gms::setScenario(cfg, c("SSP2", "NPI", "rcp2p6"))
         cfg$gms$c56_mute_ghgprices_until <- "y2030"
-        cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-NPi2025"
-        cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-NPi2025" 
+        #cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-NPi2025"
+        #cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-NPi2025"  
+        cfg$gms$c56_pollutant_prices <- "R36M414-SSP2-NPi2025"
+        cfg$gms$c60_2ndgen_biodem    <- "R36M414-SSP2-NPi2025"
+
+
 
       } else if (scen == "2deg") {
 
         # 2° - MAU
         cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
         cfg$gms$c56_mute_ghgprices_until <- "y2030"
-        cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
-        cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
+        #cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg1000"
+        #cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg1000"
+        cfg$gms$c56_pollutant_prices <- "R36M414-SSP2-PkBudg1000"
+        cfg$gms$c60_2ndgen_biodem    <- "R36M414-SSP2-PkBudg1000"
 
       } else if (scen == "1p5deg") {
 
         # 1.5° - MAU+
         cfg <- gms::setScenario(cfg, c("SSP2", "NDC", "rcp2p6"))
         cfg$gms$c56_mute_ghgprices_until <- "y2030"
-        cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg650"
-        cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg650"
+        #cfg$gms$c56_pollutant_prices <- "R34M410-SSP2-PkBudg650"
+        #cfg$gms$c60_2ndgen_biodem    <- "R34M410-SSP2-PkBudg650"
+        cfg$gms$c56_pollutant_prices <- "R36M414-SSP2-PkBudg750"
+        cfg$gms$c60_2ndgen_biodem    <- "R36M414-SSP2-PkBudg750"
 
       } else {stop("wrong miti setup")}
 
@@ -109,6 +119,14 @@ for(scen in miti){
 
       #ZeroZeroZero
       .startRun("agfZero", "scmZero", "bcZero")
+      #ZeroZeroLow
+      .startRun("agfZero", "scmZero", "bcLow")
+      #ZeroLowZero
+      .startRun("agfZero", "scmLow", "bcZero")
+      #LowZeroZero
+      .startRun("agfLow", "scmZero", "bcZero")
+      #LowLowLow
+      .startRun("agfLow", "scmLow", "bcLow")
       #ZeroZeroHigh
       .startRun("agfZero", "scmZero", "bcHigh")
       #ZeroHighZero
