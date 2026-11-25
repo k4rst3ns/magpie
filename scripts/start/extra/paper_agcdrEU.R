@@ -20,6 +20,11 @@ version <- "EUCDR-22newRemind_H12"
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
+# Input data with the new soil carbon stock change factor files (as in test_scm_treecover.R)
+cfg$input["regional"]   <- "rev4.138+SCM+TCupdate_h12_magpie.tgz"
+cfg$input["cellular"]   <- "rev4.138+SCM+TCupdate_h12_1b5c3817_cellularmagpie_c200_MRI-ESM2-0-ssp245_lpjml-8e6c5eb1.tgz"
+cfg$input["validation"] <- "rev4.138+SCM+TCupdate_h12_92e02314_validation.tgz"
+
 EU_countries <- c("ALA", "AUT", "BEL", "BGR", "CYP", "CZE", "DEU", "DNK", "ESP",
                   "EST", "FIN", "FRA", "FRO", "GBR", "GGY", "GIB", "GRC", "HRV",
                   "HUN", "IMN", "IRL", "ITA", "JEY", "LTU", "LUX", "LVA", "MLT",
