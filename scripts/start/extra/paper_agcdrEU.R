@@ -46,7 +46,7 @@ EU_countries <- c("ALA", "AUT", "BEL", "BGR", "CYP", "CZE", "DEU", "DNK", "ESP",
                   "HUN", "IMN", "IRL", "ITA", "JEY", "LTU", "LUX", "LVA", "MLT",
                   "NLD", "POL", "PRT", "ROU", "SVK", "SVN", "SWE")
 
-cdrRegions <- list(glo = all_iso_countries, eu = EU_countries)
+EU_countries_noUK <- setdiff(EU_countries, "GBR")
 
 ### agroforestry settings
 cfg$gms$som                     <- "cellpool_jan23"
@@ -97,6 +97,9 @@ mitiPrice <- c(npi = "npi", "2deg" = "deg2", "1p5deg" = "deg15")
 for (inp in names(inputSets)){
 
   fam <- inputSets[[inp]]
+  # FSEC regionalisation excludes the UK from EUR, H12 includes it
+  cdrRegions <- list(glo = all_iso_countries,
+                     eu = if (inp == "FSEC") EU_countries_noUK else EU_countries)
   cfg$input["regional"]   <- paste0("rev4.138+new4p139_", fam, "_magpie.tgz")
   cfg$input["cellular"]   <- cellularSsp245(fam)
   cfg$input["validation"] <- paste0("rev4.138+new4p139_", fam, "_92e02314_validation.tgz")
