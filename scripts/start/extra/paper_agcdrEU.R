@@ -14,14 +14,14 @@
 library(magpie4)
 library(magclass)
 
-version <- "EUCDR-23new4p139"
+version <- "EUCDR-23"
 
 # Load start_run(cfg) function which is needed to start MAgPIE runs
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
 ### input data: rev4.138+new4p139, two families (h12 and FSEC)
-inputSets <- c(h12 = "h12", FSEC = "FSEC")
+inputSets <- c(H12 = "h12", FSEC = "FSEC")
 # LPJmL ssp245 run (all mitigation scenarios here are SSP2-based)
 cellularSsp245 <- function(fam) {
   paste0("rev4.138+new4p139_", fam,
