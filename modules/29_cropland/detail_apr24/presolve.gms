@@ -33,6 +33,14 @@ p29_snv_relocation(t,j)$(p29_snv_relocation(t, j) > p29_max_snv_relocation(t,j))
 
 *' Area potentially available for cropping
 p29_avl_cropland(t,j) = f29_avl_cropland(j,"%c29_marginal_land%") * (1 - p29_snv_shr(t,j));
+
+*' Existing tree cover on cropland cannot be removed (see below). Cropland therefore cannot fall below
+*' the area needed to hold it (tree cover <= cropland * s29_treecover_max), even if the SNV share
+*' lowers the available cropland.
+if (s29_treecover_max > 0,
+  p29_avl_cropland(t,j) = max(p29_avl_cropland(t,j),
+                              sum(ac, pc29_treecover(j,ac)) / s29_treecover_max);
+);
 *' @stop
 
 
@@ -70,16 +78,6 @@ else
   pc29_land_crop(j) = vm_land.l(j,"crop");
 );
 
-* Store cropland area snapshot when we reach the reference year (if using fixed year mode)
-* This snapshot is then used for all subsequent treecover target calculations
-* NOTE: s29_treecover_reference_year should be <= s29_treecover_scenario_start to ensure
-*       the snapshot is taken before the treecover policy begins
-if (s29_treecover_reference_year > 0,
-  if (m_year(t) = s29_treecover_reference_year,
-    p29_land_crop_reference(j) = pc29_land_crop(j);
-  );
-);
-
 * Target calculation, depending on s29_treecover_mode:
 *   s29_treecover_mode = 0: share target, applied to current cropland area in the
 *                           equation (original behaviour)
@@ -100,6 +98,7 @@ else
       + s29_treecover_target_noselect * sum(cell(i,j), 1-p29_country_weight(i)))
       * pc29_land_crop(j);
   else
+*   The reference year area for fixed year mode is stored in postsolve
     i29_treecover_target_area(t,j) = i29_treecover_scenario_fader(t) *
       (s29_treecover_target * sum(cell(i,j), p29_country_weight(i))
       + s29_treecover_target_noselect * sum(cell(i,j), 1-p29_country_weight(i)))
