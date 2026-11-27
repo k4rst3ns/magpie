@@ -30,7 +30,7 @@ cellularSsp245 <- function(fam) {
 
 ### REMIND version for pollutant prices and 2nd generation bioenergy demand
 # *** TO DECIDE: which REMIND generation to use ***
-remindVersion <- "R36M414"
+remindVersion <- "R34M410"
 if (remindVersion == "R34M410") {
   prices <- c(npi = "R34M410-SSP2-NPi2025",
               deg2 = "R34M410-SSP2-PkBudg1000",
